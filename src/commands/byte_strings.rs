@@ -1,9 +1,9 @@
 use crate::parser::CaosParsable;
 use nom::character::complete::char;
-use nom::multi::many0;
 use nom::character::complete::u8;
-use nom::sequence::delimited;
 use nom::combinator::map;
+use nom::multi::many0;
+use nom::sequence::delimited;
 
 pub enum ByteString {
     Raw(Vec<u8>),

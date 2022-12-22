@@ -1,11 +1,11 @@
-use caos_macros::{CaosParsable, CommandList};
-use crate::parser::CaosParsable;
 use super::{Integer, SString, Variable};
+use crate::parser::CaosParsable;
+use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
 
 #[derive(CaosParsable, CommandList)]
 pub enum Agent {
-    #[syntax(with_parser="parse_variable")]
+    #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
     #[syntax]
     Carr,

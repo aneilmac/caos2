@@ -1,14 +1,19 @@
-use caos_macros::{CaosParsable, CommandList};
 use super::{Anything, Decimal, Integer, Variable};
-use nom::{combinator::map, bytes::complete::escaped, character::complete::{none_of, one_of}, sequence::delimited};
 use crate::parser::CaosParsable;
+use caos_macros::{CaosParsable, CommandList};
 use nom::bytes::complete::tag;
+use nom::{
+    bytes::complete::escaped,
+    character::complete::{none_of, one_of},
+    combinator::map,
+    sequence::delimited,
+};
 
 #[derive(CaosParsable, CommandList)]
 pub enum SString {
-    #[syntax(with_parser="parse_variable")]
+    #[syntax(with_parser = "parse_variable")]
     Raw(String),
-    #[syntax(with_parser="parse_raw")]
+    #[syntax(with_parser = "parse_raw")]
     Variable(Variable),
     #[syntax]
     Catx { category_id: Box<Integer> },
@@ -163,5 +168,5 @@ fn parse_variable(input: &str) -> nom::IResult<&str, SString> {
 fn parse_raw(input: &str) -> nom::IResult<&str, SString> {
     let es = escaped(none_of("\\"), '\\', one_of(r#"\"\\\n"#));
     let delim = delimited(tag("\""), es, tag("\""));
-    map(delim,|s: &str| SString::Raw(s.to_owned()))(input)
+    map(delim, |s: &str| SString::Raw(s.to_owned()))(input)
 }

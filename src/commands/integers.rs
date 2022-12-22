@@ -1,15 +1,15 @@
-use caos_macros::{CaosParsable, CommandList};
-use crate::parser::CaosParsable;
 use super::{Agent, Anything, ByteString, Float, SString, Variable};
+use crate::parser::CaosParsable;
+use caos_macros::{CaosParsable, CommandList};
+use nom::character::complete::digit1;
 use nom::combinator::map;
 use nom::combinator::map_res;
-use nom::character::complete::digit1;
 
 #[derive(CaosParsable, CommandList)]
 pub enum Integer {
-    #[syntax(with_parser="parse_literal")]
+    #[syntax(with_parser = "parse_literal")]
     Raw(i32),
-    #[syntax(with_parser="parse_variable")]
+    #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
     #[syntax]
     Attr,

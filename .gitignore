@@ -1,1 +1,3 @@
 /target
+/caos-macros/target
+Cargo.lock
