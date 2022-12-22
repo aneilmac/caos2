@@ -3,9 +3,10 @@ use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
 use nom::bytes::complete::tag;
 use nom::{
-    bytes::complete::escaped,
-    character::complete::{none_of, one_of},
-    combinator::map,
+    branch::alt,
+    bytes::complete::escaped_transform,
+    character::complete::{char, none_of},
+    combinator::{map, value},
     sequence::delimited,
 };
 
@@ -171,8 +172,89 @@ fn parse_variable(input: &str) -> nom::IResult<&str, SString> {
     map(Variable::parse_caos, |v| SString::Variable(Box::new(v)))(input)
 }
 
+fn parse_escaped(input: &str) -> nom::IResult<&str, String> {
+    escaped_transform(
+        none_of("\\\""),
+        '\\',
+        alt((
+            value("\\", tag("\\")),
+            value("\"", tag("\"")),
+            value("\n", tag("n")),
+        )),
+    )(input)
+}
+
 fn parse_raw(input: &str) -> nom::IResult<&str, SString> {
-    let es = escaped(none_of("\\"), '\\', one_of(r#"\"\\\n"#));
-    let delim = delimited(tag("\""), es, tag("\""));
-    map(delim, |s: &str| SString::Raw(s.to_owned()))(input)
+    map(
+        alt((
+            delimited(tag("\""), parse_escaped, tag("\"")),
+            map(tag(r#""""#), |_| String::new()),
+        )),
+        |s| SString::Raw(s),
+    )(input)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_escaped_empty() {
+        let (_, res) = parse_escaped("").expect("Valid string");
+        assert_eq!(res, String::new());
+    }
+
+    #[test]
+    fn test_escaped_simple() {
+        let (_, res) = parse_escaped("Hello world!").expect("Valid string");
+        assert_eq!(res, "Hello world!");
+    }
+
+    #[test]
+    fn test_escaped_newline() {
+        let (_, res) = parse_escaped("Hello\\nworld!").expect("Valid string");
+        assert_eq!(res, "Hello\nworld!");
+    }
+
+    #[test]
+    fn test_escaped_quote() {
+        let (_, res) = parse_escaped(r#"Hello\"\\world!"#).expect("Valid string");
+        assert_eq!(res, r#"Hello"\world!"#);
+    }
+
+    #[test]
+    fn test_raw_delimited_empty() {
+        let (_, res) = parse_raw(r#""""#).expect("Valid variable");
+        assert_eq!(res, String::new().into());
+    }
+
+    #[test]
+    fn test_literal_empty() {
+        let (_, res) = SString::parse_caos(r#""""#).expect("Valid variable");
+        assert_eq!(res, String::new().into());
+    }
+
+    #[test]
+    fn test_literal_single_escape() {
+        let (_, res) = SString::parse_caos(r#""\"""#).expect("Valid variable");
+        assert_eq!(res, "\"".to_owned().into());
+    }
+
+    #[test]
+    fn test_literal() {
+        let (_, res) = SString::parse_caos(r#""Hello world!""#).expect("Valid variable");
+        assert_eq!(res, "Hello world!".to_owned().into());
+    }
+
+    #[test]
+    fn test_end() {
+        let (_, res) = SString::parse_caos(r#""Hello " world!""#).expect("Valid variable");
+        assert_eq!(res, "Hello ".to_owned().into());
+    }
+
+    #[test]
+    fn test_escape() {
+        let (_, res) = SString::parse_caos(r#""Hello \" world!""#).expect("Valid variable");
+        assert_eq!(res, "Hello \" world!".to_owned().into());
+    }
 }
