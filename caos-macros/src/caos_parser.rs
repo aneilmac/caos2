@@ -59,7 +59,7 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
         .split_whitespace()
         .map(|k| {
             std::iter::once(quote!(let (input, _) = tag_no_case(#k)(input)?;)).chain(
-                std::iter::once(quote!(let (input, _) = multispace1(input)?;)),
+                std::iter::once(quote!(let (input, _) = caos_skippable1(input)?;)),
             )
         })
         .flatten();
@@ -93,7 +93,7 @@ fn parse_field(field: &syn::Field) -> proc_macro2::TokenStream {
     let field_ident = &field.ident;
     let ty = &field.ty;
     quote_spanned!(field.span() =>
-        let (input, _) = multispace1(input)?;
+        let (input, _) = caos_skippable1(input)?;
         let (input, #field_ident) = <#ty as crate::parser::CaosParsable>::parse_caos(input).map_err(|e| {
             match e {
                 nom::Err::Error(e) => nom::Err::Failure(e),

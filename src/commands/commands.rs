@@ -1,11 +1,21 @@
-use caos_macros::{CaosParsable, CommandList};
-
 use super::{
-    Agent, Anything, ByteString, Condition, Decimal, Float, Integer, Label, SString, Variable,
+    Agent, Anything, ByteString, Condition, Decimal, Float, Integer, Label, LiteralInt, SString,
+    Variable,
 };
+use caos_macros::{CaosParsable, CommandList};
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Clone, Debug)]
 pub enum Command {
+    // Script
+    #[syntax]
+    Scrp {
+        family: LiteralInt,
+        genus: LiteralInt,
+        species: LiteralInt,
+        script_number: LiteralInt,
+    },
+    #[syntax]
+    Endm,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },

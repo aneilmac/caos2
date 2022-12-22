@@ -7,6 +7,7 @@ mod decimals;
 mod floats;
 mod integers;
 mod labels;
+mod script;
 mod strings;
 mod variables;
 
@@ -19,5 +20,6 @@ pub use decimals::*;
 pub use floats::*;
 pub use integers::*;
 pub use labels::*;
+pub use script::*;
 pub use strings::*;
 pub use variables::*;

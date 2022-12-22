@@ -2,7 +2,7 @@ use nom::IResult;
 
 /// Represents a type which can be parsed from a string into
 ///  a CAOS expression.
-pub trait CaosParsable {
+pub(crate) trait CaosParsable {
     fn parse_caos(input: &str) -> IResult<&str, Self>
     where
         Self: Sized;

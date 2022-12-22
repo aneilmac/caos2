@@ -85,7 +85,7 @@ mod test {
             agent,
             Agent::Twin {
                 original: Box::new(Agent::It),
-                agent_null: Box::new(Integer::Raw(2))
+                agent_null: Box::new(2.into())
             }
         );
     }

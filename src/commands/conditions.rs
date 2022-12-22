@@ -1,9 +1,5 @@
-use nom::{
-    branch::alt,
-    bytes::streaming::tag_no_case,
-    character::streaming::multispace1,
-    combinator::{complete, map},
-};
+use crate::parser::caos_skippable1;
+use nom::{branch::alt, bytes::complete::tag_no_case, combinator::map};
 
 use super::Anything;
 use crate::parser::CaosParsable;
@@ -27,11 +23,13 @@ impl CaosParsable for Condition {
     where
         Self: Sized,
     {
+        // CAOS conditions are very primitive. They are evaluated from left to right,
+        // with no parentheses available.
         let (input, lhs) = parse_condition_simple(input)?;
         let res: nom::IResult<&str, (Condition, JoinType)> = (|input| {
-            let (input, _) = multispace1(input)?;
+            let (input, _) = caos_skippable1(input)?;
             let (input, join_type) = JoinType::parse_caos(input)?;
-            let (input, _) = multispace1(input)?;
+            let (input, _) = caos_skippable1(input)?;
             let (input, rhs) = CaosParsable::parse_caos(input)?;
             Ok((input, (rhs, join_type)))
         })(input);
@@ -52,9 +50,9 @@ impl CaosParsable for Condition {
 
 fn parse_condition_simple(input: &str) -> nom::IResult<&str, Condition> {
     let (input, lhs) = Anything::parse_caos(input)?;
-    let (input, _) = multispace1(input)?;
+    let (input, _) = caos_skippable1(input)?;
     let (input, cond_type) = ConditionType::parse_caos(input)?;
-    let (input, _) = multispace1(input)?;
+    let (input, _) = caos_skippable1(input)?;
     let (input, rhs) = Anything::parse_caos(input)?;
     Ok((
         input,
@@ -103,21 +101,18 @@ impl CaosParsable for ConditionType {
             map(alt((tag_no_case("="), tag_no_case("eq"))), |_| {
                 ConditionType::Eq
             }),
-            map(
-                alt((complete(tag_no_case(">=")), tag_no_case("ge"))),
-                |_| ConditionType::Ge,
-            ),
+            map(alt((tag_no_case(">="), tag_no_case("ge"))), |_| {
+                ConditionType::Ge
+            }),
             map(alt((tag_no_case(">"), tag_no_case("gt"))), |_| {
                 ConditionType::Gt
             }),
-            map(
-                alt((complete(tag_no_case("<=")), tag_no_case("le"))),
-                |_| ConditionType::Le,
-            ),
-            map(
-                alt((complete(tag_no_case("<>")), tag_no_case("ne"))),
-                |_| ConditionType::Ne,
-            ),
+            map(alt((tag_no_case("<="), tag_no_case("le"))), |_| {
+                ConditionType::Le
+            }),
+            map(alt((tag_no_case("<>"), tag_no_case("ne"))), |_| {
+                ConditionType::Ne
+            }),
             map(alt((tag_no_case("<"), tag_no_case("lt"))), |_| {
                 ConditionType::Lt
             }),
@@ -207,8 +202,8 @@ mod tests {
     }
 
     #[test]
-    fn test_combo_condition_2() {
-        let (_, res) = parse_condition_simple("VA34 LT VA00").expect("Valid condition");
+    fn test_condition_parse() {
+        let (_, res) = Condition::parse_caos("VA34 LT VA00").expect("Valid condition");
         assert_eq!(
             res,
             Condition::Simple {

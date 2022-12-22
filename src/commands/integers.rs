@@ -1,13 +1,59 @@
 use super::{Agent, Anything, ByteString, Float, SString, Variable};
-use crate::parser::parse_integer_literal;
 use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
-use nom::combinator::map;
+use nom::branch::alt;
+use nom::bytes::complete::take_while1;
+use nom::character::complete::{anychar, char, i32};
+use nom::combinator::{map, map_res};
+use nom::sequence::{delimited, preceded};
+use nom::IResult;
+
+/// Represents an integer that can only be parsed as a numeric literal.
+#[derive(Eq, PartialEq, Debug, Clone, Copy)]
+pub struct LiteralInt(pub i32);
+
+impl CaosParsable for LiteralInt {
+    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    where
+        Self: Sized,
+    {
+        map(
+            alt((
+                // Allow parsing regular numbers
+                i32,
+                // Allow parsing a characters as a number
+                parse_integer_char,
+                // Allows parsing of binary sequences
+                parse_integer_binary,
+            )),
+            LiteralInt,
+        )(input)
+    }
+}
+
+impl From<i32> for LiteralInt {
+    fn from(i: i32) -> Self {
+        LiteralInt(i)
+    }
+}
+
+/// Parses a character as an i32
+fn parse_integer_char(input: &str) -> IResult<&str, i32> {
+    map(delimited(char('\''), anychar, char('\'')), |c| c as i32)(input)
+}
+
+/// Parses a %XXXXX as an i32
+fn parse_integer_binary(input: &str) -> IResult<&str, i32> {
+    map_res(
+        preceded(char('%'), take_while1(|c| c == '0' || c == '1')),
+        |b| i32::from_str_radix(b, 2),
+    )(input)
+}
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
-    Raw(i32),
+    Raw(LiteralInt),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
     #[syntax]
@@ -496,7 +542,7 @@ pub enum Integer {
 
 impl From<i32> for Integer {
     fn from(i: i32) -> Self {
-        Integer::Raw(i)
+        Integer::Raw(LiteralInt(i))
     }
 }
 
@@ -505,7 +551,7 @@ fn parse_variable(input: &str) -> nom::IResult<&str, Integer> {
 }
 
 fn parse_literal(input: &str) -> nom::IResult<&str, Integer> {
-    map(parse_integer_literal, Integer::Raw)(input)
+    map(LiteralInt::parse_caos, Integer::Raw)(input)
 }
 
 #[cfg(test)]
@@ -522,5 +568,49 @@ mod tests {
     fn test_simple_int() {
         let (_, res) = Integer::parse_caos("cabb").expect("Valid int");
         assert_eq!(res, Integer::Cabb);
+    }
+
+    #[test]
+    fn test_bad_binary() {
+        parse_integer_binary("%").expect_err("Bad binary");
+        parse_integer_binary("%3").expect_err("Bad binary");
+        parse_integer_binary("0101").expect_err("Bad binary");
+    }
+
+    #[test]
+    fn test_binary_0() {
+        let (_, res) = parse_integer_binary("%0").expect("Good binary");
+        assert_eq!(res, 0);
+    }
+
+    #[test]
+    fn test_binary_3() {
+        let (_, res) = parse_integer_binary("%11").expect("Good binary");
+        assert_eq!(res, 3);
+    }
+
+    #[test]
+    fn test_char_good() {
+        let (_, res) = parse_integer_char("'N'").expect("Good binary");
+        assert_eq!(res, 78);
+    }
+
+    #[test]
+    fn test_char_bad() {
+        parse_integer_char("N").expect_err("Bad binary");
+        parse_integer_char("''").expect_err("Bad binary");
+        parse_integer_char("'Q").expect_err("Bad binary");
+    }
+
+    #[test]
+    fn test_integer() {
+        let (_, res) = LiteralInt::parse_caos("%11").expect("Good binary");
+        assert_eq!(res, LiteralInt(3));
+
+        let (_, res) = LiteralInt::parse_caos("'A'").expect("Good binary");
+        assert_eq!(res, LiteralInt(65));
+
+        let (_, res) = LiteralInt::parse_caos("32").expect("Good binary");
+        assert_eq!(res, LiteralInt(32));
     }
 }

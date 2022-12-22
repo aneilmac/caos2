@@ -1,6 +1,7 @@
-use crate::parser::parse_integer_literal;
+use super::LiteralInt;
+use crate::parser::caos_skippable1;
 use crate::parser::CaosParsable;
-use nom::character::complete::{char, multispace1};
+use nom::character::complete::char;
 use nom::combinator::map;
 use nom::multi::separated_list0;
 use nom::sequence::delimited;
@@ -19,12 +20,12 @@ impl CaosParsable for ByteString {
         map(
             delimited(
                 char('['),
-                separated_list0(multispace1, parse_integer_literal),
+                separated_list0(caos_skippable1, LiteralInt::parse_caos),
                 char(']'),
             ),
             |v|
             // Clamp between 0 and 255 
-            ByteString::Raw(v.into_iter().map(|i| min(max(i, u8::MIN.into()), u8::MAX.into()) as u8).collect()),
+            ByteString::Raw(v.into_iter().map(|LiteralInt(i)| min(max(i, u8::MIN.into()), u8::MAX.into()) as u8).collect()),
         )(input)
     }
 }
