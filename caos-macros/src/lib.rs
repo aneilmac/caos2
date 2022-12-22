@@ -30,6 +30,7 @@ use self::syntax_token::SyntaxToken;
 ///   IgnoredThing,
 /// }
 /// ```
+///
 /// Would produce:
 ///
 /// ```ignore
@@ -80,6 +81,7 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 /// fn parse_value(input: &str) -> IResult<&str, Foo> {
 ///   map_res(digit1, |s: &str| s.parse::<u32>())(input)
 /// }
+/// ```
 ///
 /// Would produce an implementation of `CaosParsable::parse_caos`, which could parse the following CAOS commands:
 ///

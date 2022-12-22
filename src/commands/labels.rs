@@ -1,6 +1,6 @@
 use crate::parser::CaosParsable;
 
-#[derive(Eq, PartialEq, Debug)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
 
 impl CaosParsable for Label {

@@ -9,12 +9,12 @@ use nom::{
     sequence::delimited,
 };
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum SString {
     #[syntax(with_parser = "parse_variable")]
     Raw(String),
     #[syntax(with_parser = "parse_raw")]
-    Variable(Variable),
+    Variable(Box<Variable>),
     #[syntax]
     Catx { category_id: Box<Integer> },
     #[syntax]
@@ -161,8 +161,14 @@ pub enum SString {
     Wuid,
 }
 
+impl From<String> for SString {
+    fn from(s: String) -> Self {
+        SString::Raw(s)
+    }
+}
+
 fn parse_variable(input: &str) -> nom::IResult<&str, SString> {
-    map(Variable::parse_caos, SString::Variable)(input)
+    map(Variable::parse_caos, |v| SString::Variable(Box::new(v)))(input)
 }
 
 fn parse_raw(input: &str) -> nom::IResult<&str, SString> {

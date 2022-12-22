@@ -4,7 +4,7 @@ use super::{
     Agent, Anything, ByteString, Condition, Decimal, Float, Integer, Label, SString, Variable,
 };
 
-#[derive(CaosParsable, CommandList)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Clone, Debug)]
 pub enum Command {
     // Agents
     #[syntax]

@@ -4,12 +4,12 @@ use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
     Raw(i32),
     #[syntax(with_parser = "parse_variable")]
-    Variable(Variable),
+    Variable(Box<Variable>),
     #[syntax]
     Attr,
     #[syntax]
@@ -494,10 +494,33 @@ pub enum Integer {
     Wnti { world: Box<SString> },
 }
 
+impl From<i32> for Integer {
+    fn from(i: i32) -> Self {
+        Integer::Raw(i)
+    }
+}
+
 fn parse_variable(input: &str) -> nom::IResult<&str, Integer> {
-    map(Variable::parse_caos, Integer::Variable)(input)
+    map(Variable::parse_caos, |v| Integer::Variable(Box::new(v)))(input)
 }
 
 fn parse_literal(input: &str) -> nom::IResult<&str, Integer> {
     map(parse_integer_literal, Integer::Raw)(input)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_literal_int() {
+        let (_, res) = Integer::parse_caos("3").expect("Valid int");
+        assert_eq!(res, 3.into());
+    }
+
+    #[test]
+    fn test_simple_int() {
+        let (_, res) = Integer::parse_caos("cabb").expect("Valid int");
+        assert_eq!(res, Integer::Cabb);
+    }
 }

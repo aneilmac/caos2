@@ -5,7 +5,7 @@ use nom::combinator::map;
 
 /// Agent types represents a reference to an in-game CAOS
 /// Agent.
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Agent {
     #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
@@ -76,5 +76,17 @@ mod test {
     fn test_simple_agent() {
         let (_, agent) = Agent::parse_caos("hots").expect("Valid Agent");
         assert_eq!(agent, Agent::Hots);
+    }
+
+    #[test]
+    fn test_compound_agent() {
+        let (_, agent) = Agent::parse_caos("twin _it_ %10").expect("Valid Agent");
+        assert_eq!(
+            agent,
+            Agent::Twin {
+                original: Box::new(Agent::It),
+                agent_null: Box::new(Integer::Raw(2))
+            }
+        );
     }
 }

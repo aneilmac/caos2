@@ -58,15 +58,15 @@ mod test {
 
     #[test]
     fn test_char_good() {
-        let (_, res) = parse_integer_binary("'N'").expect("Good binary");
+        let (_, res) = parse_integer_char("'N'").expect("Good binary");
         assert_eq!(res, 78);
     }
 
     #[test]
     fn test_char_bad() {
-        parse_integer_binary("N").expect_err("Bad binary");
-        parse_integer_binary("''").expect_err("Bad binary");
-        parse_integer_binary("'Q").expect_err("Bad binary");
+        parse_integer_char("N").expect_err("Bad binary");
+        parse_integer_char("''").expect_err("Bad binary");
+        parse_integer_char("'Q").expect_err("Bad binary");
     }
 
     #[test]

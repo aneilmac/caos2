@@ -6,7 +6,7 @@ use nom::number::complete::float;
 
 /// We want strict equality for our tokens, so we wrap the f32 up and compare it bitwise to ensure
 /// "true" equality for token parsing.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct F32Wrapper(f32);
 
 impl PartialEq for F32Wrapper {
@@ -17,12 +17,12 @@ impl PartialEq for F32Wrapper {
 
 impl Eq for F32Wrapper {}
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Float {
     #[syntax(with_parser = "parse_literal")]
     Raw(F32Wrapper),
     #[syntax(with_parser = "parse_variable")]
-    Variable(Variable),
+    Variable(Box<Variable>),
     #[syntax]
     Disq { other: Box<Agent> },
     #[syntax]
@@ -123,10 +123,33 @@ pub enum Float {
     Tan { theta: Box<Float> },
 }
 
+impl From<f32> for Float {
+    fn from(f: f32) -> Self {
+        Float::Raw(F32Wrapper(f))
+    }
+}
+
 fn parse_literal(input: &str) -> nom::IResult<&str, Float> {
     map(float, |f| Float::Raw(F32Wrapper(f)))(input)
 }
 
 fn parse_variable(input: &str) -> nom::IResult<&str, Float> {
-    map(Variable::parse_caos, Float::Variable)(input)
+    map(Variable::parse_caos, |v| Float::Variable(Box::new(v)))(input)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_literal_float() {
+        let (_, res) = Float::parse_caos("3.134").expect("Valid float");
+        assert_eq!(res, Float::Raw(F32Wrapper(3.134)));
+    }
+
+    #[test]
+    fn test_variable_float() {
+        let (_, res) = Float::parse_caos("velx").expect("Valid float");
+        assert_eq!(res, Float::Variable(Box::new(Variable::Velx)));
+    }
 }
