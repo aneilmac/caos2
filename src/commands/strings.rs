@@ -5,7 +5,7 @@ use nom::bytes::complete::tag;
 use nom::{
     branch::alt,
     bytes::complete::escaped_transform,
-    character::complete::{char, none_of},
+    character::complete::none_of,
     combinator::{map, value},
     sequence::delimited,
 };
