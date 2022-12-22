@@ -9,7 +9,7 @@ use nom::{
     sequence::delimited,
 };
 
-#[derive(CaosParsable, CommandList)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
 pub enum SString {
     #[syntax(with_parser = "parse_variable")]
     Raw(String),

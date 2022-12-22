@@ -3,6 +3,7 @@ use crate::parser::CaosParsable;
 use nom::branch::alt;
 use nom::combinator::map;
 
+#[derive(Eq, PartialEq, Debug)]
 pub enum Anything {
     String(SString),
     Integer(Integer),

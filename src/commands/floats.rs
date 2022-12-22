@@ -1,17 +1,30 @@
+use super::{Agent, Integer, SString, Variable};
+use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
+use nom::combinator::map;
+use nom::number::complete::float;
 
-use super::{Agent, Integer, SString};
+/// We want strict equality for our tokens, so we wrap the f32 up and compare it bitwise to ensure
+/// "true" equality for token parsing.
+#[derive(Debug)]
+pub struct F32Wrapper(f32);
 
-#[derive(CaosParsable, CommandList)]
+impl PartialEq for F32Wrapper {
+    fn eq(&self, other: &Self) -> bool {
+        self.0.to_bits() == other.0.to_bits()
+    }
+}
+
+impl Eq for F32Wrapper {}
+
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
 pub enum Float {
-    //#[raw]
-    Raw(f32),
-    //#[raw]
-    Variable(String),
+    #[syntax(with_parser = "parse_literal")]
+    Raw(F32Wrapper),
+    #[syntax(with_parser = "parse_variable")]
+    Variable(Variable),
     #[syntax]
-    Disq {
-        other: Box<Agent>,
-    },
+    Disq { other: Box<Agent> },
     #[syntax]
     Fltx,
     #[syntax]
@@ -35,17 +48,13 @@ pub enum Float {
     #[syntax]
     Rnge,
     #[syntax]
-    Chem {
-        chemical: Box<Integer>,
-    },
+    Chem { chemical: Box<Integer> },
     #[syntax]
     Dftx,
     #[syntax]
     Dfty,
     #[syntax]
-    Driv {
-        drive: Box<Integer>,
-    },
+    Driv { drive: Box<Integer> },
     #[syntax]
     Loci {
         r#type: Box<Integer>,
@@ -75,19 +84,13 @@ pub enum Float {
         ca_index: Box<Integer>,
     },
     #[syntax]
-    Torx {
-        room_id: Box<Integer>,
-    },
+    Torx { room_id: Box<Integer> },
     #[syntax]
-    Tory {
-        room_id: Box<Integer>,
-    },
+    Tory { room_id: Box<Integer> },
     #[syntax]
     Accg,
     #[syntax]
-    Obst {
-        direction: Box<Integer>,
-    },
+    Obst { direction: Box<Integer> },
     #[syntax]
     Relx {
         first: Box<Agent>,
@@ -101,39 +104,29 @@ pub enum Float {
     #[syntax]
     Pace,
     #[syntax]
-    Acos {
-        x: Box<Float>,
-    },
+    Acos { x: Box<Float> },
     #[syntax]
-    Asin {
-        x: Box<Float>,
-    },
+    Asin { x: Box<Float> },
     #[syntax]
-    Atan {
-        x: Box<Float>,
-    },
+    Atan { x: Box<Float> },
     #[syntax(name = "cos_")]
-    Cos {
-        theta: Box<Float>,
-    },
+    Cos { theta: Box<Float> },
     #[syntax]
-    Itof {
-        number_to_convert: Box<Integer>,
-    },
+    Itof { number_to_convert: Box<Integer> },
     #[syntax(name = "sin_")]
-    Sin {
-        theta: Box<Float>,
-    },
+    Sin { theta: Box<Float> },
     #[syntax]
-    Sqrt {
-        value: Box<Float>,
-    },
+    Sqrt { value: Box<Float> },
     #[syntax]
-    Stof {
-        value: Box<SString>,
-    },
+    Stof { value: Box<SString> },
     #[syntax(name = "tan_")]
-    Tan {
-        theta: Box<Float>,
-    },
+    Tan { theta: Box<Float> },
+}
+
+fn parse_literal(input: &str) -> nom::IResult<&str, Float> {
+    map(float, |f| Float::Raw(F32Wrapper(f)))(input)
+}
+
+fn parse_variable(input: &str) -> nom::IResult<&str, Float> {
+    map(Variable::parse_caos, Float::Variable)(input)
 }

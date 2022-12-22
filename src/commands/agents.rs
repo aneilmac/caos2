@@ -3,7 +3,9 @@ use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
 
-#[derive(CaosParsable, CommandList)]
+/// Agent types represents a reference to an in-game CAOS
+/// Agent.
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
 pub enum Agent {
     #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
@@ -64,4 +66,15 @@ pub enum Agent {
 
 fn parse_variable(input: &str) -> nom::IResult<&str, Agent> {
     map(Variable::parse_caos, Agent::Variable)(input)
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_simple_agent() {
+        let (_, agent) = Agent::parse_caos("hots").expect("Valid Agent");
+        assert_eq!(agent, Agent::Hots);
+    }
 }

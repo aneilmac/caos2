@@ -4,6 +4,7 @@ use super::{Float, Integer};
 use nom::branch::alt;
 use nom::combinator::map;
 
+#[derive(Debug, PartialEq, Eq)]
 pub enum Decimal {
     Integer(Integer),
     Float(Float),

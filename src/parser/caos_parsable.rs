@@ -26,9 +26,9 @@ mod test {
     use super::*;
     use caos_macros::CaosParsable;
     use nom::character::complete::digit1;
+    use nom::combinator::map_res;
     use nom::error::ErrorKind;
     use nom::Finish;
-    use nom::{combinator::map_res, IResult};
 
     #[derive(Eq, PartialEq, Debug, CaosParsable)]
     enum Foo {
@@ -36,7 +36,11 @@ mod test {
         Helo,
         #[syntax]
         Wrld { recursive: Box<Foo> },
-        Rec2 { recursive1: Box<Foo>, recursive2: Box<Foo> },
+        #[syntax]
+        Rec2 {
+            recursive1: Box<Foo>,
+            recursive2: Box<Foo>,
+        },
         #[syntax(name = "cus: name")]
         CusName,
         #[syntax(with_parser = "magic_parse")]
@@ -77,10 +81,10 @@ mod test {
     #[test]
     fn test_newline() {
         assert_eq!(
-            Foo::parse_caos("wrld   \n   helo")
-                .expect("A valid pass")
-                .1,
-            Foo::Wrld { recursive: Box::new(Foo::Helo) }
+            Foo::parse_caos("wrld   \n   helo").expect("A valid pass").1,
+            Foo::Wrld {
+                recursive: Box::new(Foo::Helo)
+            }
         );
     }
 
@@ -90,16 +94,16 @@ mod test {
             Foo::parse_caos("wrld    cus:  \n\t  name")
                 .expect("A valid pass")
                 .1,
-            Foo::Wrld { recursive: Box::new(Foo::CusName) }
+            Foo::Wrld {
+                recursive: Box::new(Foo::CusName)
+            }
         );
     }
 
     #[test]
     fn test_custom_name() {
         assert_eq!(
-            Foo::parse_caos("cus: name")
-                .expect("A valid pass")
-                .1,
+            Foo::parse_caos("cus: name").expect("A valid pass").1,
             Foo::CusName
         );
     }
@@ -107,9 +111,7 @@ mod test {
     #[test]
     fn test_custom_parse() {
         assert_eq!(
-            Foo::parse_caos("7")
-                .expect("A valid pass")
-                .1,
+            Foo::parse_caos("7").expect("A valid pass").1,
             Foo::MagicParse(7)
         );
     }
@@ -117,17 +119,41 @@ mod test {
     #[test]
     fn test_single_arg() {
         assert_eq!(
-            Foo::parse_caos("wrld helo")
-                .expect("A valid pass")
-                .1,
-            Foo::Wrld { recursive: Box::new(Foo::Helo) }
+            Foo::parse_caos("wrld helo").expect("A valid pass").1,
+            Foo::Wrld {
+                recursive: Box::new(Foo::Helo)
+            }
         );
 
         assert_eq!(
-            Foo::parse_caos("wrld cus: name")
-                .expect("A valid pass")
-                .1,
-            Foo::Wrld { recursive: Box::new(Foo::CusName) }
+            Foo::parse_caos("wrld cus: name").expect("A valid pass").1,
+            Foo::Wrld {
+                recursive: Box::new(Foo::CusName)
+            }
+        );
+    }
+
+    #[test]
+    fn test_multi_args_simple() {
+        assert_eq!(
+            Foo::parse_caos("rec2 helo helo").expect("A valid pass").1,
+            Foo::Rec2 {
+                recursive1: Box::new(Foo::Helo),
+                recursive2: Box::new(Foo::Helo)
+            }
+        );
+    }
+
+    #[test]
+    fn test_multi_args_complex() {
+        assert_eq!(
+            Foo::parse_caos("rec2 wrld helo 2").expect("A valid pass").1,
+            Foo::Rec2 {
+                recursive1: Box::new(Foo::Wrld {
+                    recursive: Box::new(Foo::Helo)
+                }),
+                recursive2: Box::new(Foo::MagicParse(2))
+            }
         );
     }
 }

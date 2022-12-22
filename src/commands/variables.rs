@@ -7,7 +7,7 @@ use nom::{
 
 use super::{Agent, Integer, SString};
 
-#[derive(CaosParsable, CommandList)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
 pub enum Variable {
     #[syntax]
     Velx,

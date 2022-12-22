@@ -109,8 +109,7 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
                     use nom::character::complete::multispace1;
                     use nom::branch::alt;
                     use nom::combinator::fail;
-                    use nom::multi::separated_list1;
-                    
+
                     #alt_statement(input)
                 }
             }

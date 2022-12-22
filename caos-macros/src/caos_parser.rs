@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use crate::{syntax_keyword, syntax_token::SyntaxToken};
 use quote::{quote, quote_spanned};
 use syn::{spanned::Spanned, Variant};
@@ -50,15 +52,21 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
 
     let var_ident = &variant.ident;
 
-    // Break down a keyword with spaces such that it can have any number 
+    // Break down a keyword with spaces such that it can have any number
     // of spaces. That is "NEW: CREA" and "NEW:   CREA" are equivalent.
     let keywords = syntax_keyword(variant, syntax);
-    let keywords = keywords.split_ascii_whitespace().map(|k| {
-        quote!(tag_no_case(#k))
-    });
-    let keyword = quote!(
-        separated_list1(multispace1, alt((#(#keywords),*,)))
-    );
+    let keywords = keywords
+        .split_whitespace()
+        .map(|k| {
+            std::iter::once(quote!(let (input, _) = tag_no_case(#k)(input)?;)).chain(
+                std::iter::once(quote!(let (input, _) = multispace1(input)?;)),
+            )
+        })
+        .flatten();
+    let keywords: Vec<_> = keywords.collect();
+    // This would be simplified through use of intersperse but that is still in Nightly.
+    // Remove the last element of the list to get equivalent behaviour.
+    let keywords = keywords.iter().take(keywords.len() - 1);
 
     let construction = if variant.fields.is_empty() {
         quote!(Self::#var_ident)
@@ -68,7 +76,7 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
 
     quote_spanned!(variant.span() =>
         |input: &'a str| -> nom::IResult<&str, Self> {
-            let (input, _ ) = #keyword(input)?;
+            #(#keywords)*
 
             #(#parse_lines)*
 

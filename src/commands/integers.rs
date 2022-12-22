@@ -1,11 +1,10 @@
 use super::{Agent, Anything, ByteString, Float, SString, Variable};
+use crate::parser::parse_integer_literal;
 use crate::parser::CaosParsable;
 use caos_macros::{CaosParsable, CommandList};
-use nom::character::complete::digit1;
 use nom::combinator::map;
-use nom::combinator::map_res;
 
-#[derive(CaosParsable, CommandList)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
     Raw(i32),
@@ -500,5 +499,5 @@ fn parse_variable(input: &str) -> nom::IResult<&str, Integer> {
 }
 
 fn parse_literal(input: &str) -> nom::IResult<&str, Integer> {
-    map_res(digit1, |i: &str| i.parse::<i32>().map(Integer::Raw))(input)
+    map(parse_integer_literal, Integer::Raw)(input)
 }
