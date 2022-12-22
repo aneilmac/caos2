@@ -11,9 +11,9 @@ use nom::{
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum SString {
-    #[syntax(with_parser = "parse_variable")]
-    Raw(String),
     #[syntax(with_parser = "parse_raw")]
+    Raw(String),
+    #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
     #[syntax]
     Catx { category_id: Box<Integer> },
