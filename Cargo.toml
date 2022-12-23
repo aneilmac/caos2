@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 nom = "7.1.1"
 caos-macros = { path = "caos-macros" }
+
+[[example]]
+name="scan_file"

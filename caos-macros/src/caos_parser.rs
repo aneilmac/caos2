@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::{syntax_keyword, syntax_token::SyntaxToken};
 use quote::{quote, quote_spanned};
 use syn::{spanned::Spanned, Variant};

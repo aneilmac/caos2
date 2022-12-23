@@ -23,6 +23,8 @@ pub enum Float {
     Raw(F32Wrapper),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
+    #[syntax(with_parser = "parse_integer_cast")]
+    FromInteger(Box<Integer>),
     #[syntax]
     Disq { other: Box<Agent> },
     #[syntax]
@@ -137,8 +139,14 @@ fn parse_variable(input: &str) -> nom::IResult<&str, Float> {
     map(Variable::parse_caos, |v| Float::Variable(Box::new(v)))(input)
 }
 
+fn parse_integer_cast(input: &str) -> nom::IResult<&str, Float> {
+    map(Integer::parse_caos, |i| Float::FromInteger(Box::new(i)))(input)
+}
+
 #[cfg(test)]
 mod tests {
+    use crate::commands::Command;
+
     use super::*;
 
     #[test]
@@ -151,5 +159,20 @@ mod tests {
     fn test_variable_float() {
         let (_, res) = Float::parse_caos("velx").expect("Valid float");
         assert_eq!(res, Float::Variable(Box::new(Variable::Velx)));
+    }
+
+    #[test]
+    fn test_integer_cast() {
+        let (_, res) = Command::parse_caos("mvto rand 217 2787 1840").expect("Valid command");
+        assert_eq!(
+            res,
+            Command::Mvto {
+                y: 1840f32.into(),
+                x: Float::FromInteger(Box::new(Integer::Rand {
+                    value1: Box::new(217.into()),
+                    value2: Box::new(2787.into())
+                }))
+            }
+        );
     }
 }
