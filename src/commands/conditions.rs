@@ -2,7 +2,7 @@ use crate::parser::caos_skippable1;
 use nom::{branch::alt, bytes::complete::tag_no_case, combinator::map};
 
 use super::Anything;
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub enum Condition {
@@ -19,14 +19,14 @@ pub enum Condition {
 }
 
 impl CaosParsable for Condition {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {
         // CAOS conditions are very primitive. They are evaluated from left to right,
         // with no parentheses available.
         let (input, lhs) = parse_condition_simple(input)?;
-        let res: nom::IResult<&str, (Condition, JoinType)> = (|input| {
+        let res: CaosParseResult<&str, (Condition, JoinType)> = (|input| {
             let (input, _) = caos_skippable1(input)?;
             let (input, join_type) = JoinType::parse_caos(input)?;
             let (input, _) = caos_skippable1(input)?;
@@ -48,7 +48,7 @@ impl CaosParsable for Condition {
     }
 }
 
-fn parse_condition_simple(input: &str) -> nom::IResult<&str, Condition> {
+fn parse_condition_simple(input: &str) -> CaosParseResult<&str, Condition> {
     let (input, lhs) = Anything::parse_caos(input)?;
     let (input, _) = caos_skippable1(input)?;
     let (input, cond_type) = ConditionType::parse_caos(input)?;
@@ -71,7 +71,7 @@ pub enum JoinType {
 }
 
 impl CaosParsable for JoinType {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {
@@ -93,7 +93,7 @@ pub enum ConditionType {
 }
 
 impl CaosParsable for ConditionType {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {

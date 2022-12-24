@@ -73,7 +73,7 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
     };
 
     quote_spanned!(variant.span() =>
-        |input: &'a str| -> nom::IResult<&str, Self> {
+        |input: &'a str| -> CaosParseResult<&str, Self> {
             #(#keywords)*
 
             #(#parse_lines)*
@@ -92,11 +92,6 @@ fn parse_field(field: &syn::Field) -> proc_macro2::TokenStream {
     let ty = &field.ty;
     quote_spanned!(field.span() =>
         let (input, _) = caos_skippable1(input)?;
-        let (input, #field_ident) = <#ty as crate::parser::CaosParsable>::parse_caos(input).map_err(|e| {
-            match e {
-                nom::Err::Error(e) => nom::Err::Failure(e),
-                h => h
-            }
-        })?;
+        let (input, #field_ident) = cut(<#ty as crate::parser::CaosParsable>::parse_caos)(input)?;
     )
 }

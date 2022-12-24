@@ -2,6 +2,7 @@ use super::{
     Agent, Anything, ByteString, Condition, Decimal, Float, Integer, Label, LiteralInt, SString,
     Variable,
 };
+use crate::parser::CaosParseResult;
 use caos_macros::{CaosParsable, CommandList};
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Clone, Debug)]
@@ -16,6 +17,8 @@ pub enum Command {
     },
     #[syntax]
     Endm,
+    #[syntax]
+    Iscr,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },

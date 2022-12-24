@@ -1,3 +1,4 @@
+use crate::parser::CaosParseResult;
 use nom::{
     bytes::complete::{tag_no_case, take_until},
     character::complete::{multispace0, multispace1},
@@ -5,11 +6,11 @@ use nom::{
     sequence::preceded,
 };
 
-fn parse_comment(input: &str) -> nom::IResult<&str, &str> {
+fn parse_comment(input: &str) -> CaosParseResult<&str, &str> {
     preceded(tag_no_case("*"), take_until("\n"))(input)
 }
 
-pub(crate) fn caos_skippable0(input: &str) -> nom::IResult<&str, ()> {
+pub(crate) fn caos_skippable0(input: &str) -> CaosParseResult<&str, ()> {
     let (input, _) = multispace0(input)?;
     let (input, n) = opt(parse_comment)(input)?;
     match n {
@@ -18,7 +19,7 @@ pub(crate) fn caos_skippable0(input: &str) -> nom::IResult<&str, ()> {
     }
 }
 
-pub(crate) fn caos_skippable1(input: &str) -> nom::IResult<&str, ()> {
+pub(crate) fn caos_skippable1(input: &str) -> CaosParseResult<&str, ()> {
     let (input, _) = multispace1(input)?;
     let (input, n) = opt(parse_comment)(input)?;
     match n {

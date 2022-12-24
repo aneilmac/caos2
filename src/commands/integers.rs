@@ -1,19 +1,18 @@
 use super::{Agent, Anything, ByteString, Float, SString, Variable};
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::branch::alt;
 use nom::bytes::complete::take_while1;
 use nom::character::complete::{anychar, char, i32};
 use nom::combinator::{map, map_res};
 use nom::sequence::{delimited, preceded};
-use nom::IResult;
 
 /// Represents an integer that can only be parsed as a numeric literal.
 #[derive(Eq, PartialEq, Debug, Clone, Copy)]
 pub struct LiteralInt(pub i32);
 
 impl CaosParsable for LiteralInt {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {
@@ -38,12 +37,12 @@ impl From<i32> for LiteralInt {
 }
 
 /// Parses a character as an i32
-fn parse_integer_char(input: &str) -> IResult<&str, i32> {
+fn parse_integer_char(input: &str) -> CaosParseResult<&str, i32> {
     map(delimited(char('\''), anychar, char('\'')), |c| c as i32)(input)
 }
 
 /// Parses a %XXXXX as an i32
-fn parse_integer_binary(input: &str) -> IResult<&str, i32> {
+fn parse_integer_binary(input: &str) -> CaosParseResult<&str, i32> {
     map_res(
         preceded(char('%'), take_while1(|c| c == '0' || c == '1')),
         |b| i32::from_str_radix(b, 2),
@@ -359,7 +358,7 @@ pub enum Integer {
     #[syntax]
     Perm,
     #[syntax]
-    Right,
+    Rght,
     #[syntax]
     Room { agent: Box<Agent> },
     #[syntax]
@@ -546,11 +545,11 @@ impl From<i32> for Integer {
     }
 }
 
-fn parse_variable(input: &str) -> nom::IResult<&str, Integer> {
+fn parse_variable(input: &str) -> CaosParseResult<&str, Integer> {
     map(Variable::parse_caos, |v| Integer::Variable(Box::new(v)))(input)
 }
 
-fn parse_literal(input: &str) -> nom::IResult<&str, Integer> {
+fn parse_literal(input: &str) -> CaosParseResult<&str, Integer> {
     map(LiteralInt::parse_caos, Integer::Raw)(input)
 }
 

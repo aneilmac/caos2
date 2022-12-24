@@ -1,4 +1,4 @@
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 
 use super::{Float, Integer};
 use nom::combinator::consumed;
@@ -10,7 +10,7 @@ pub enum Decimal {
 }
 
 impl CaosParsable for Decimal {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {

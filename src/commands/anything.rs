@@ -1,5 +1,5 @@
 use super::{Agent, ByteString, Decimal, SString, Variable};
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use nom::branch::alt;
 use nom::combinator::map;
 
@@ -13,7 +13,7 @@ pub enum Anything {
 }
 
 impl CaosParsable for Anything {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {

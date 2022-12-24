@@ -1,9 +1,9 @@
-use super::CaosParsable;
 use crate::commands::Command;
 use crate::parser::{caos_skippable0, caos_skippable1};
+use crate::parser::{CaosParsable, CaosParseResult};
 use nom::multi::separated_list0;
 
-pub fn parse_caos_script(input: &str) -> nom::IResult<&str, Vec<Command>> {
+pub fn parse_caos_script(input: &str) -> CaosParseResult<&str, Vec<Command>> {
     let (input, _) = caos_skippable0(input)?;
     separated_list0(caos_skippable1, Command::parse_caos)(input)
 }

@@ -1,6 +1,6 @@
 use super::LiteralInt;
 use crate::parser::caos_skippable1;
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use nom::bytes::complete::tag_no_case;
 use nom::character::complete::multispace0;
 use nom::combinator::map;
@@ -15,7 +15,7 @@ pub enum ByteString {
 }
 
 impl CaosParsable for ByteString {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {

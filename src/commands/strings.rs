@@ -1,5 +1,5 @@
 use super::{Anything, Decimal, Integer, Variable};
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::bytes::complete::tag;
 use nom::{
@@ -168,11 +168,11 @@ impl From<String> for SString {
     }
 }
 
-fn parse_variable(input: &str) -> nom::IResult<&str, SString> {
+fn parse_variable(input: &str) -> CaosParseResult<&str, SString> {
     map(Variable::parse_caos, |v| SString::Variable(Box::new(v)))(input)
 }
 
-fn parse_escaped(input: &str) -> nom::IResult<&str, String> {
+fn parse_escaped(input: &str) -> CaosParseResult<&str, String> {
     escaped_transform(
         none_of("\\\""),
         '\\',
@@ -184,7 +184,7 @@ fn parse_escaped(input: &str) -> nom::IResult<&str, String> {
     )(input)
 }
 
-fn parse_raw(input: &str) -> nom::IResult<&str, SString> {
+fn parse_raw(input: &str) -> CaosParseResult<&str, SString> {
     map(
         alt((
             delimited(tag("\""), parse_escaped, tag("\"")),

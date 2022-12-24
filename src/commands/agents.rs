@@ -1,5 +1,5 @@
 use super::{Integer, SString, Variable};
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
 
@@ -64,7 +64,7 @@ pub enum Agent {
     Hots,
 }
 
-fn parse_variable(input: &str) -> nom::IResult<&str, Agent> {
+fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
     map(Variable::parse_caos, Agent::Variable)(input)
 }
 

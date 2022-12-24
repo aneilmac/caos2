@@ -78,7 +78,7 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 ///   Recu{recursive: Box<Foo>}
 /// }
 ///
-/// fn parse_value(input: &str) -> IResult<&str, Foo> {
+/// fn parse_value(input: &str) -> CaosParseResult<&str, Foo> {
 ///   map_res(digit1, |s: &str| s.parse::<u32>())(input)
 /// }
 /// ```
@@ -106,11 +106,11 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
         let name = &input.ident;
         let q = quote_spanned!(input.span() =>
             impl crate::parser::CaosParsable for #name  {
-                fn parse_caos<'a>(input: &'a str) -> nom::IResult<&'a str, Self> {
-                    use nom::bytes::complete::tag_no_case;
+                fn parse_caos<'a>(input: &'a str) -> CaosParseResult<&'a str, Self> {
                     use crate::parser::caos_skippable1;
+                    use nom::bytes::complete::tag_no_case;
                     use nom::branch::alt;
-                    use nom::combinator::fail;
+                    use nom::combinator::{fail, cut};
 
                     #alt_statement(input)
                 }

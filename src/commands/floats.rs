@@ -1,5 +1,5 @@
 use super::{Agent, Integer, SString, Variable};
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
 use nom::number::complete::float;
@@ -131,15 +131,15 @@ impl From<f32> for Float {
     }
 }
 
-fn parse_literal(input: &str) -> nom::IResult<&str, Float> {
+fn parse_literal(input: &str) -> CaosParseResult<&str, Float> {
     map(float, |f| Float::Raw(F32Wrapper(f)))(input)
 }
 
-fn parse_variable(input: &str) -> nom::IResult<&str, Float> {
+fn parse_variable(input: &str) -> CaosParseResult<&str, Float> {
     map(Variable::parse_caos, |v| Float::Variable(Box::new(v)))(input)
 }
 
-fn parse_integer_cast(input: &str) -> nom::IResult<&str, Float> {
+fn parse_integer_cast(input: &str) -> CaosParseResult<&str, Float> {
     map(Integer::parse_caos, |i| Float::FromInteger(Box::new(i)))(input)
 }
 

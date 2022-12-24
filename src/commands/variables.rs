@@ -1,3 +1,4 @@
+use crate::parser::CaosParseResult;
 use caos_macros::{CaosParsable, CommandList};
 use nom::{
     bytes::complete::{tag_no_case, take},
@@ -32,19 +33,19 @@ pub enum Variable {
     P2,
 }
 
-fn parse_mvxx(input: &str) -> nom::IResult<&str, Variable> {
+fn parse_mvxx(input: &str) -> CaosParseResult<&str, Variable> {
     map(|i| parse_register("mv", i), Variable::Mvxx)(input)
 }
 
-fn parse_ovxx(input: &str) -> nom::IResult<&str, Variable> {
+fn parse_ovxx(input: &str) -> CaosParseResult<&str, Variable> {
     map(|i| parse_register("ov", i), Variable::Ovxx)(input)
 }
 
-fn parse_vaxx(input: &str) -> nom::IResult<&str, Variable> {
+fn parse_vaxx(input: &str) -> CaosParseResult<&str, Variable> {
     map(|i| parse_register("va", i), Variable::Vaxx)(input)
 }
 
-fn parse_register<'a, 'b>(prefix: &'b str, input: &'a str) -> nom::IResult<&'a str, u8> {
+fn parse_register<'a, 'b>(prefix: &'b str, input: &'a str) -> CaosParseResult<&'a str, u8> {
     map_res(preceded(tag_no_case(prefix), take(2u32)), |s: &str| {
         s.parse::<u8>()
     })(input)

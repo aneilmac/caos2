@@ -1,10 +1,10 @@
-use crate::parser::CaosParsable;
+use crate::parser::{CaosParsable, CaosParseResult};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
 
 impl CaosParsable for Label {
-    fn parse_caos(input: &str) -> nom::IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {

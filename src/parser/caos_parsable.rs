@@ -1,9 +1,9 @@
-use nom::IResult;
+use crate::parser::CaosParseResult;
 
 /// Represents a type which can be parsed from a string into
 ///  a CAOS expression.
 pub(crate) trait CaosParsable {
-    fn parse_caos(input: &str) -> IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized;
 }
@@ -12,7 +12,7 @@ impl<T> CaosParsable for Box<T>
 where
     T: CaosParsable,
 {
-    fn parse_caos(input: &str) -> IResult<&str, Self>
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
     {
@@ -47,19 +47,22 @@ mod test {
         MagicParse(u32),
     }
 
-    fn magic_parse(input: &str) -> IResult<&str, Foo> {
+    fn magic_parse(input: &str) -> CaosParseResult<&str, Foo> {
         map_res(digit1, |s: &str| s.parse::<u32>().map(Foo::MagicParse))(input)
     }
 
     #[test]
     fn test_failed_args() {
-        assert_eq!(
-            Foo::parse_caos("not: vald")
-                .finish()
-                .expect_err("Not a valid string")
-                .code,
-            ErrorKind::Fail
-        );
+        Foo::parse_caos("not: vald")
+            .finish()
+            .expect_err("Not a valid string");
+    }
+
+    #[test]
+    fn test_failed_fields() {
+        Foo::parse_caos("wrld fail")
+            .finish()
+            .expect_err("Not a valid string");
     }
 
     #[test]
