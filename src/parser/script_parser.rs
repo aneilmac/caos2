@@ -4,6 +4,7 @@ use crate::parser::CaosParsable;
 use nom::Finish;
 use nom::multi::separated_list0;
 use nom::error::VerboseError;
+use  nom::combinator::all_consuming;
 
 pub fn parse_caos_script(input: &str) -> Result<(&str, Vec<Command>), VerboseError<&str>> {
     let do_parse = |input| {
@@ -12,7 +13,7 @@ pub fn parse_caos_script(input: &str) -> Result<(&str, Vec<Command>), VerboseErr
         let (input, _) = caos_skippable0(input)?;
         Ok((input, v))
     };
-    do_parse(input).finish()
+    all_consuming(do_parse)(input).finish()
 }
 
 #[cfg(test)]

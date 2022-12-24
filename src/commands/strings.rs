@@ -119,12 +119,6 @@ pub enum SString {
         report: Box<Variable>,
     },
     #[syntax]
-    Mmsc {
-        x: Box<Integer>,
-        y: Box<Integer>,
-        track_name: Box<SString>,
-    },
-    #[syntax]
     Rmsc { x: Box<Integer>, y: Box<Integer> },
     #[syntax]
     Vois,

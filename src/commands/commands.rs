@@ -21,6 +21,8 @@ pub enum Command {
     Iscr,
     #[syntax]
     Rscr,
+    #[syntax]
+    Drft,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },
@@ -648,7 +650,7 @@ pub enum Command {
     #[syntax]
     Retn,
     #[syntax]
-    Subr,
+    Subr {label: Label},
     #[syntax]
     Untl { condition: Condition },
     // Genetics
@@ -925,6 +927,12 @@ pub enum Command {
     Mclr { x: Integer, y: Integer },
     #[syntax]
     Midi { midi_file: SString },
+    #[syntax]
+    Mmsc {
+        x: Box<Integer>,
+        y: Box<Integer>,
+        track_name: Box<SString>,
+    },
     #[syntax]
     Rclr { x: Integer, y: Integer },
     #[syntax]
