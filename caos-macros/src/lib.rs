@@ -16,7 +16,9 @@ use self::syntax_token::SyntaxToken;
 ///  `ALL_KEYWORDS : &[&str]`.
 ///
 /// This is a hardcoded list of all known keywords/commands that have been marked with the
-/// `#[syntax]` element in a type, and can be iterated against/tested in real-time.
+/// `#[syntax]` element in a type and *do not* have a custom parser associated.
+///
+/// These can be iterated against/tested in real-time.
 ///
 /// For example:
 ///
@@ -44,7 +46,13 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 
     if let syn::Data::Enum(ref content) = input.data {
         let marked_variants: Vec<_> = marked_variants(content).collect();
-        let keywords = marked_variants.iter().map(|(v, s)| syntax_keyword(v, s));
+        let keywords = marked_variants.iter().filter_map(|(v, s)| {
+            if s.custom_parser().is_none() {
+                Some(syntax_keyword(v, s))
+            } else {
+                None
+            }
+        });
         let name = &input.ident;
         let q = quote_spanned!(input.span() =>
             impl #name  {
@@ -92,7 +100,7 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 /// - `recu 19`
 /// - and so on...
 ///
-#[proc_macro_derive(CaosParsable, attributes(syntax))]
+#[proc_macro_derive(CaosParsable, attributes(syntax, can_cast))]
 pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 
@@ -130,7 +138,7 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
 }
 
 /// For each SyntaxToken, produces it's keyword, if none have been provided, we
-//. default to the lowercase version of the variant identifier.
+/// default to the lowercase version of the variant identifier.
 fn syntax_keyword(variant: &Variant, syntax: &SyntaxToken) -> String {
     syntax
         .name()

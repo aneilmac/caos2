@@ -7,26 +7,43 @@ use nom::number::complete::float;
 /// We want strict equality for our tokens, so we wrap the f32 up and compare it bitwise to ensure
 /// "true" equality for token parsing.
 #[derive(Debug, Clone)]
-pub struct F32Wrapper(f32);
+pub struct LiteralF32(f32);
 
-impl PartialEq for F32Wrapper {
+impl PartialEq for LiteralF32 {
     fn eq(&self, other: &Self) -> bool {
         self.0.to_bits() == other.0.to_bits()
     }
 }
 
-impl Eq for F32Wrapper {}
+impl Eq for LiteralF32 {}
+
+impl From<f32> for LiteralF32 {
+    fn from(f: f32) -> Self {
+        LiteralF32(f)
+    }
+}
+
+impl CaosParsable for LiteralF32 {
+    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
+    where
+        Self: Sized,
+    {
+        map(float, LiteralF32)(input)
+    }
+}
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[can_cast(Integer)]
 pub enum Float {
+    FromInteger(Box<Integer>),
     #[syntax(with_parser = "parse_literal")]
-    Raw(F32Wrapper),
+    Raw(LiteralF32),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
-    #[syntax(with_parser = "parse_integer_cast")] // Something is wrong with this - position sensitive?
-    FromInteger(Box<Integer>),
     #[syntax]
-    Disq { other: Box<Agent> },
+    Disq {
+        other: Box<Agent>,
+    },
     #[syntax]
     Fltx,
     #[syntax]
@@ -50,13 +67,17 @@ pub enum Float {
     #[syntax]
     Rnge,
     #[syntax]
-    Chem { chemical: Box<Integer> },
+    Chem {
+        chemical: Box<Integer>,
+    },
     #[syntax]
     Dftx,
     #[syntax]
     Dfty,
     #[syntax]
-    Driv { drive: Box<Integer> },
+    Driv {
+        drive: Box<Integer>,
+    },
     #[syntax]
     Loci {
         r#type: Box<Integer>,
@@ -86,13 +107,19 @@ pub enum Float {
         ca_index: Box<Integer>,
     },
     #[syntax]
-    Torx { room_id: Box<Integer> },
+    Torx {
+        room_id: Box<Integer>,
+    },
     #[syntax]
-    Tory { room_id: Box<Integer> },
+    Tory {
+        room_id: Box<Integer>,
+    },
     #[syntax]
     Accg,
     #[syntax]
-    Obst { direction: Box<Integer> },
+    Obst {
+        direction: Box<Integer>,
+    },
     #[syntax]
     Relx {
         first: Box<Agent>,
@@ -106,41 +133,67 @@ pub enum Float {
     #[syntax]
     Pace,
     #[syntax]
-    Acos { x: Box<Float> },
+    Acos {
+        x: Box<Float>,
+    },
     #[syntax]
-    Asin { x: Box<Float> },
+    Asin {
+        x: Box<Float>,
+    },
     #[syntax]
-    Atan { x: Box<Float> },
+    Atan {
+        x: Box<Float>,
+    },
     #[syntax(name = "cos_")]
-    Cos { theta: Box<Float> },
+    Cos {
+        theta: Box<Float>,
+    },
     #[syntax]
-    Itof { number_to_convert: Box<Integer> },
+    Itof {
+        number_to_convert: Box<Integer>,
+    },
     #[syntax(name = "sin_")]
-    Sin { theta: Box<Float> },
+    Sin {
+        theta: Box<Float>,
+    },
     #[syntax]
-    Sqrt { value: Box<Float> },
+    Sqrt {
+        value: Box<Float>,
+    },
     #[syntax]
-    Stof { value: Box<SString> },
+    Stof {
+        value: Box<SString>,
+    },
     #[syntax(name = "tan_")]
-    Tan { theta: Box<Float> },
+    Tan {
+        theta: Box<Float>,
+    },
 }
 
 impl From<f32> for Float {
     fn from(f: f32) -> Self {
-        Float::Raw(F32Wrapper(f))
+        Float::Raw(f.into())
+    }
+}
+
+impl From<LiteralF32> for Float {
+    fn from(f: LiteralF32) -> Self {
+        Float::Raw(f)
+    }
+}
+
+impl From<Integer> for Float {
+    fn from(i: Integer) -> Self {
+        Float::FromInteger(Box::new(i))
     }
 }
 
 fn parse_literal(input: &str) -> CaosParseResult<&str, Float> {
-    map(float, |f| Float::Raw(F32Wrapper(f)))(input)
+    map(LiteralF32::parse_caos, Float::Raw)(input)
 }
 
 fn parse_variable(input: &str) -> CaosParseResult<&str, Float> {
     map(Variable::parse_caos, |v| Float::Variable(Box::new(v)))(input)
-}
-
-fn parse_integer_cast(input: &str) -> CaosParseResult<&str, Float> {
-    map(Integer::parse_caos, |i| Float::FromInteger(Box::new(i)))(input)
 }
 
 #[cfg(test)]
@@ -152,7 +205,7 @@ mod tests {
     #[test]
     fn test_literal_float() {
         let (_, res) = Float::parse_caos("3.134").expect("Valid float");
-        assert_eq!(res, Float::Raw(F32Wrapper(3.134)));
+        assert_eq!(res, Float::Raw(LiteralF32(3.134)));
     }
 
     #[test]

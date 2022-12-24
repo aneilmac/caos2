@@ -1,9 +1,10 @@
 use crate::parser::CaosParseResult;
 use nom::{
+    branch::alt,
     bytes::complete::{tag_no_case, take_until},
     character::complete::{multispace0, multispace1},
     combinator::{map, opt, rest},
-    sequence::preceded, branch::alt,
+    sequence::preceded,
 };
 
 fn parse_comment(input: &str) -> CaosParseResult<&str, &str> {
@@ -30,9 +31,9 @@ pub(crate) fn caos_skippable1(input: &str) -> CaosParseResult<&str, ()> {
 
 #[cfg(test)]
 mod test {
+    use super::*;
     use crate::commands::Command;
     use crate::parser::CaosParsable;
-    use super::*;
 
     #[test]
     fn test_comment_skip() {
@@ -54,7 +55,6 @@ mod test {
         assert_eq!(c, Command::BrnDmpb);
     }
 
-    
     #[test]
     fn test_premature_eof() {
         let content: &str = r#"* Simple test"#;

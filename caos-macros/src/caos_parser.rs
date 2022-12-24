@@ -1,5 +1,4 @@
 use crate::{syntax_keyword, syntax_token::SyntaxToken};
-use proc_macro::Ident;
 use quote::{quote, quote_spanned};
 use syn::{spanned::Spanned, Variant};
 
@@ -9,7 +8,7 @@ pub fn parse_variant(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2::To
         let custom_parser: syn::Ident = custom_parser
             .parse()
             .expect("Must provide a valid function name");
-        quote!(#custom_parser)
+        quote_spanned!(variant.span()=>#custom_parser)
     } else {
         parse_variant_default(variant, syntax)
     }
@@ -17,7 +16,7 @@ pub fn parse_variant(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2::To
 
 /// Workaround for nom's `alt` method. `alt` has a limit of 21 tuple entries -- this function,
 /// splits a list of parser functions into groups of 20 which are nested on top of one another
-/// to avoid this limit.
+/// to avoid this limit. Order is not preserved.
 pub fn alt_chunk(
     inputs: impl Iterator<Item = proc_macro2::TokenStream>,
     chunk_size: usize,
@@ -57,8 +56,8 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
     let keywords = keywords
         .split_whitespace()
         .map(|k| {
-            std::iter::once(quote!(let (input, _) = tag_no_case(#k)(input)?;)).chain(
-                std::iter::once(quote!(let (input, _) = caos_skippable1(input)?;)),
+            std::iter::once(quote_spanned!(variant.span()=> let (input, _) = tag_no_case(#k)(input)?;)).chain(
+                std::iter::once(quote_spanned!(variant.span()=> let (input, _) = caos_skippable1(input)?;)),
             )
         })
         .flatten();

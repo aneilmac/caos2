@@ -64,9 +64,7 @@ pub enum Agent {
     Hots,
     // Ports
     #[syntax(name = "prt: frma")]
-    PrtFrma {
-        input_port: Box<Integer>,
-    },
+    PrtFrma { input_port: Box<Integer> },
 }
 
 fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
