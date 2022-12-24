@@ -11,9 +11,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let paths = std::fs::read_dir(path)?;
     for p in paths {
         let p = p?;
-        
+
         let path = p.path();
-        if path.extension().map(|e| e =="cos").unwrap_or(false) {
+        if path.extension().map(|e| e == "cos").unwrap_or(false) {
             print!("Reading file: {}", path.display());
             let file_content = std::fs::read_to_string(path)?;
             let res = scan_file(&file_content);

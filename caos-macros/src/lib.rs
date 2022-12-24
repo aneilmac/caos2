@@ -5,7 +5,7 @@ mod caos_parser;
 mod syntax_token;
 
 use proc_macro::TokenStream;
-use quote::{quote_spanned};
+use quote::quote_spanned;
 use syn::spanned::Spanned;
 use syn::{parse_macro_input, Variant};
 
@@ -103,13 +103,13 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
             let vname = v.ident.to_string();
             let parser = parse_variant(v, s);
             quote_spanned!(v.span()=> context(#vname, #parser))
-    });
+        });
 
         let alt_statement = alt_chunk(parse_combos, 20);
-        
+
         let name = &input.ident;
         let name_as_str = name.to_string();
-        
+
         let q = quote_spanned!(input.span() =>
             impl crate::parser::CaosParsable for #name  {
                 fn parse_caos<'a>(input: &'a str) -> CaosParseResult<&'a str, Self> {
@@ -118,7 +118,7 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
                     use nom::branch::alt;
                     use nom::combinator::{fail, cut};
                     use nom::error::context;
-                    
+
                     context(#name_as_str, #alt_statement)(input)
                 }
             }

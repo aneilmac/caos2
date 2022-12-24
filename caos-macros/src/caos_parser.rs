@@ -90,7 +90,10 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
 /// not the arguments is not a recoverable error.
 fn parse_field(field: &syn::Field) -> proc_macro2::TokenStream {
     let field_ident = &field.ident;
-    let field_ident_as_str = field_ident.as_ref().map(|i| i.to_string()).unwrap_or(String::new());
+    let field_ident_as_str = field_ident
+        .as_ref()
+        .map(|i| i.to_string())
+        .unwrap_or(String::new());
     let ty = &field.ty;
     quote_spanned!(field.span() =>
         let (input, _) = caos_skippable1(input)?;

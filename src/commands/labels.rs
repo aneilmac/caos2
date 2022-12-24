@@ -1,5 +1,5 @@
 use crate::parser::{CaosParsable, CaosParseResult};
-use nom::{character::{complete::{alpha1}}, bytes::complete::{is_a}, combinator::opt};
+use nom::{bytes::complete::is_a, character::complete::alpha1, combinator::opt};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
@@ -10,8 +10,13 @@ impl CaosParsable for Label {
         Self: Sized,
     {
         let (input, first_chars) = alpha1(input)?;
-        let (input, remainder) = opt(is_a("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"))(input)?;
-        Ok((input, Label(format!("{}{}", first_chars, remainder.unwrap_or("")))))
+        let (input, remainder) = opt(is_a(
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_",
+        ))(input)?;
+        Ok((
+            input,
+            Label(format!("{}{}", first_chars, remainder.unwrap_or(""))),
+        ))
     }
 }
 

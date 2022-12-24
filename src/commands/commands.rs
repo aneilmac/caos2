@@ -25,15 +25,25 @@ pub enum Command {
     Drft,
     // Agents
     #[syntax]
-    Anim { pose_list: ByteString },
+    Anim {
+        pose_list: ByteString,
+    },
     #[syntax]
-    Anms { anim_string: SString },
+    Anms {
+        anim_string: SString,
+    },
     #[syntax]
-    Attr { attributes: Integer },
+    Attr {
+        attributes: Integer,
+    },
     #[syntax]
-    Base { index: Integer },
+    Base {
+        index: Integer,
+    },
     #[syntax]
-    Bhvr { permissions: Integer },
+    Bhvr {
+        permissions: Integer,
+    },
     #[syntax]
     #[syntax]
     Enum {
@@ -53,20 +63,31 @@ pub enum Command {
         genus: Integer,
         species: Integer,
     },
-    Frat { framerate: Integer },
+    Frat {
+        framerate: Integer,
+    },
     #[syntax]
-    Gait { gait_number: Integer },
+    Gait {
+        gait_number: Integer,
+    },
     #[syntax]
     Gall {
         sprite_file: SString,
         first_image: Integer,
     },
     #[syntax]
-    Hand { name_for_the_hand: SString },
+    Hand {
+        name_for_the_hand: SString,
+    },
     #[syntax]
-    Kill { agent: Agent },
+    Kill {
+        agent: Agent,
+    },
     #[syntax(name = "mesg writ")]
-    MesgWrit { command: Agent, message_id: Integer },
+    MesgWrit {
+        command: Agent,
+        message_id: Integer,
+    },
     #[syntax(name = "mesg wrt+")]
     MesgWritPlus {
         agent: Agent,
@@ -76,7 +97,9 @@ pub enum Command {
         delay: Integer,
     },
     #[syntax]
-    Mira { on_off: Integer },
+    Mira {
+        on_off: Integer,
+    },
     #[syntax(name = "new: simp")]
     NewSimp {
         family: Integer,
@@ -94,11 +117,17 @@ pub enum Command {
     #[syntax]
     Over,
     #[syntax]
-    Paus { paused: Integer },
+    Paus {
+        paused: Integer,
+    },
     #[syntax]
-    Plne { plane: Integer },
+    Plne {
+        plane: Integer,
+    },
     #[syntax]
-    Pose { pose: Integer },
+    Pose {
+        pose: Integer,
+    },
     #[syntax]
     Puhl {
         pose: Integer,
@@ -112,7 +141,9 @@ pub enum Command {
         y: Integer,
     },
     #[syntax]
-    Rnge { distance: Float },
+    Rnge {
+        distance: Float,
+    },
     #[syntax]
     Rtar {
         family: Integer,
@@ -120,7 +151,9 @@ pub enum Command {
         species: Integer,
     },
     #[syntax]
-    Show { visibility: Integer },
+    Show {
+        visibility: Integer,
+    },
     #[syntax]
     Star {
         family: Integer,
@@ -128,7 +161,9 @@ pub enum Command {
         species: Integer,
     },
     #[syntax]
-    Tick { tick_rate: Integer },
+    Tick {
+        tick_rate: Integer,
+    },
     #[syntax]
     Tint {
         red_tint: Integer,
@@ -152,14 +187,18 @@ pub enum Command {
         dendrite_number: Integer,
     },
     #[syntax(name = "brn: dmpl")]
-    BrnDmpl { lobe_number: Integer },
+    BrnDmpl {
+        lobe_number: Integer,
+    },
     #[syntax(name = "brn: dmpn")]
     BrnDmpn {
         lobe_number: Integer,
         neuron_number: Integer,
     },
     #[syntax(name = "brn: dmpt")]
-    BrnDmpt { tract_number: Integer },
+    BrnDmpt {
+        tract_number: Integer,
+    },
     #[syntax(name = "brn: setd")]
     BrnSetd {
         tract_number: Integer,
@@ -211,7 +250,9 @@ pub enum Command {
         pan: Integer,
     },
     #[syntax]
-    Cmrt { pan: Integer },
+    Cmrt {
+        pan: Integer,
+    },
     #[syntax]
     Frsh,
     #[syntax]
@@ -285,7 +326,10 @@ pub enum Command {
         max_y: Float,
     },
     #[syntax]
-    Grpv { line_index: Integer, value: Float },
+    Grpv {
+        line_index: Integer,
+        value: Float,
+    },
     #[syntax(name = "new: comp")]
     NewComp {
         family: Integer,
@@ -297,9 +341,13 @@ pub enum Command {
         plane: Integer,
     },
     #[syntax]
-    Page { page: Integer },
+    Page {
+        page: Integer,
+    },
     #[syntax]
-    Part { part_id: Integer },
+    Part {
+        part_id: Integer,
+    },
     #[syntax(name = "pat: butt")]
     PatButt {
         part_id: Integer,
@@ -356,7 +404,9 @@ pub enum Command {
         num_values: Integer,
     },
     #[syntax(name = "pat: kill")]
-    PatKill { part_id: Integer },
+    PatKill {
+        part_id: Integer,
+    },
     #[syntax(name = "pat: text")]
     PatText {
         part_id: Integer,
@@ -369,16 +419,25 @@ pub enum Command {
         font_sprite: SString,
     },
     #[syntax]
-    Ptxt { text: SString },
+    Ptxt {
+        text: SString,
+    },
     // Creates
     #[syntax]
-    Ages { times: Integer },
+    Ages {
+        times: Integer,
+    },
     #[syntax]
     Appr,
     #[syntax]
-    Aslp { asleep: Integer },
+    Aslp {
+        asleep: Integer,
+    },
     #[syntax]
-    Body { set_number: Integer, layer: Integer },
+    Body {
+        set_number: Integer,
+        layer: Integer,
+    },
     #[syntax]
     Born,
     #[syntax]
@@ -389,23 +448,41 @@ pub enum Command {
     #[syntax]
     Dead,
     #[syntax]
-    Dirn { direction: Integer },
+    Dirn {
+        direction: Integer,
+    },
     #[syntax]
     Done,
     #[syntax]
-    Drea { dream: Integer },
+    Drea {
+        dream: Integer,
+    },
     #[syntax]
-    Driv { drive: Integer, adjustment: Float },
+    Driv {
+        drive: Integer,
+        adjustment: Float,
+    },
     #[syntax]
-    Face { set_number: Integer },
+    Face {
+        set_number: Integer,
+    },
     #[syntax]
-    Forf { creature_to_learn_about: Agent },
+    Forf {
+        creature_to_learn_about: Agent,
+    },
     #[syntax]
-    Hair { stage: Integer },
+    Hair {
+        stage: Integer,
+    },
     #[syntax]
-    Injr { organ: Integer, amount: Integer },
+    Injr {
+        organ: Integer,
+        amount: Integer,
+    },
     #[syntax]
-    Like { creature_state_opinion_about: Agent },
+    Like {
+        creature_state_opinion_about: Agent,
+    },
     #[syntax]
     Loci {
         r#type: Integer,
@@ -423,7 +500,10 @@ pub enum Command {
     #[syntax]
     Mate,
     #[syntax]
-    Mvft { x: Float, y: Float },
+    Mvft {
+        x: Float,
+        y: Float,
+    },
     #[syntax(name = "new: crea")]
     NewCrea {
         family: Integer,
@@ -441,15 +521,24 @@ pub enum Command {
         variant: Integer,
     },
     #[syntax]
-    Norn { creature: Agent },
+    Norn {
+        creature: Agent,
+    },
     #[syntax]
     Nude,
     #[syntax(name = "ordr shou")]
-    OrdrShou { speech: SString },
+    OrdrShou {
+        speech: SString,
+    },
     #[syntax(name = "ordr sign")]
-    OrdrSign { speech: SString },
+    OrdrSign {
+        speech: SString,
+    },
     #[syntax(name = "ordr writ")]
-    OrdrWrit { crature: Agent, speech: SString },
+    OrdrWrit {
+        crature: Agent,
+        speech: SString,
+    },
     #[syntax]
     Sayn,
     #[syntax]
@@ -459,11 +548,20 @@ pub enum Command {
         value: Float,
     },
     #[syntax(name = "stim shou")]
-    StimShou { stimulus: Integer, strength: Float },
+    StimShou {
+        stimulus: Integer,
+        strength: Float,
+    },
     #[syntax(name = "stim sign")]
-    StimSign { stimulus: Integer, strength: Float },
+    StimSign {
+        stimulus: Integer,
+        strength: Float,
+    },
     #[syntax(name = "stim tact")]
-    StimTact { stimulus: Integer, strength: Float },
+    StimTact {
+        stimulus: Integer,
+        strength: Float,
+    },
     #[syntax(name = "stim writ")]
     StimWrit {
         creature: Agent,
@@ -518,7 +616,9 @@ pub enum Command {
     #[syntax]
     Touc,
     #[syntax]
-    Uncs { unconscious: Integer },
+    Uncs {
+        unconscious: Integer,
+    },
     #[syntax(name = "urge shou")]
     UrgeShou {
         noun_stim: Float,
@@ -556,22 +656,34 @@ pub enum Command {
         layer: Integer,
     },
     #[syntax]
-    Zomb { zombie: Integer },
+    Zomb {
+        zombie: Integer,
+    },
     // Debug
     #[syntax]
-    Apro { search_text: SString },
+    Apro {
+        search_text: SString,
+    },
     #[syntax(name = "dbg: asrt")]
-    DbgAsrt { condition: Condition },
+    DbgAsrt {
+        condition: Condition,
+    },
     #[syntax(name = "dbg: cpro")]
     DbgCpro,
     #[syntax(name = "dbg: flsh")]
     DbgFlsh,
     #[syntax(name = "dbg: html")]
-    DbgHtml { sort_order: Integer },
+    DbgHtml {
+        sort_order: Integer,
+    },
     #[syntax(name = "dbg: outs")]
-    DbgOuts { value: SString },
+    DbgOuts {
+        value: SString,
+    },
     #[syntax(name = "dbg: outv")]
-    DbgOutv { value: Decimal },
+    DbgOutv {
+        value: Decimal,
+    },
     #[syntax(name = "dbg: paws")]
     DbgPaws,
     #[syntax(name = "dbg: play")]
@@ -581,15 +693,21 @@ pub enum Command {
     #[syntax(name = "dbg: prof")]
     DbgProf,
     #[syntax(name = "dbg: tack")]
-    DbgTack { follow: Agent },
+    DbgTack {
+        follow: Agent,
+    },
     #[syntax(name = "dbg: tock")]
     DbTock,
     #[syntax(name = "dbg: wtik")]
-    DbgWtik { new_world_tick: Integer },
+    DbgWtik {
+        new_world_tick: Integer,
+    },
     #[syntax]
     Help,
     #[syntax]
-    Mann { command: SString },
+    Mann {
+        command: SString,
+    },
     #[syntax]
     Memx,
     // Files
@@ -621,16 +739,26 @@ pub enum Command {
         append: Integer,
     },
     #[syntax]
-    Outs { text: SString },
+    Outs {
+        text: SString,
+    },
     #[syntax]
-    Outv { value: Decimal },
+    Outv {
+        value: Decimal,
+    },
     #[syntax]
-    Outx { text: SString },
+    Outx {
+        text: SString,
+    },
     // Flow
     #[syntax]
-    Doif { condition: Condition },
+    Doif {
+        condition: Condition,
+    },
     #[syntax]
-    Elif { condition: Condition },
+    Elif {
+        condition: Condition,
+    },
     #[syntax]
     Else,
     #[syntax]
@@ -638,21 +766,31 @@ pub enum Command {
     #[syntax]
     Ever,
     #[syntax]
-    Goto { destination: Label },
+    Goto {
+        destination: Label,
+    },
     #[syntax]
-    Gsub { destination: Label },
+    Gsub {
+        destination: Label,
+    },
     #[syntax]
     Loop,
     #[syntax]
     Repe,
     #[syntax]
-    Reps { count: Integer },
+    Reps {
+        count: Integer,
+    },
     #[syntax]
     Retn,
     #[syntax]
-    Subr {label: Label},
+    Subr {
+        label: Label,
+    },
     #[syntax]
-    Untl { condition: Condition },
+    Untl {
+        condition: Condition,
+    },
     // Genetics
     #[syntax(name = "gene clon")]
     GeneClon {
@@ -675,7 +813,10 @@ pub enum Command {
         dad_degree_of_mutation: Integer,
     },
     #[syntax(name = "gene kill")]
-    GeneKill { agent: Agent, slot: Integer },
+    GeneKill {
+        agent: Agent,
+        slot: Integer,
+    },
     #[syntax(name = "gene load")]
     GeneLoad {
         agent: Agent,
@@ -704,7 +845,10 @@ pub enum Command {
         new_value: SString,
     },
     #[syntax(name = "hist name")]
-    HistName { moniker: SString, new_name: SString },
+    HistName {
+        moniker: SString,
+        new_name: SString,
+    },
     #[syntax(name = "hist utxt")]
     HistUtxt {
         moniker: SString,
@@ -712,9 +856,13 @@ pub enum Command {
         new_value: SString,
     },
     #[syntax(name = "hist wipe")]
-    HistWipe { moniker: SString },
+    HistWipe {
+        moniker: SString,
+    },
     #[syntax]
-    Clac { message: Integer },
+    Clac {
+        message: Integer,
+    },
     #[syntax]
     Clik {
         message_1: Integer,
@@ -722,11 +870,17 @@ pub enum Command {
         message_3: Integer,
     },
     #[syntax]
-    Imsk { mask: Integer },
+    Imsk {
+        mask: Integer,
+    },
     #[syntax]
-    Mous { behaviour: Integer },
+    Mous {
+        behaviour: Integer,
+    },
     #[syntax]
-    Pure { value: Integer },
+    Pure {
+        value: Integer,
+    },
     #[syntax]
     Tran {
         transparency: Integer,
@@ -752,13 +906,21 @@ pub enum Command {
         ca_index: Integer,
     },
     #[syntax]
-    Delm { metaroom_id: Integer },
+    Delm {
+        metaroom_id: Integer,
+    },
     #[syntax]
-    Delr { room_id: Integer },
+    Delr {
+        room_id: Integer,
+    },
     #[syntax]
-    Dmap { debug_map: Integer },
+    Dmap {
+        debug_map: Integer,
+    },
     #[syntax]
-    Doca { no_of_updates: Integer },
+    Doca {
+        no_of_updates: Integer,
+    },
     #[syntax]
     Door {
         room_id1: Integer,
@@ -766,7 +928,10 @@ pub enum Command {
         permiability: Integer,
     },
     #[syntax]
-    Emit { ca_index: Integer, amount: Float },
+    Emit {
+        ca_index: Integer,
+        amount: Float,
+    },
     #[syntax]
     Link {
         room1: Integer,
@@ -774,11 +939,16 @@ pub enum Command {
         permiability: Integer,
     },
     #[syntax]
-    Mapd { width: Integer, height: Integer },
+    Mapd {
+        width: Integer,
+        height: Integer,
+    },
     #[syntax]
     Mapk,
     #[syntax]
-    Perm { permiability: Integer },
+    Perm {
+        permiability: Integer,
+    },
     #[syntax]
     Prop {
         room_id: Integer,
@@ -800,34 +970,67 @@ pub enum Command {
     },
     // Motion
     #[syntax]
-    Accg { acceleration: Float },
+    Accg {
+        acceleration: Float,
+    },
     #[syntax]
-    Aero { aerodynamics: Integer },
+    Aero {
+        aerodynamics: Integer,
+    },
     #[syntax]
-    Elas { elasticity: Integer },
+    Elas {
+        elasticity: Integer,
+    },
     #[syntax]
-    Flto { screen_x: Float, screen_y: Float },
+    Flto {
+        screen_x: Float,
+        screen_y: Float,
+    },
     #[syntax]
-    Frel { relative: Agent },
+    Frel {
+        relative: Agent,
+    },
     #[syntax]
-    Fric { friction: Integer },
+    Fric {
+        friction: Integer,
+    },
     #[syntax]
-    Mvby { delta_x: Float, delta_y: Float },
+    Mvby {
+        delta_x: Float,
+        delta_y: Float,
+    },
     #[syntax]
-    Mvsf { x: Float, y: Float },
+    Mvsf {
+        x: Float,
+        y: Float,
+    },
     #[syntax]
-    Mvto { x: Float, y: Float },
+    Mvto {
+        x: Float,
+        y: Float,
+    },
     #[syntax]
-    Velo { x_velocity: Float, y_velocity: Float },
+    Velo {
+        x_velocity: Float,
+        y_velocity: Float,
+    },
     // Ports
     #[syntax]
-    Econ { agent: Agent },
+    Econ {
+        agent: Agent,
+    },
     #[syntax(name = "prt: bang")]
-    PrtBang { bang_strength: Integer },
+    PrtBang {
+        bang_strength: Integer,
+    },
     #[syntax(name = "prt: frma")]
-    PrtFrma { input_port: Integer },
+    PrtFrma {
+        input_port: Integer,
+    },
     #[syntax(name = "prt: from")]
-    PrtFrom { input_port: Integer },
+    PrtFrom {
+        input_port: Integer,
+    },
     #[syntax(name = "prt: inew")]
     PrtInew {
         id: Integer,
@@ -840,7 +1043,9 @@ pub enum Command {
     #[syntax(name = "prt: itot")]
     PrtItot,
     #[syntax(name = "prt: izap")]
-    PrtIzap { id: Integer },
+    PrtIzap {
+        id: Integer,
+    },
     #[syntax(name = "prt: join")]
     PrtJoin {
         source_agent: Agent,
@@ -871,19 +1076,31 @@ pub enum Command {
     #[syntax(name = "prt: otot")]
     PrtOtot,
     #[syntax(name = "prt: ozap")]
-    PrtOzap { id: Integer },
+    PrtOzap {
+        id: Integer,
+    },
     #[syntax(name = "prt: send")]
-    PrtSend { id: Integer, data: Anything },
+    PrtSend {
+        id: Integer,
+        data: Anything,
+    },
     // Resources
     #[syntax(name = "pray grab")]
-    PrayGrab { force: Integer },
+    PrayGrab {
+        force: Integer,
+    },
     #[syntax(name = "pray refr")]
     PrayRefr,
     // Scripts
     #[syntax(name = "gids fmly")]
-    GidsFmly { family: Integer },
+    GidsFmly {
+        family: Integer,
+    },
     #[syntax(name = "gids gnus")]
-    GidsGnus { family: Integer, genus: Integer },
+    GidsGnus {
+        family: Integer,
+        genus: Integer,
+    },
     #[syntax(name = "gids root")]
     GidsRoot,
     #[syntax(name = "gids spcs")]
@@ -919,14 +1136,21 @@ pub enum Command {
     #[syntax]
     Unlk,
     #[syntax]
-    Wait { ticks: Integer },
+    Wait {
+        ticks: Integer,
+    },
     // Sounds
     #[syntax]
     Fade,
     #[syntax]
-    Mclr { x: Integer, y: Integer },
+    Mclr {
+        x: Integer,
+        y: Integer,
+    },
     #[syntax]
-    Midi { midi_file: SString },
+    Midi {
+        midi_file: SString,
+    },
     #[syntax]
     Mmsc {
         x: Box<Integer>,
@@ -934,7 +1158,10 @@ pub enum Command {
         track_name: Box<SString>,
     },
     #[syntax]
-    Rclr { x: Integer, y: Integer },
+    Rclr {
+        x: Integer,
+        y: Integer,
+    },
     #[syntax]
     Rmsc {
         x: Integer,
@@ -942,35 +1169,66 @@ pub enum Command {
         track_name: SString,
     },
     #[syntax]
-    Sezz { text: SString },
+    Sezz {
+        text: SString,
+    },
     #[syntax]
-    Sndc { sound_file: SString },
+    Sndc {
+        sound_file: SString,
+    },
     #[syntax]
-    Snde { sound_file: SString },
+    Snde {
+        sound_file: SString,
+    },
     #[syntax]
-    Sndl { sound_file: SString },
+    Sndl {
+        sound_file: SString,
+    },
     #[syntax]
-    Sndq { sound_file: SString, delay: Integer },
+    Sndq {
+        sound_file: SString,
+        delay: Integer,
+    },
     #[syntax]
     Stpc,
     #[syntax]
-    Strk { latency: Integer, track: SString },
+    Strk {
+        latency: Integer,
+        track: SString,
+    },
     #[syntax]
-    Voic { voice_name: SString },
+    Voic {
+        voice_name: SString,
+    },
     #[syntax]
-    Volm { volume: Integer },
+    Volm {
+        volume: Integer,
+    },
     // Date
     #[syntax]
-    Wpau { paused: Integer },
+    Wpau {
+        paused: Integer,
+    },
     // Variables
     #[syntax]
-    Absv { var: Variable },
+    Absv {
+        var: Variable,
+    },
     #[syntax]
-    Adds { var: Variable, append: SString },
+    Adds {
+        var: Variable,
+        append: SString,
+    },
     #[syntax]
-    Addv { var: Variable, sum: Decimal },
+    Addv {
+        var: Variable,
+        sum: Decimal,
+    },
     #[syntax]
-    Andv { var: Variable, value: Integer },
+    Andv {
+        var: Variable,
+        value: Integer,
+    },
     #[syntax]
     Char {
         string: Variable,
@@ -978,29 +1236,59 @@ pub enum Command {
         character: Integer,
     },
     #[syntax]
-    Delg { variable_name: SString },
+    Delg {
+        variable_name: SString,
+    },
     #[syntax]
-    Divv { var: Variable, div: Decimal },
+    Divv {
+        var: Variable,
+        div: Decimal,
+    },
     #[syntax]
-    Modv { var: Variable, r#mod: Integer },
+    Modv {
+        var: Variable,
+        r#mod: Integer,
+    },
     #[syntax]
-    Mulv { var: Variable, mul: Decimal },
+    Mulv {
+        var: Variable,
+        mul: Decimal,
+    },
     #[syntax]
-    Negv { var: Variable },
+    Negv {
+        var: Variable,
+    },
     #[syntax]
-    Orrv { var: Variable, value: Integer },
+    Orrv {
+        var: Variable,
+        value: Integer,
+    },
     #[syntax]
     Reaf,
     #[syntax]
-    Seta { var: Variable, value: Agent },
+    Seta {
+        var: Variable,
+        value: Agent,
+    },
     #[syntax]
-    Sets { var: Variable, value: SString },
+    Sets {
+        var: Variable,
+        value: SString,
+    },
     #[syntax]
-    Setv { var: Variable, value: Decimal },
+    Setv {
+        var: Variable,
+        value: Decimal,
+    },
     #[syntax]
-    Subv { var: Variable, sub: Decimal },
+    Subv {
+        var: Variable,
+        sub: Decimal,
+    },
     #[syntax]
-    Targ { agent: Agent },
+    Targ {
+        agent: Agent,
+    },
     // Vehicles
     #[syntax]
     Cabn {
@@ -1010,11 +1298,17 @@ pub enum Command {
         bottom: Integer,
     },
     #[syntax]
-    Cabp { plane: Integer },
+    Cabp {
+        plane: Integer,
+    },
     #[syntax]
-    Cabv { cabin_room_id: Integer },
+    Cabv {
+        cabin_room_id: Integer,
+    },
     #[syntax]
-    Cabw { cabin_capacity: Integer },
+    Cabw {
+        cabin_capacity: Integer,
+    },
     #[syntax]
     Dpas {
         family: Integer,
@@ -1045,7 +1339,10 @@ pub enum Command {
         plane: Integer,
     },
     #[syntax]
-    Rpas { vehicle: Agent, passenger: Agent },
+    Rpas {
+        vehicle: Agent,
+        passenger: Agent,
+    },
     #[syntax]
     Spas {
         vehicle: Agent,
@@ -1053,11 +1350,17 @@ pub enum Command {
     },
     // World
     #[syntax]
-    Delw { world_name: SString },
+    Delw {
+        world_name: SString,
+    },
     #[syntax]
-    Load { world_name: SString },
+    Load {
+        world_name: SString,
+    },
     #[syntax]
-    Pswd { world_name: SString },
+    Pswd {
+        world_name: SString,
+    },
     #[syntax]
     Quit,
     #[syntax]
@@ -1065,9 +1368,13 @@ pub enum Command {
     #[syntax]
     Save,
     #[syntax]
-    Tntw { index: Integer },
+    Tntw {
+        index: Integer,
+    },
     #[syntax]
-    Wrld { world_name: SString },
+    Wrld {
+        world_name: SString,
+    },
     #[syntax]
     Wtnt {
         index: Integer,
