@@ -1,4 +1,4 @@
-use super::{Agent, Integer, SString, Variable};
+use super::{Agent, IntArg, FloatArg, SString};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
@@ -33,13 +33,9 @@ impl CaosParsable for LiteralF32 {
 }
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
-#[can_cast(Integer)]
 pub enum Float {
-    FromInteger(Box<Integer>),
     #[syntax(with_parser = "parse_literal")]
     Raw(LiteralF32),
-    #[syntax(with_parser = "parse_variable")]
-    Variable(Box<Variable>),
     #[syntax]
     Disq {
         other: Box<Agent>,
@@ -68,7 +64,7 @@ pub enum Float {
     Rnge,
     #[syntax]
     Chem {
-        chemical: Box<Integer>,
+        chemical: Box<IntArg>,
     },
     #[syntax]
     Dftx,
@@ -76,20 +72,19 @@ pub enum Float {
     Dfty,
     #[syntax]
     Driv {
-        drive: Box<Integer>,
+        drive: Box<IntArg>,
     },
     #[syntax]
     Loci {
-        r#type: Box<Integer>,
-        organ: Box<Integer>,
-        tissue: Box<Integer>,
-        id: Box<Integer>,
-        new_value: Box<Float>,
+        r#type: Box<IntArg>,
+        organ: Box<IntArg>,
+        tissue: Box<IntArg>,
+        id: Box<IntArg>,
     },
     #[syntax]
     Orgf {
-        organ_number: Box<Integer>,
-        data: Box<Integer>,
+        organ_number: Box<IntArg>,
+        data: Box<IntArg>,
     },
     #[syntax]
     Uftx,
@@ -103,22 +98,22 @@ pub enum Float {
     Movy,
     #[syntax]
     Prop {
-        room_id: Box<Integer>,
-        ca_index: Box<Integer>,
+        room_id: Box<IntArg>,
+        ca_index: Box<IntArg>,
     },
     #[syntax]
     Torx {
-        room_id: Box<Integer>,
+        room_id: Box<IntArg>,
     },
     #[syntax]
     Tory {
-        room_id: Box<Integer>,
+        room_id: Box<IntArg>,
     },
     #[syntax]
     Accg,
     #[syntax]
     Obst {
-        direction: Box<Integer>,
+        direction: Box<IntArg>,
     },
     #[syntax]
     Relx {
@@ -134,31 +129,31 @@ pub enum Float {
     Pace,
     #[syntax]
     Acos {
-        x: Box<Float>,
+        x: Box<FloatArg>,
     },
     #[syntax]
     Asin {
-        x: Box<Float>,
+        x: Box<FloatArg>,
     },
     #[syntax]
     Atan {
-        x: Box<Float>,
+        x: Box<FloatArg>,
     },
     #[syntax(name = "cos_")]
     Cos {
-        theta: Box<Float>,
+        theta: Box<FloatArg>,
     },
     #[syntax]
     Itof {
-        number_to_convert: Box<Integer>,
+        number_to_convert: Box<IntArg>,
     },
     #[syntax(name = "sin_")]
     Sin {
-        theta: Box<Float>,
+        theta: Box<FloatArg>,
     },
     #[syntax]
     Sqrt {
-        value: Box<Float>,
+        value: Box<FloatArg>,
     },
     #[syntax]
     Stof {
@@ -166,7 +161,7 @@ pub enum Float {
     },
     #[syntax(name = "tan_")]
     Tan {
-        theta: Box<Float>,
+        theta: Box<FloatArg>,
     },
 }
 
@@ -182,50 +177,17 @@ impl From<LiteralF32> for Float {
     }
 }
 
-impl From<Integer> for Float {
-    fn from(i: Integer) -> Self {
-        Float::FromInteger(Box::new(i))
-    }
-}
-
 fn parse_literal(input: &str) -> CaosParseResult<&str, Float> {
     map(LiteralF32::parse_caos, Float::Raw)(input)
 }
 
-fn parse_variable(input: &str) -> CaosParseResult<&str, Float> {
-    map(Variable::parse_caos, |v| Float::Variable(Box::new(v)))(input)
-}
-
 #[cfg(test)]
 mod tests {
-    use crate::commands::Command;
-
     use super::*;
 
     #[test]
     fn test_literal_float() {
         let (_, res) = Float::parse_caos("3.134").expect("Valid float");
         assert_eq!(res, Float::Raw(LiteralF32(3.134)));
-    }
-
-    #[test]
-    fn test_variable_float() {
-        let (_, res) = Float::parse_caos("velx").expect("Valid float");
-        assert_eq!(res, Float::Variable(Box::new(Variable::Velx)));
-    }
-
-    #[test]
-    fn test_integer_cast() {
-        let (_, res) = Command::parse_caos("mvto rand 217 2787 1840").expect("Valid command");
-        assert_eq!(
-            res,
-            Command::Mvto {
-                y: 1840f32.into(),
-                x: Float::FromInteger(Box::new(Integer::Rand {
-                    value1: Box::new(217.into()),
-                    value2: Box::new(2787.into())
-                }))
-            }
-        );
     }
 }

@@ -6,7 +6,7 @@ use nom::{
     sequence::preceded,
 };
 
-use super::{Agent, Integer, SString};
+use super::{Agent, IntArg, SString};
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Variable {
@@ -17,7 +17,7 @@ pub enum Variable {
     #[syntax]
     Avar {
         agent: Box<Agent>,
-        index: Box<Integer>,
+        index: Box<IntArg>,
     },
     #[syntax]
     Game { variable_name: Box<SString> },

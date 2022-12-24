@@ -18,7 +18,7 @@ pub fn parse_caos_script(input: &str) -> Result<(&str, Vec<Command>), VerboseErr
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::{Anything, Condition, ConditionType, Decimal, Float, Integer, Variable};
+    use crate::commands::{Anything, Condition, ConditionType, Decimal, Float, Integer, Variable, IntArg, FloatArg};
 
     use super::*;
 
@@ -59,38 +59,38 @@ repe
             vec![
                 Command::Inst,
                 Command::NewSimp {
-                    family: 1.into(),
-                    genus: 1.into(),
-                    species: 114.into(),
+                    family: IntArg::from_primary(1.into()),
+                    genus: IntArg::from_primary(1.into()),
+                    species: IntArg::from_primary(114.into()),
                     sprite_file: String::from("blnk").into(),
-                    image_count: 1.into(),
-                    first_image: 0.into(),
-                    plane: 0.into()
+                    image_count: IntArg::from_primary(1.into()),
+                    first_image: IntArg::from_primary(0.into()),
+                    plane: IntArg::from_primary(0.into())
                 },
                 Command::Tick {
-                    tick_rate: 9.into()
+                    tick_rate: IntArg::from_primary(9.into())
                 },
-                Command::Reps { count: 100.into() },
+                Command::Reps { count: IntArg::from_primary(100.into()) },
                 Command::NewSimp {
-                    family: 2.into(),
-                    genus: 10.into(),
-                    species: 37.into(),
+                    family: IntArg::from_primary(2.into()),
+                    genus: IntArg::from_primary(10.into()),
+                    species: IntArg::from_primary(37.into()),
                     sprite_file: String::from("graz").into(),
-                    image_count: 2.into(),
-                    first_image: 218.into(),
-                    plane: 3000.into()
+                    image_count: IntArg::from_primary(2.into()),
+                    first_image: IntArg::from_primary(218.into()),
+                    plane: IntArg::from_primary(3000.into())
                 },
                 Command::Attr {
-                    attributes: 192.into()
+                    attributes: IntArg::from_primary(192.into())
                 },
                 Command::Elas {
-                    elasticity: 0.into()
+                    elasticity: IntArg::from_primary(0.into())
                 },
                 Command::Setv {
                     var: Variable::Vaxx(0),
                     value: Decimal::Integer(Integer::Rand {
-                        value1: Box::new(0.into()),
-                        value2: Box::new(2.into())
+                        value1: Box::new(IntArg::from_primary(0.into())),
+                        value2: Box::new(IntArg::from_primary(2.into()))
                     })
                 },
                 Command::Doif {
@@ -101,7 +101,7 @@ repe
                     }
                 },
                 Command::Accg {
-                    acceleration: 0.1f32.into()
+                    acceleration: FloatArg::from_primary(0.1f32.into())
                 },
                 Command::Elif {
                     condition: Condition::Simple {
@@ -111,25 +111,25 @@ repe
                     }
                 },
                 Command::Accg {
-                    acceleration: 0.3f32.into()
+                    acceleration:  FloatArg::from_primary(0.3f32.into())
                 },
                 Command::Else,
                 Command::Accg {
-                    acceleration: 0.4f32.into()
+                    acceleration:  FloatArg::from_primary(0.4f32.into())
                 },
                 Command::Endi,
                 Command::Mvto {
-                    x: Float::FromInteger(Box::new(Integer::Rand {
-                        value1: Box::new(217.into()),
-                        value2: Box::new(2787.into())
-                    })),
-                    y: 1840f32.into(),
+                    x: FloatArg::from_castable(Integer::Rand {
+                        value1: Box::new(IntArg::from_primary(217.into())),
+                        value2: Box::new(IntArg::from_primary(2787.into()))
+                    }),
+                    y:  FloatArg::from_primary(1840f32.into()),
                 },
                 Command::Perm {
-                    permiability: Integer::Rand {
-                        value1: Box::new(0.into()),
-                        value2: Box::new(70.into())
-                    }
+                    permiability: IntArg::from_primary(Integer::Rand {
+                        value1: Box::new(IntArg::from_primary(0.into())),
+                        value2: Box::new(IntArg::from_primary(70.into()))
+                    })
                 },
                 Command::Repe,
             ]

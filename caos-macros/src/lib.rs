@@ -100,7 +100,7 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 /// - `recu 19`
 /// - and so on...
 ///
-#[proc_macro_derive(CaosParsable, attributes(syntax, can_cast))]
+#[proc_macro_derive(CaosParsable, attributes(syntax))]
 pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 

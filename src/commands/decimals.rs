@@ -1,10 +1,11 @@
 use crate::parser::{CaosParsable, CaosParseResult};
 
-use super::{Float, Integer, LiteralF32, LiteralInt};
-use nom::combinator::consumed;
+use super::{Float, Integer, LiteralF32, LiteralInt, Variable};
+use nom::{combinator::{consumed, map}, branch::alt};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Decimal {
+    Variable(Variable),
     Integer(Integer),
     Float(Float),
 }
@@ -31,17 +32,31 @@ impl CaosParsable for Decimal {
                 }
             }
             (Err(..), Err(..)) => {
-                // Otherwise, as a non-numeric literal, capture as a float and unpack as needed.
-                let (input, f) = Float::parse_caos(input)?;
-                Ok((
-                    input,
-                    match f {
-                        Float::FromInteger(i) => Decimal::Integer(*i),
-                        h @ _ => Decimal::Float(h),
-                    },
-                ))
+                // TODO This might not be good for variable types
+                alt((
+                    map(Variable::parse_caos, Decimal::Variable),
+                    map(Float::parse_caos, Decimal::Float), 
+                    map(Integer::parse_caos, Decimal::Integer)))(input)
             }
         }
+    }
+}
+
+impl From<Integer> for Decimal {
+    fn from(i: Integer) -> Self {
+        Self::Integer(i)
+    }
+}
+
+impl From<Float> for Decimal {
+    fn from(f: Float) -> Self {
+        Self::Float(f)
+    }
+}
+
+impl From<Variable> for Decimal {
+    fn from(v: Variable) -> Self {
+        Self::Variable(v)
     }
 }
 

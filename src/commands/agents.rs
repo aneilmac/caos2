@@ -1,4 +1,4 @@
-use super::{Integer, SString, Variable};
+use super::{IntArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::combinator::map;
@@ -20,9 +20,9 @@ pub enum Agent {
     #[syntax]
     Ncls {
         previous: Box<Agent>,
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
     #[syntax]
     Null,
@@ -31,9 +31,9 @@ pub enum Agent {
     #[syntax]
     Pcls {
         next: Box<Agent>,
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
     #[syntax]
     Pntr,
@@ -42,7 +42,7 @@ pub enum Agent {
     #[syntax]
     Twin {
         original: Box<Agent>,
-        agent_null: Box<Integer>,
+        agent_null: Box<IntArg>,
     },
     #[syntax(name = "_it_")]
     It,
@@ -53,7 +53,7 @@ pub enum Agent {
     #[syntax]
     Norn,
     #[syntax]
-    Agnt { unique_id: Box<Integer> },
+    Agnt { unique_id: Box<IntArg> },
     #[syntax]
     Tack,
     #[syntax]
@@ -64,7 +64,7 @@ pub enum Agent {
     Hots,
     // Ports
     #[syntax(name = "prt: frma")]
-    PrtFrma { input_port: Box<Integer> },
+    PrtFrma { input_port: Box<IntArg> },
 }
 
 fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
@@ -73,6 +73,7 @@ fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
 
 #[cfg(test)]
 mod test {
+    use crate::commands::Integer;
     use super::*;
 
     #[test]
@@ -88,7 +89,7 @@ mod test {
             agent,
             Agent::Twin {
                 original: Box::new(Agent::It),
-                agent_null: Box::new(2.into())
+                agent_null: Box::new(IntArg::from(Integer::from(2)))
             }
         );
     }

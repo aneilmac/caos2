@@ -1,4 +1,4 @@
-use super::{Agent, Anything, ByteString, Float, SString, Variable};
+use super::{Agent, Anything, ByteString, IntArg, FloatArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::branch::alt;
@@ -50,13 +50,9 @@ fn parse_integer_binary(input: &str) -> CaosParseResult<&str, i32> {
 }
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
-#[can_cast(Integer)]
 pub enum Integer {
-    FromFloat(Box<Float>),
     #[syntax(with_parser = "parse_literal")]
     Raw(LiteralInt),
-    #[syntax(with_parser = "parse_variable")]
-    Variable(Box<Variable>),
     #[syntax]
     Attr,
     #[syntax]
@@ -65,15 +61,15 @@ pub enum Integer {
     Bhvr,
     #[syntax]
     Cati {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
     #[syntax]
     Clac,
     #[syntax]
     Clik {
-        which_value: Box<Integer>,
+        which_value: Box<IntArg>,
     },
     #[syntax]
     Fmly,
@@ -95,13 +91,13 @@ pub enum Integer {
     Pose,
     #[syntax]
     Puhl {
-        pose: Box<Integer>,
-        x_or_y: Box<Integer>,
+        pose: Box<IntArg>,
+        x_or_y: Box<IntArg>,
     },
     #[syntax]
     Pupt {
-        pose: Box<Integer>,
-        x_or_y: Box<Integer>,
+        pose: Box<IntArg>,
+        x_or_y: Box<IntArg>,
     },
     #[syntax]
     Seee {
@@ -114,9 +110,9 @@ pub enum Integer {
     Tick,
     #[syntax]
     Totl {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
     #[syntax]
     Touc {
@@ -125,7 +121,7 @@ pub enum Integer {
     },
     #[syntax]
     Visi {
-        check_all_cameras: Box<Integer>,
+        check_all_cameras: Box<IntArg>,
     },
     #[syntax]
     Wdth,
@@ -167,7 +163,7 @@ pub enum Integer {
     Attn,
     #[syntax]
     Body {
-        body_part: Box<Integer>,
+        body_part: Box<IntArg>,
     },
     #[syntax]
     Bvar,
@@ -197,8 +193,8 @@ pub enum Integer {
     Ins,
     #[syntax]
     Orgi {
-        organ_number: Box<Integer>,
-        data: Box<Integer>,
+        organ_number: Box<IntArg>,
+        data: Box<IntArg>,
     },
     #[syntax]
     Orgn,
@@ -220,7 +216,7 @@ pub enum Integer {
     Cods,
     #[syntax]
     Heap {
-        index: Box<Integer>,
+        index: Box<IntArg>,
     },
     #[syntax]
     Paws,
@@ -233,7 +229,7 @@ pub enum Integer {
     #[syntax(name = "hist cage")]
     HistCage {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist coun")]
     HistCoun {
@@ -246,14 +242,14 @@ pub enum Integer {
     #[syntax(name = "hist find")]
     HistFind {
         moniker: Box<SString>,
-        event_type: Box<Integer>,
-        from_index: Box<Integer>,
+        event_type: Box<IntArg>,
+        from_index: Box<IntArg>,
     },
     #[syntax(name = "hist finr")]
     HistFinr {
         moniker: Box<SString>,
-        event_type: Box<Integer>,
-        from_index: Box<Integer>,
+        event_type: Box<IntArg>,
+        from_index: Box<IntArg>,
     },
     #[syntax(name = "hist gend")]
     HistGend {
@@ -270,17 +266,17 @@ pub enum Integer {
     #[syntax(name = "hist rtim")]
     HistPrev {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist tage")]
     HistTage {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist type")]
     HistType {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist vari")]
     HistVari {
@@ -289,12 +285,12 @@ pub enum Integer {
     #[syntax(name = "hist wtik")]
     HistWnam {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist wuid")]
     HistWuid {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax]
     Ooww {
@@ -302,7 +298,7 @@ pub enum Integer {
     },
     #[syntax]
     Keyd {
-        key_code: Box<Integer>,
+        key_code: Box<IntArg>,
     },
     #[syntax]
     Mopx,
@@ -312,62 +308,62 @@ pub enum Integer {
     Pure,
     #[syntax]
     Addm {
-        x: Box<Integer>,
-        y: Box<Integer>,
-        width: Box<Integer>,
-        height: Box<Integer>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        width: Box<IntArg>,
+        height: Box<IntArg>,
         background: Box<SString>,
     },
     #[syntax]
     Addr {
-        metaroom_id: Box<Integer>,
-        x_left: Box<Integer>,
-        y_right: Box<Integer>,
-        y_left_ceiling: Box<Integer>,
-        y_right_ceiling: Box<Integer>,
-        y_left_floor: Box<Integer>,
-        y_right_floor: Box<Integer>,
+        metaroom_id: Box<IntArg>,
+        x_left: Box<IntArg>,
+        y_right: Box<IntArg>,
+        y_left_ceiling: Box<IntArg>,
+        y_right_ceiling: Box<IntArg>,
+        y_left_floor: Box<IntArg>,
+        y_right_floor: Box<IntArg>,
     },
     #[syntax]
     Door {
-        room_id1: Box<Integer>,
-        room_id2: Box<Integer>,
+        room_id1: Box<IntArg>,
+        room_id2: Box<IntArg>,
     },
     #[syntax]
     Down,
     #[syntax]
     Gmap {
-        x: Box<Float>,
-        y: Box<Float>,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
     #[syntax]
     Grap {
-        x: Box<Float>,
-        y: Box<Float>,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
     #[syntax]
     Grid {
         agent: Box<Agent>,
-        direction: Box<Integer>,
+        direction: Box<IntArg>,
     },
     #[syntax]
     Hirp {
-        room_id: Box<Integer>,
-        ca_index: Box<Integer>,
-        directions: Box<Integer>,
+        room_id: Box<IntArg>,
+        ca_index: Box<IntArg>,
+        directions: Box<IntArg>,
     },
     #[syntax]
     Left,
     #[syntax]
     Link {
-        room1: Box<Integer>,
-        room2: Box<Integer>,
+        room1: Box<IntArg>,
+        room2: Box<IntArg>,
     },
     #[syntax]
     Lorp {
-        room_id: Box<Integer>,
-        ca_index: Box<Integer>,
-        directions: Box<Integer>,
+        room_id: Box<IntArg>,
+        ca_index: Box<IntArg>,
+        directions: Box<IntArg>,
     },
     #[syntax]
     Maph,
@@ -385,7 +381,7 @@ pub enum Integer {
     },
     #[syntax]
     Rtyp {
-        room_id: Box<Integer>,
+        room_id: Box<IntArg>,
     },
     #[syntax(name = "_up_")]
     Up,
@@ -402,18 +398,18 @@ pub enum Integer {
     Movs,
     #[syntax]
     Tmvb {
-        delta_x: Box<Float>,
-        delta_y: Box<Float>,
+        delta_x: Box<FloatArg>,
+        delta_y: Box<FloatArg>,
     },
     #[syntax]
     Tmvf {
-        x: Box<Float>,
-        y: Box<Float>,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
     #[syntax]
     Tmvt {
-        x: Box<Float>,
-        y: Box<Float>,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
     #[syntax]
     Wall,
@@ -422,7 +418,7 @@ pub enum Integer {
     PrayAgti {
         resource_name: Box<SString>,
         integer_tag: Box<SString>,
-        default_value: Box<Integer>,
+        default_value: Box<IntArg>,
     },
     #[syntax(name = "pray coun")]
     PrayCoun {
@@ -431,7 +427,7 @@ pub enum Integer {
     #[syntax(name = "pray deps")]
     PrayDeps {
         resource_name: Box<SString>,
-        dp_install: Box<Integer>,
+        dp_install: Box<IntArg>,
     },
     #[syntax(name = "pray expo")]
     PrayExpo {
@@ -440,26 +436,26 @@ pub enum Integer {
     #[syntax(name = "pray file")]
     PrayFile {
         resource_name: Box<SString>,
-        resource_type: Box<Integer>,
-        do_install: Box<Integer>,
+        resource_type: Box<IntArg>,
+        do_install: Box<IntArg>,
     },
     #[syntax(name = "pray impo")]
     PrayImpo {
         moniker: Box<SString>,
-        actually_do_it: Box<Integer>,
-        keep_file: Box<Integer>,
+        actually_do_it: Box<IntArg>,
+        keep_file: Box<IntArg>,
     },
     #[syntax(name = "pray injt")]
     PrayInjt {
         resource_name: Box<SString>,
-        do_install: Box<Integer>,
+        do_install: Box<IntArg>,
         report_var: Box<Variable>,
     },
     #[syntax(name = "pray make")]
     PrayMake {
-        which_journal_spot: Box<Integer>,
+        which_journal_spot: Box<IntArg>,
         journal_name: Box<SString>,
-        which_pray_spot: Box<Integer>,
+        which_pray_spot: Box<IntArg>,
         pray_name: Box<SString>,
         report_destination: Box<Variable>,
     },
@@ -474,16 +470,16 @@ pub enum Integer {
     // Scripts
     #[syntax]
     Sorq {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
-        event: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        event: Box<IntArg>,
     },
     // Sounds
     #[syntax]
     Mute {
-        and_mask: Box<Integer>,
-        eor_mask: Box<Integer>,
+        and_mask: Box<IntArg>,
+        eor_mask: Box<IntArg>,
     },
     // Time
     #[syntax]
@@ -494,19 +490,19 @@ pub enum Integer {
     Etik,
     #[syntax(name = "hist date")]
     HistDate {
-        world_tick: Box<Integer>,
+        world_tick: Box<IntArg>,
     },
     #[syntax(name = "hist sean")]
     HistSean {
-        world_tick: Box<Integer>,
+        world_tick: Box<IntArg>,
     },
     #[syntax(name = "hist time")]
     HistTime {
-        world_tick: Box<Integer>,
+        world_tick: Box<IntArg>,
     },
     #[syntax(name = "hist year")]
     HistYear {
-        world_tick: Box<Integer>,
+        world_tick: Box<IntArg>,
     },
     #[syntax]
     Mont,
@@ -518,8 +514,8 @@ pub enum Integer {
     Rtim,
     #[syntax]
     Scol {
-        and_mask: Box<Integer>,
-        eor_mask: Box<Integer>,
+        and_mask: Box<IntArg>,
+        eor_mask: Box<IntArg>,
         up_speeds: Box<ByteString>,
         down_speeds: Box<ByteString>,
     },
@@ -529,8 +525,8 @@ pub enum Integer {
     Time,
     #[syntax]
     Wolf {
-        kanga_mask: Box<Integer>,
-        eeyore_mask: Box<Integer>,
+        kanga_mask: Box<IntArg>,
+        eeyore_mask: Box<IntArg>,
     },
     #[syntax]
     Wpau,
@@ -542,16 +538,16 @@ pub enum Integer {
     #[syntax]
     Char {
         string: Box<SString>,
-        index: Box<Integer>,
+        index: Box<IntArg>,
     },
     #[syntax]
     Ftoi {
-        number_to_convert: Box<Float>,
+        number_to_convert: Box<FloatArg>,
     },
     #[syntax]
     Rand {
-        value1: Box<Integer>,
-        value2: Box<Integer>,
+        value1: Box<IntArg>,
+        value2: Box<IntArg>,
     },
     #[syntax]
     Rean {
@@ -602,7 +598,7 @@ pub enum Integer {
     PrtItot,
     #[syntax(name = "prt: from")]
     PrtFrom {
-        input_port: Box<Integer>,
+        input_port: Box<IntArg>,
     },
 }
 
@@ -618,24 +614,12 @@ impl From<LiteralInt> for Integer {
     }
 }
 
-impl From<Float> for Integer {
-    fn from(f: Float) -> Self {
-        Integer::FromFloat(Box::new(f))
-    }
-}
-
-fn parse_variable(input: &str) -> CaosParseResult<&str, Integer> {
-    map(Variable::parse_caos, |v| Integer::Variable(Box::new(v)))(input)
-}
-
 fn parse_literal(input: &str) -> CaosParseResult<&str, Integer> {
     map(LiteralInt::parse_caos, Integer::Raw)(input)
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::Command;
-
     use super::*;
 
     #[test]
@@ -692,22 +676,5 @@ mod tests {
 
         let (_, res) = LiteralInt::parse_caos("32").expect("Good binary");
         assert_eq!(res, LiteralInt(32));
-    }
-
-    #[test]
-    fn test_float_cast() {
-        let (_, res) =
-            Command::parse_caos("snap va00 posx posy 119 139 100").expect("Valid command");
-        assert_eq!(
-            res,
-            Command::Snap {
-                filename: SString::Variable(Box::new(Variable::Vaxx(0))),
-                x_centre: Integer::FromFloat(Box::new(Float::Posx)),
-                y_centre: Integer::FromFloat(Box::new(Float::Posy)),
-                width: 119.into(),
-                height: 139.into(),
-                zoom_factor: 100.into()
-            }
-        );
     }
 }

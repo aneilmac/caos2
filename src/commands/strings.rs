@@ -1,4 +1,4 @@
-use super::{Anything, Decimal, Integer, Variable};
+use super::{Anything, Decimal, IntArg, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList};
 use nom::bytes::complete::tag;
@@ -17,47 +17,47 @@ pub enum SString {
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
     #[syntax]
-    Catx { category_id: Box<Integer> },
+    Catx { category_id: Box<IntArg> },
     #[syntax]
     Hand,
     #[syntax]
     Wild {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
         tag_stub: Box<SString>,
-        offset: Box<Integer>,
+        offset: Box<IntArg>,
     },
     #[syntax]
-    Bkgd { metaroom_id: Box<Integer> },
+    Bkgd { metaroom_id: Box<IntArg> },
     #[syntax]
     Ptxt,
     #[syntax]
     Face,
     #[syntax(name = "dbg#")]
-    Dbg { variable: Box<Integer> },
+    Dbg { variable: Box<IntArg> },
     #[syntax]
-    Dbga { variable: Box<Integer> },
+    Dbga { variable: Box<IntArg> },
     #[syntax]
     Fvwm { name: Box<SString> },
     #[syntax]
     Innl,
     #[syntax]
-    Gtos { slot: Box<Integer> },
+    Gtos { slot: Box<IntArg> },
     #[syntax(name = "hist foto")]
     HistFoto {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist mon1")]
     HistMon1 {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist mon2")]
     HistMon2 {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist name")]
     HistName { moniker: Box<SString> },
@@ -68,28 +68,28 @@ pub enum SString {
     #[syntax(name = "hist utxt")]
     HistUtxt {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax(name = "hist wnam")]
     HistWnam {
         moniker: Box<SString>,
-        event_no: Box<Integer>,
+        event_no: Box<IntArg>,
     },
     #[syntax]
-    Bkds { metaroom_id: Box<Integer> },
+    Bkds { metaroom_id: Box<IntArg> },
     #[syntax]
     Emid,
     #[syntax]
-    Erid { metaroom_id: Box<Integer> },
+    Erid { metaroom_id: Box<IntArg> },
     #[syntax]
-    Mloc { metaroom_id: Box<Integer> },
+    Mloc { metaroom_id: Box<IntArg> },
     #[syntax]
     Rate {
-        room_type: Box<Integer>,
-        ca_index: Box<Integer>,
+        room_type: Box<IntArg>,
+        ca_index: Box<IntArg>,
     },
     #[syntax]
-    Rloc { room_id: Box<Integer> },
+    Rloc { room_id: Box<IntArg> },
     // Resource
     #[syntax(name = "pray agts")]
     PrayAgts {
@@ -109,23 +109,23 @@ pub enum SString {
     },
     #[syntax]
     Caos {
-        inline: Box<Integer>,
-        state_trans: Box<Integer>,
+        inline: Box<IntArg>,
+        state_trans: Box<IntArg>,
         p1: Box<Anything>,
         p2: Box<Anything>,
         commands: Box<SString>,
-        throws: Box<Integer>,
-        catches: Box<Integer>,
+        throws: Box<IntArg>,
+        catches: Box<IntArg>,
         report: Box<Variable>,
     },
     #[syntax]
-    Rmsc { x: Box<Integer>, y: Box<Integer> },
+    Rmsc { x: Box<IntArg>, y: Box<IntArg> },
     #[syntax]
     Vois,
     // Date
     #[syntax]
     Rtif {
-        real_time: Box<Integer>,
+        real_time: Box<IntArg>,
         format: Box<SString>,
     },
     #[syntax]
@@ -135,23 +135,23 @@ pub enum SString {
     #[syntax]
     Read {
         catalogue_tag: Box<SString>,
-        offset: Box<Integer>,
+        offset: Box<IntArg>,
     },
     #[syntax]
     Subs {
         value: Box<SString>,
-        start: Box<Integer>,
-        count: Box<Integer>,
+        start: Box<IntArg>,
+        count: Box<IntArg>,
     },
     #[syntax]
     Vtos { value: Box<Decimal> },
     // World
     #[syntax]
-    Pswd { world_index: Box<Integer> },
+    Pswd { world_index: Box<IntArg> },
     #[syntax]
     Wnam,
     #[syntax]
-    Wrld { world_index: Box<Integer> },
+    Wrld { world_index: Box<IntArg> },
     #[syntax]
     Wuid,
 }

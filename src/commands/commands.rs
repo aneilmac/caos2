@@ -1,5 +1,5 @@
 use super::{
-    Agent, Anything, ByteString, Condition, Decimal, Float, Integer, Label, LiteralInt, SString,
+    Agent, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, LiteralInt, SString,
     Variable,
 };
 use crate::parser::CaosParseResult;
@@ -29,64 +29,64 @@ pub enum Command {
     #[syntax]
     Anms { anim_string: SString },
     #[syntax]
-    Attr { attributes: Integer },
+    Attr { attributes: IntArg },
     #[syntax]
-    Base { index: Integer },
+    Base { index: IntArg },
     #[syntax]
-    Bhvr { permissions: Integer },
+    Bhvr { permissions: IntArg },
     #[syntax]
     #[syntax]
     Enum {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
     Esee {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
     Etch {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
-    Frat { framerate: Integer },
+    Frat { framerate: IntArg },
     #[syntax]
-    Gait { gait_number: Integer },
+    Gait { gait_number: IntArg },
     #[syntax]
     Gall {
         sprite_file: SString,
-        first_image: Integer,
+        first_image: IntArg,
     },
     #[syntax]
     Hand { name_for_the_hand: SString },
     #[syntax]
     Kill { agent: Agent },
     #[syntax(name = "mesg writ")]
-    MesgWrit { command: Agent, message_id: Integer },
+    MesgWrit { command: Agent, message_id: IntArg },
     #[syntax(name = "mesg wrt+")]
     MesgWritPlus {
         agent: Agent,
-        message_id: Integer,
+        message_id: IntArg,
         param_1: Anything,
         param_2: Anything,
-        delay: Integer,
+        delay: IntArg,
     },
     #[syntax]
-    Mira { on_off: Integer },
+    Mira { on_off: IntArg },
     #[syntax(name = "new: simp")]
     NewSimp {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
         sprite_file: SString,
-        image_count: Integer,
-        first_image: Integer,
-        plane: Integer,
+        image_count: IntArg,
+        first_image: IntArg,
+        plane: IntArg,
     },
     #[syntax]
     Next,
@@ -95,351 +95,351 @@ pub enum Command {
     #[syntax]
     Over,
     #[syntax]
-    Paus { paused: Integer },
+    Paus { paused: IntArg },
     #[syntax]
-    Plne { plane: Integer },
+    Plne { plane: IntArg },
     #[syntax]
-    Pose { pose: Integer },
+    Pose { pose: IntArg },
     #[syntax]
     Puhl {
-        pose: Integer,
-        x: Integer,
-        y: Integer,
+        pose: IntArg,
+        x: IntArg,
+        y: IntArg,
     },
     #[syntax]
     Pupt {
-        pose: Integer,
-        x: Integer,
-        y: Integer,
+        pose: IntArg,
+        x: IntArg,
+        y: IntArg,
     },
     #[syntax]
-    Rnge { distance: Float },
+    Rnge { distance: FloatArg },
     #[syntax]
     Rtar {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
-    Show { visibility: Integer },
+    Show { visibility: IntArg },
     #[syntax]
     Star {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
-    Tick { tick_rate: Integer },
+    Tick { tick_rate: IntArg },
     #[syntax]
     Tint {
-        red_tint: Integer,
-        green_tint: Integer,
-        blue_tint: Integer,
-        rotation: Integer,
-        swap: Integer,
+        red_tint: IntArg,
+        green_tint: IntArg,
+        blue_tint: IntArg,
+        rotation: IntArg,
+        swap: IntArg,
     },
     #[syntax]
     Ttar {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     // Brain
     #[syntax(name = "brn: dmpb")]
     BrnDmpb,
     #[syntax(name = "brn: dmpd")]
     BrnDmpd {
-        tract_number: Integer,
-        dendrite_number: Integer,
+        tract_number: IntArg,
+        dendrite_number: IntArg,
     },
     #[syntax(name = "brn: dmpl")]
-    BrnDmpl { lobe_number: Integer },
+    BrnDmpl { lobe_number: IntArg },
     #[syntax(name = "brn: dmpn")]
     BrnDmpn {
-        lobe_number: Integer,
-        neuron_number: Integer,
+        lobe_number: IntArg,
+        neuron_number: IntArg,
     },
     #[syntax(name = "brn: dmpt")]
-    BrnDmpt { tract_number: Integer },
+    BrnDmpt { tract_number: IntArg },
     #[syntax(name = "brn: setd")]
     BrnSetd {
-        tract_number: Integer,
-        dendrite_number: Integer,
-        weight_number: Integer,
-        new_value: Float,
+        tract_number: IntArg,
+        dendrite_number: IntArg,
+        weight_number: IntArg,
+        new_value: FloatArg,
     },
     #[syntax(name = "brn: setl")]
     BrntSetl {
-        lobe_number: Integer,
-        line_number: Integer,
-        new_value: Float,
+        lobe_number: IntArg,
+        line_number: IntArg,
+        new_value: FloatArg,
     },
     #[syntax(name = "brn: setn")]
     BrnSetn {
-        lobe_number: Integer,
-        neuron_number: Integer,
-        state_number: Integer,
-        new_value: Float,
+        lobe_number: IntArg,
+        neuron_number: IntArg,
+        state_number: IntArg,
+        new_value: FloatArg,
     },
     #[syntax(name = "brn: sett")]
     BrnSett {
-        tract_number: Integer,
-        line_number: Integer,
-        new_value: Float,
+        tract_number: IntArg,
+        line_number: IntArg,
+        new_value: FloatArg,
     },
     // Camera
     #[syntax]
     Bkgd {
-        metaroom_id: Integer,
+        metaroom_id: IntArg,
         background: SString,
-        transition: Integer,
+        transition: IntArg,
     },
     #[syntax]
     Brmi {
-        mearoom_base: Integer,
-        room_base: Integer,
+        mearoom_base: IntArg,
+        room_base: IntArg,
     },
     #[syntax]
     Cmra {
-        x: Integer,
-        y: Integer,
-        pan: Integer,
+        x: IntArg,
+        y: IntArg,
+        pan: IntArg,
     },
     #[syntax]
     Cmrp {
-        x: Integer,
-        y: Integer,
-        pan: Integer,
+        x: IntArg,
+        y: IntArg,
+        pan: IntArg,
     },
     #[syntax]
-    Cmrt { pan: Integer },
+    Cmrt { pan: IntArg },
     #[syntax]
     Frsh,
     #[syntax]
     Line {
-        x1: Integer,
-        y1: Integer,
-        x2: Integer,
-        y2: Integer,
-        r: Integer,
-        g: Integer,
-        b: Integer,
-        stipple_on: Integer,
-        stipple_off: Integer,
+        x1: IntArg,
+        y1: IntArg,
+        x2: IntArg,
+        y2: IntArg,
+        r: IntArg,
+        g: IntArg,
+        b: IntArg,
+        stipple_on: IntArg,
+        stipple_off: IntArg,
     },
     #[syntax]
     Meta {
-        metaroom_id: Integer,
-        camera_x: Integer,
-        camera_y: Integer,
-        transition: Integer,
+        metaroom_id: IntArg,
+        camera_x: IntArg,
+        camera_y: IntArg,
+        transition: IntArg,
     },
     #[syntax]
     Scam {
         compound_agent: Agent,
-        part_number: Integer,
+        part_number: IntArg,
     },
     #[syntax]
     Snap {
         filename: SString,
-        x_centre: Integer,
-        y_centre: Integer,
-        width: Integer,
-        height: Integer,
-        zoom_factor: Integer,
+        x_centre: IntArg,
+        y_centre: IntArg,
+        width: IntArg,
+        height: IntArg,
+        zoom_factor: IntArg,
     },
     #[syntax]
     Trck {
         agent: Agent,
-        x_percent: Integer,
-        y_percent: Integer,
-        style: Integer,
-        transition: Integer,
+        x_percent: IntArg,
+        y_percent: IntArg,
+        style: IntArg,
+        transition: IntArg,
     },
     #[syntax]
     Wdow,
     #[syntax]
     Zoom {
-        pixels: Integer,
-        x: Integer,
-        y: Integer,
+        pixels: IntArg,
+        x: IntArg,
+        y: IntArg,
     },
     // Compounds
     #[syntax]
     Fcus,
     #[syntax]
     Frmt {
-        left_margin: Integer,
-        top_margin: Integer,
-        right_margin: Integer,
-        bottom_margin: Integer,
-        line_spacing: Integer,
-        character_spacing: Integer,
-        justification: Integer,
+        left_margin: IntArg,
+        top_margin: IntArg,
+        right_margin: IntArg,
+        bottom_margin: IntArg,
+        line_spacing: IntArg,
+        character_spacing: IntArg,
+        justification: IntArg,
     },
     #[syntax]
     Grpl {
-        red: Integer,
-        green: Integer,
-        blue: Integer,
-        min_y: Float,
-        max_y: Float,
+        red: IntArg,
+        green: IntArg,
+        blue: IntArg,
+        min_y: FloatArg,
+        max_y: FloatArg,
     },
     #[syntax]
-    Grpv { line_index: Integer, value: Float },
+    Grpv { line_index: IntArg, value: FloatArg },
     #[syntax(name = "new: comp")]
     NewComp {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
         sprite_file: SString,
-        image_count: Integer,
-        first_image: Integer,
-        plane: Integer,
+        image_count: IntArg,
+        first_image: IntArg,
+        plane: IntArg,
     },
     #[syntax]
-    Page { page: Integer },
+    Page { page: IntArg },
     #[syntax]
-    Part { part_id: Integer },
+    Part { part_id: IntArg },
     #[syntax(name = "pat: butt")]
     PatButt {
-        part_id: Integer,
+        part_id: IntArg,
         sprite_file: SString,
-        first_image: Integer,
-        image_count: Integer,
+        first_image: IntArg,
+        image_count: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
-        rel_plane: Integer,
+        rel_plane: IntArg,
         anim_hover: ByteString,
-        message_id: Integer,
-        option: Integer,
+        message_id: IntArg,
+        option: IntArg,
     },
     #[syntax(name = "pat: cmra")]
     PatCmra {
-        part_id: Integer,
+        part_id: IntArg,
         overlay_sprinte: SString,
-        base_image: Integer,
+        base_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
-        rel_plane: Integer,
-        view_width: Integer,
-        view_height: Integer,
-        camera_width: Integer,
-        camera_height: Integer,
+        rel_plane: IntArg,
+        view_width: IntArg,
+        view_height: IntArg,
+        camera_width: IntArg,
+        camera_height: IntArg,
     },
     #[syntax(name = "pat: dull")]
     PatDull {
-        part_id: Integer,
+        part_id: IntArg,
         sprite_file: SString,
-        first_image: Integer,
+        first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
-        rel_plane: Integer,
+        rel_plane: IntArg,
     },
     #[syntax(name = "pat: fixd")]
     PatFixd {
-        part_id: Integer,
+        part_id: IntArg,
         sprinte_file: SString,
-        first_image: Integer,
+        first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
-        rel_plane: Integer,
+        rel_plane: IntArg,
         font_sprite: SString,
     },
     #[syntax(name = "pat: grph")]
     PatGrph {
-        part_id: Integer,
+        part_id: IntArg,
         overlay_sprite: SString,
-        base_image: Integer,
+        base_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
         rel_plane: Decimal,
-        num_values: Integer,
+        num_values: IntArg,
     },
     #[syntax(name = "pat: kill")]
-    PatKill { part_id: Integer },
+    PatKill { part_id: IntArg },
     #[syntax(name = "pat: text")]
     PatText {
-        part_id: Integer,
+        part_id: IntArg,
         sprite_file: SString,
-        first_image: Integer,
+        first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
-        rel_plane: Integer,
-        message_id: Integer,
+        rel_plane: IntArg,
+        message_id: IntArg,
         font_sprite: SString,
     },
     #[syntax]
     Ptxt { text: SString },
     // Creates
     #[syntax]
-    Ages { times: Integer },
+    Ages { times: IntArg },
     #[syntax]
     Appr,
     #[syntax]
-    Aslp { asleep: Integer },
+    Aslp { asleep: IntArg },
     #[syntax]
-    Body { set_number: Integer, layer: Integer },
+    Body { set_number: IntArg, layer: IntArg },
     #[syntax]
     Born,
     #[syntax]
     Chem {
-        chemical: Integer,
-        adjustment: Float,
+        chemical: IntArg,
+        adjustment: FloatArg,
     },
     #[syntax]
     Dead,
     #[syntax]
-    Dirn { direction: Integer },
+    Dirn { direction: IntArg },
     #[syntax]
     Done,
     #[syntax]
-    Drea { dream: Integer },
+    Drea { dream: IntArg },
     #[syntax]
-    Driv { drive: Integer, adjustment: Float },
+    Driv { drive: IntArg, adjustment: FloatArg },
     #[syntax]
-    Face { set_number: Integer },
+    Face { set_number: IntArg },
     #[syntax]
     Forf { creature_to_learn_about: Agent },
     #[syntax]
-    Hair { stage: Integer },
+    Hair { stage: IntArg },
     #[syntax]
-    Injr { organ: Integer, amount: Integer },
+    Injr { organ: IntArg, amount: IntArg },
     #[syntax]
     Like { creature_state_opinion_about: Agent },
     #[syntax]
     Loci {
-        r#type: Integer,
-        organ: Integer,
-        tissue: Integer,
-        id: Integer,
-        new_value: Float,
+        r#type: IntArg,
+        organ: IntArg,
+        tissue: IntArg,
+        id: IntArg,
+        new_value: FloatArg,
     },
     #[syntax]
     Ltcy {
-        action: Integer,
-        min: Integer,
-        max: Integer,
+        action: IntArg,
+        min: IntArg,
+        max: IntArg,
     },
     #[syntax]
     Mate,
     #[syntax]
-    Mvft { x: Float, y: Float },
+    Mvft { x: FloatArg, y: FloatArg },
     #[syntax(name = "new: crea")]
     NewCrea {
-        family: Integer,
+        family: IntArg,
         gene_agent: Agent,
-        gene_slot: Integer,
-        sex: Integer,
-        variant: Integer,
+        gene_slot: IntArg,
+        sex: IntArg,
+        variant: IntArg,
     },
     #[syntax]
     Newc {
-        family: Integer,
+        family: IntArg,
         gene_agent: Agent,
-        gene_slot: Integer,
-        sex: Integer,
-        variant: Integer,
+        gene_slot: IntArg,
+        sex: IntArg,
+        variant: IntArg,
     },
     #[syntax]
     Norn { creature: Agent },
@@ -456,108 +456,108 @@ pub enum Command {
     #[syntax]
     Spnl {
         lobe_monkier: SString,
-        neuron_id: Integer,
-        value: Float,
+        neuron_id: IntArg,
+        value: FloatArg,
     },
     #[syntax(name = "stim shou")]
-    StimShou { stimulus: Integer, strength: Float },
+    StimShou { stimulus: IntArg, strength: FloatArg },
     #[syntax(name = "stim sign")]
-    StimSign { stimulus: Integer, strength: Float },
+    StimSign { stimulus: IntArg, strength: FloatArg },
     #[syntax(name = "stim tact")]
-    StimTact { stimulus: Integer, strength: Float },
+    StimTact { stimulus: IntArg, strength: FloatArg },
     #[syntax(name = "stim writ")]
     StimWrit {
         creature: Agent,
-        stimulus: Integer,
-        strength: Float,
+        stimulus: IntArg,
+        strength: FloatArg,
     },
     #[syntax(name = "sway shou")]
     SwayShou {
-        drive1: Integer,
-        adjust1: Float,
-        drive2: Integer,
-        adjust2: Float,
-        drive3: Integer,
-        adjust3: Float,
-        drive4: Integer,
-        adjust4: Float,
+        drive1: IntArg,
+        adjust1: FloatArg,
+        drive2: IntArg,
+        adjust2: FloatArg,
+        drive3: IntArg,
+        adjust3: FloatArg,
+        drive4: IntArg,
+        adjust4: FloatArg,
     },
     #[syntax(name = "sway sign")]
     SwaySign {
-        drive1: Integer,
-        adjust1: Float,
-        drive2: Integer,
-        adjust2: Float,
-        drive3: Integer,
-        adjust3: Float,
-        drive4: Integer,
-        adjust4: Float,
+        drive1: IntArg,
+        adjust1: FloatArg,
+        drive2: IntArg,
+        adjust2: FloatArg,
+        drive3: IntArg,
+        adjust3: FloatArg,
+        drive4: IntArg,
+        adjust4: FloatArg,
     },
     #[syntax(name = "sway tact")]
     SwayTact {
-        drive1: Integer,
-        adjust1: Float,
-        drive2: Integer,
-        adjust2: Float,
-        drive3: Integer,
-        adjust3: Float,
-        drive4: Integer,
-        adjust4: Float,
+        drive1: IntArg,
+        adjust1: FloatArg,
+        drive2: IntArg,
+        adjust2: FloatArg,
+        drive3: IntArg,
+        adjust3: FloatArg,
+        drive4: IntArg,
+        adjust4: FloatArg,
     },
     #[syntax(name = "sway tact")]
     SwayWrit {
         creature: Agent,
-        drive1: Integer,
-        adjust1: Float,
-        drive2: Integer,
-        adjust2: Float,
-        drive3: Integer,
-        adjust3: Float,
-        drive4: Integer,
-        adjust4: Float,
+        drive1: IntArg,
+        adjust1: FloatArg,
+        drive2: IntArg,
+        adjust2: FloatArg,
+        drive3: IntArg,
+        adjust3: FloatArg,
+        drive4: IntArg,
+        adjust4: FloatArg,
     },
     #[syntax]
     Touc,
     #[syntax]
-    Uncs { unconscious: Integer },
+    Uncs { unconscious: IntArg },
     #[syntax(name = "urge shou")]
     UrgeShou {
-        noun_stim: Float,
-        verb_id: Integer,
-        verb_stim: Float,
+        noun_stim: FloatArg,
+        verb_id: IntArg,
+        verb_stim: FloatArg,
     },
     #[syntax(name = "urge sign")]
     UrgeSign {
-        noun_stim: Float,
-        verb_id: Integer,
-        verb_stim: Float,
+        noun_stim: FloatArg,
+        verb_id: IntArg,
+        verb_stim: FloatArg,
     },
     #[syntax(name = "urge tact")]
     UrgeTact {
-        noun_stim: Float,
-        verb_id: Integer,
-        verb_stim: Float,
+        noun_stim: FloatArg,
+        verb_id: IntArg,
+        verb_stim: FloatArg,
     },
     #[syntax(name = "urge writ")]
     UrgeWrit {
         creature: Agent,
-        noun_id: Integer,
-        noun_stim: Float,
-        verb_id: Integer,
-        verb_stim: Float,
+        noun_id: IntArg,
+        noun_stim: FloatArg,
+        verb_id: IntArg,
+        verb_stim: FloatArg,
     },
     #[syntax]
-    Vocab,
+    Vocb,
     #[syntax]
     Walk,
     #[syntax]
     Wear {
-        body_id: Integer,
-        set_number: Integer,
-        layer: Integer,
+        body_id: IntArg,
+        set_number: IntArg,
+        layer: IntArg,
     },
     #[syntax]
-    Zomb { zombie: Integer },
+    Zomb { zombie: IntArg },
     // Debug
     #[syntax]
     Apro { search_text: SString },
@@ -568,7 +568,7 @@ pub enum Command {
     #[syntax(name = "dbg: flsh")]
     DbgFlsh,
     #[syntax(name = "dbg: html")]
-    DbgHtml { sort_order: Integer },
+    DbgHtml { sort_order: IntArg },
     #[syntax(name = "dbg: outs")]
     DbgOuts { value: SString },
     #[syntax(name = "dbg: outv")]
@@ -586,7 +586,7 @@ pub enum Command {
     #[syntax(name = "dbg: tock")]
     DbTock,
     #[syntax(name = "dbg: wtik")]
-    DbgWtik { new_world_tick: Integer },
+    DbgWtik { new_world_tick: IntArg },
     #[syntax]
     Help,
     #[syntax]
@@ -596,19 +596,19 @@ pub enum Command {
     // Files
     #[syntax(name = "file glob")]
     FileGlob {
-        directory: Integer,
+        directory: IntArg,
         file_spec: SString,
     },
     #[syntax(name = "file iclo")]
     FileIclo,
     #[syntax(name = "file iope")]
     FileIope {
-        directory: Integer,
+        directory: IntArg,
         filename: SString,
     },
     #[syntax(name = "file jdel")]
     FileJdel {
-        directory: Integer,
+        directory: IntArg,
         filename: SString,
     },
     #[syntax(name = "file oclo")]
@@ -617,9 +617,9 @@ pub enum Command {
     FileOflu,
     #[syntax(name = "file oope")]
     FileOope {
-        directory: Integer,
+        directory: IntArg,
         filename: SString,
-        append: Integer,
+        append: IntArg,
     },
     #[syntax]
     Outs { text: SString },
@@ -647,7 +647,7 @@ pub enum Command {
     #[syntax]
     Repe,
     #[syntax]
-    Reps { count: Integer },
+    Reps { count: IntArg },
     #[syntax]
     Retn,
     #[syntax]
@@ -658,50 +658,50 @@ pub enum Command {
     #[syntax(name = "gene clon")]
     GeneClon {
         dest_agent: Agent,
-        dest_slot: Integer,
+        dest_slot: IntArg,
         source_agent: Agent,
-        source_slot: Integer,
+        source_slot: IntArg,
     },
     #[syntax(name = "gene cros")]
     GeneCros {
         child_agent: Agent,
-        child_slot: Integer,
+        child_slot: IntArg,
         mum_agent: Agent,
-        mum_slot: Integer,
+        mum_slot: IntArg,
         dad_agent: Agent,
-        dad_slot: Integer,
-        mum_chance_of_mutation: Integer,
-        mum_degree_of_mutation: Integer,
-        dad_chance_of_mutation: Integer,
-        dad_degree_of_mutation: Integer,
+        dad_slot: IntArg,
+        mum_chance_of_mutation: IntArg,
+        mum_degree_of_mutation: IntArg,
+        dad_chance_of_mutation: IntArg,
+        dad_degree_of_mutation: IntArg,
     },
     #[syntax(name = "gene kill")]
-    GeneKill { agent: Agent, slot: Integer },
+    GeneKill { agent: Agent, slot: IntArg },
     #[syntax(name = "gene load")]
     GeneLoad {
         agent: Agent,
-        slot: Integer,
+        slot: IntArg,
         gene_file: SString,
     },
     #[syntax(name = "gene move")]
     GeneMove {
         dest_agent: Agent,
-        dest_slot: Integer,
+        dest_slot: IntArg,
         source_agent: Agent,
-        source_slot: Integer,
+        source_slot: IntArg,
     },
     // History
     #[syntax(name = "hist evnt")]
     HistEvnt {
         moniker: SString,
-        event_type: Integer,
+        event_type: IntArg,
         related_moniker_1: SString,
         related_moniker_2: SString,
     },
     #[syntax(name = "hist foto")]
     HistFoto {
         moniker: SString,
-        event_no: Integer,
+        event_no: IntArg,
         new_value: SString,
     },
     #[syntax(name = "hist name")]
@@ -709,186 +709,186 @@ pub enum Command {
     #[syntax(name = "hist utxt")]
     HistUtxt {
         moniker: SString,
-        event_no: Integer,
+        event_no: IntArg,
         new_value: SString,
     },
     #[syntax(name = "hist wipe")]
     HistWipe { moniker: SString },
     #[syntax]
-    Clac { message: Integer },
+    Clac { message: IntArg },
     #[syntax]
     Clik {
-        message_1: Integer,
-        message_2: Integer,
-        message_3: Integer,
+        message_1: IntArg,
+        message_2: IntArg,
+        message_3: IntArg,
     },
     #[syntax]
-    Imsk { mask: Integer },
+    Imsk { mask: IntArg },
     #[syntax]
-    Mous { behaviour: Integer },
+    Mous { behaviour: IntArg },
     #[syntax]
-    Pure { value: Integer },
+    Pure { value: IntArg },
     #[syntax]
     Tran {
-        transparency: Integer,
-        part_no: Integer,
+        transparency: IntArg,
+        part_no: IntArg,
     },
     // Map
     #[syntax]
     Addb {
-        metaroom_id: Integer,
+        metaroom_id: IntArg,
         background_file: SString,
     },
     #[syntax]
     Altr {
-        room_id: Integer,
-        ca_index: Integer,
-        ca_delta: Float,
+        room_id: IntArg,
+        ca_index: IntArg,
+        ca_delta: FloatArg,
     },
     #[syntax]
-    Calc {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
-        ca_index: Integer,
+    Cacl {
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        ca_index: IntArg,
     },
     #[syntax]
-    Delm { metaroom_id: Integer },
+    Delm { metaroom_id: IntArg },
     #[syntax]
-    Delr { room_id: Integer },
+    Delr { room_id: IntArg },
     #[syntax]
-    Dmap { debug_map: Integer },
+    Dmap { debug_map: IntArg },
     #[syntax]
-    Doca { no_of_updates: Integer },
+    Doca { no_of_updates: IntArg },
     #[syntax]
     Door {
-        room_id1: Integer,
-        room_id2: Integer,
-        permiability: Integer,
+        room_id1: IntArg,
+        room_id2: IntArg,
+        permiability: IntArg,
     },
     #[syntax]
-    Emit { ca_index: Integer, amount: Float },
+    Emit { ca_index: IntArg, amount: FloatArg },
     #[syntax]
     Link {
-        room1: Integer,
-        room2: Integer,
-        permiability: Integer,
+        room1: IntArg,
+        room2: IntArg,
+        permiability: IntArg,
     },
     #[syntax]
-    Mapd { width: Integer, height: Integer },
+    Mapd { width: IntArg, height: IntArg },
     #[syntax]
     Mapk,
     #[syntax]
-    Perm { permiability: Integer },
+    Perm { permiability: IntArg },
     #[syntax]
     Prop {
-        room_id: Integer,
-        ca_index: Integer,
-        ca_value: Float,
+        room_id: IntArg,
+        ca_index: IntArg,
+        ca_value: FloatArg,
     },
     #[syntax]
     Rate {
-        room_type: Integer,
-        ca_index: Integer,
-        gain: Float,
-        loss: Float,
-        diffusion: Float,
+        room_type: IntArg,
+        ca_index: IntArg,
+        gain: FloatArg,
+        loss: FloatArg,
+        diffusion: FloatArg,
     },
     #[syntax]
     Rtyp {
-        room_id: Integer,
-        room_type: Integer,
+        room_id: IntArg,
+        room_type: IntArg,
     },
     // Motion
     #[syntax]
-    Accg { acceleration: Float },
+    Accg { acceleration: FloatArg },
     #[syntax]
-    Aero { aerodynamics: Integer },
+    Aero { aerodynamics: IntArg },
     #[syntax]
-    Elas { elasticity: Integer },
+    Elas { elasticity: IntArg },
     #[syntax]
-    Flto { screen_x: Float, screen_y: Float },
+    Flto { screen_x: FloatArg, screen_y: FloatArg },
     #[syntax]
     Frel { relative: Agent },
     #[syntax]
-    Fric { friction: Integer },
+    Fric { friction: IntArg },
     #[syntax]
-    Mvby { delta_x: Float, delta_y: Float },
+    Mvby { delta_x: FloatArg, delta_y: FloatArg },
     #[syntax]
-    Mvsf { x: Float, y: Float },
+    Mvsf { x: FloatArg, y: FloatArg },
     #[syntax]
-    Mvto { x: Float, y: Float },
+    Mvto { x: FloatArg, y: FloatArg },
     #[syntax]
     Velo {
-        x_velocity: Float,
-        y_velocity: Float,
+        x_velocity: FloatArg,
+        y_velocity: FloatArg,
     },
     // Ports
     #[syntax]
     Econ { agent: Agent },
     #[syntax(name = "prt: bang")]
-    PrtBang { bang_strength: Integer },
+    PrtBang { bang_strength: IntArg },
     #[syntax(name = "prt: inew")]
     PrtInew {
-        id: Integer,
+        id: IntArg,
         name: SString,
         description: SString,
-        x: Integer,
-        y: Integer,
-        message_num: Integer,
+        x: IntArg,
+        y: IntArg,
+        message_num: IntArg,
     },
     #[syntax(name = "prt: izap")]
-    PrtIzap { id: Integer },
+    PrtIzap { id: IntArg },
     #[syntax(name = "prt: join")]
     PrtJoin {
         source_agent: Agent,
-        output_id: Integer,
-        dest_agent: Integer,
-        input_id: Integer,
+        output_id: IntArg,
+        dest_agent: IntArg,
+        input_id: IntArg,
     },
     #[syntax(name = "prt: krak")]
     PrtKrak {
         agent: Agent,
-        in_or_out: Integer,
-        port_index: Integer,
+        in_or_out: IntArg,
+        port_index: IntArg,
     },
     #[syntax(name = "prt: name")]
     PrtName {
         agent: Agent,
-        in_or_out: Integer,
-        port_index: Integer,
+        in_or_out: IntArg,
+        port_index: IntArg,
     },
     #[syntax(name = "prt: onew")]
     PrtOnew {
-        id: Integer,
+        id: IntArg,
         name: SString,
         description: SString,
-        x: Integer,
-        y: Integer,
+        x: IntArg,
+        y: IntArg,
     },
     #[syntax(name = "prt: otot")]
     PrtOtot,
     #[syntax(name = "prt: ozap")]
-    PrtOzap { id: Integer },
+    PrtOzap { id: IntArg },
     #[syntax(name = "prt: send")]
-    PrtSend { id: Integer, data: Anything },
+    PrtSend { id: IntArg, data: Anything },
     // Resources
     #[syntax(name = "pray grab")]
-    PrayGrab { force: Integer },
+    PrayGrab { force: IntArg },
     #[syntax(name = "pray refr")]
     PrayRefr,
     // Scripts
     #[syntax(name = "gids fmly")]
-    GidsFmly { family: Integer },
+    GidsFmly { family: IntArg },
     #[syntax(name = "gids gnus")]
-    GidsGnus { family: Integer, genus: Integer },
+    GidsGnus { family: IntArg, genus: IntArg },
     #[syntax(name = "gids root")]
     GidsRoot,
     #[syntax(name = "gids spcs")]
     GidsSpcs {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
     Inst,
@@ -896,19 +896,19 @@ pub enum Command {
     Lock,
     #[syntax]
     Scrx {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
-        event: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        event: IntArg,
     },
     #[syntax]
     Slow,
     #[syntax]
     Sorc {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
-        event: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        event: IntArg,
     },
     #[syntax]
     Stop,
@@ -917,26 +917,26 @@ pub enum Command {
     #[syntax]
     Unlk,
     #[syntax]
-    Wait { ticks: Integer },
+    Wait { ticks: IntArg },
     // Sounds
     #[syntax]
     Fade,
     #[syntax]
-    Mclr { x: Integer, y: Integer },
+    Mclr { x: IntArg, y: IntArg },
     #[syntax]
     Midi { midi_file: SString },
     #[syntax]
     Mmsc {
-        x: Box<Integer>,
-        y: Box<Integer>,
-        track_name: Box<SString>,
+        x: IntArg,
+        y: IntArg,
+        track_name: SString,
     },
     #[syntax]
-    Rclr { x: Integer, y: Integer },
+    Rclr { x: IntArg, y: IntArg },
     #[syntax]
     Rmsc {
-        x: Integer,
-        y: Integer,
+        x: IntArg,
+        y: IntArg,
         track_name: SString,
     },
     #[syntax]
@@ -948,18 +948,19 @@ pub enum Command {
     #[syntax]
     Sndl { sound_file: SString },
     #[syntax]
-    Sndq { sound_file: SString, delay: Integer },
+    Sndq { sound_file: SString, delay: IntArg },
     #[syntax]
     Stpc,
     #[syntax]
-    Strk { latency: Integer, track: SString },
+    Strk { latency: IntArg, track: SString },
     #[syntax]
-    Voic { voice_name: SString },
+    Voic { genus: IntArg, gender: IntArg, age: IntArg },
     #[syntax]
-    Volm { volume: Integer },
+    Vois { voice_name: SString },
+    Volm { volume: IntArg },
     // Date
     #[syntax]
-    Wpau { paused: Integer },
+    Wpau { paused: IntArg },
     // Variables
     #[syntax]
     Absv { var: Variable },
@@ -968,25 +969,25 @@ pub enum Command {
     #[syntax]
     Addv { var: Variable, sum: Decimal },
     #[syntax]
-    Andv { var: Variable, value: Integer },
+    Andv { var: Variable, value: IntArg },
     #[syntax]
     Char {
         string: Variable,
-        index: Integer,
-        character: Integer,
+        index: IntArg,
+        character: IntArg,
     },
     #[syntax]
     Delg { variable_name: SString },
     #[syntax]
     Divv { var: Variable, div: Decimal },
     #[syntax]
-    Modv { var: Variable, r#mod: Integer },
+    Modv { var: Variable, r#mod: IntArg },
     #[syntax]
     Mulv { var: Variable, mul: Decimal },
     #[syntax]
     Negv { var: Variable },
     #[syntax]
-    Orrv { var: Variable, value: Integer },
+    Orrv { var: Variable, value: IntArg },
     #[syntax]
     Reaf,
     #[syntax]
@@ -1002,45 +1003,45 @@ pub enum Command {
     // Vehicles
     #[syntax]
     Cabn {
-        left: Integer,
-        top: Integer,
-        right: Integer,
-        bottom: Integer,
+        left: IntArg,
+        top: IntArg,
+        right: IntArg,
+        bottom: IntArg,
     },
     #[syntax]
-    Cabp { plane: Integer },
+    Cabp { plane: IntArg },
     #[syntax]
-    Cabv { cabin_room_id: Integer },
+    Cabv { cabin_room_id: IntArg },
     #[syntax]
-    Cabw { cabin_capacity: Integer },
+    Cabw { cabin_capacity: IntArg },
     #[syntax]
     Dpas {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
     Epas {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
     },
     #[syntax]
     Gpas {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
-        rect_to_use: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        rect_to_use: IntArg,
     },
     #[syntax(name = "new: vhcl")]
     NewVhcl {
-        family: Integer,
-        genus: Integer,
-        species: Integer,
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
         sprite_file: SString,
-        image_count: Integer,
-        first_image: Integer,
-        plane: Integer,
+        image_count: IntArg,
+        first_image: IntArg,
+        plane: IntArg,
     },
     #[syntax]
     Rpas { vehicle: Agent, passenger: Agent },
@@ -1063,16 +1064,16 @@ pub enum Command {
     #[syntax]
     Save,
     #[syntax]
-    Tntw { index: Integer },
+    Tntw { index: IntArg },
     #[syntax]
     Wrld { world_name: SString },
     #[syntax]
     Wtnt {
-        index: Integer,
-        red_tint: Integer,
-        green_tint: Integer,
-        blue_tint: Integer,
-        rotation: Integer,
-        swap: Integer,
+        index: IntArg,
+        red_tint: IntArg,
+        green_tint: IntArg,
+        blue_tint: IntArg,
+        rotation: IntArg,
+        swap: IntArg,
     },
 }
