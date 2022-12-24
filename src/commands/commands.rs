@@ -19,6 +19,8 @@ pub enum Command {
     Endm,
     #[syntax]
     Iscr,
+    #[syntax]
+    Rscr,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },
@@ -813,6 +815,8 @@ pub enum Command {
     Mvsf { x: Float, y: Float },
     #[syntax]
     Mvto { x: Float, y: Float },
+    #[syntax]
+    Velo { x_velocity: Float, y_velocity: Float },
     // Ports
     #[syntax]
     Econ { agent: Agent },
