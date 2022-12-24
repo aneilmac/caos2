@@ -72,24 +72,6 @@ pub enum Integer {
     #[syntax]
     Clik { which_value: Box<Integer> },
     #[syntax]
-    Enum {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
-    },
-    #[syntax]
-    Esee {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
-    },
-    #[syntax]
-    Etch {
-        family: Box<Integer>,
-        genus: Box<Integer>,
-        species: Box<Integer>,
-    },
-    #[syntax]
     Fmly,
     #[syntax]
     Gnus,

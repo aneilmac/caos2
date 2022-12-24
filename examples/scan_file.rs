@@ -9,6 +9,18 @@ fn main() {
     let path = args.join(" ");
     println!("Opening file: {}", path);
     let file_content = std::fs::read_to_string(path).expect("Valid file");
-    let commands = parse_caos_script(&file_content).expect("Successful parse");
-    dbg!(commands);
+
+    match parse_caos_script(&file_content) {
+        Ok((res, _)) => {
+            if res.is_empty() {
+                print!("Successful parse!");
+            } else {
+                println!("Failed with remaining results:\n{}", res);
+            }
+        }
+        Err(e) => {
+            let err = nom::error::convert_error(file_content.as_str(), e);
+            println!("Failed with error:\n{}", err);
+        }
+    }
 }

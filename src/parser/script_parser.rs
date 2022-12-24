@@ -1,11 +1,18 @@
 use crate::commands::Command;
 use crate::parser::{caos_skippable0, caos_skippable1};
-use crate::parser::{CaosParsable, CaosParseResult};
+use crate::parser::CaosParsable;
+use nom::Finish;
 use nom::multi::separated_list0;
+use nom::error::VerboseError;
 
-pub fn parse_caos_script(input: &str) -> CaosParseResult<&str, Vec<Command>> {
-    let (input, _) = caos_skippable0(input)?;
-    separated_list0(caos_skippable1, Command::parse_caos)(input)
+pub fn parse_caos_script(input: &str) -> Result<(&str, Vec<Command>), VerboseError<&str>> {
+    let do_parse = |input| {
+        let (input, _) = caos_skippable0(input)?;
+        let (input, v) = separated_list0(caos_skippable1, Command::parse_caos)(input)?;
+        let (input, _) = caos_skippable0(input)?;
+        Ok((input, v))
+    };
+    do_parse(input).finish()
 }
 
 #[cfg(test)]

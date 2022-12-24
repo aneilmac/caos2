@@ -27,7 +27,6 @@ mod test {
     use caos_macros::CaosParsable;
     use nom::character::complete::digit1;
     use nom::combinator::map_res;
-    use nom::error::ErrorKind;
     use nom::Finish;
 
     #[derive(Eq, PartialEq, Debug, CaosParsable)]

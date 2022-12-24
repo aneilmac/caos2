@@ -31,6 +31,24 @@ pub enum Command {
     #[syntax]
     Bhvr { permissions: Integer },
     #[syntax]
+    #[syntax]
+    Enum {
+        family: Integer,
+        genus: Integer,
+        species: Integer,
+    },
+    #[syntax]
+    Esee {
+        family: Integer,
+        genus: Integer,
+        species: Integer,
+    },
+    #[syntax]
+    Etch {
+        family: Integer,
+        genus: Integer,
+        species: Integer,
+    },
     Frat { framerate: Integer },
     #[syntax]
     Gait { gait_number: Integer },
@@ -45,7 +63,7 @@ pub enum Command {
     Kill { agent: Agent },
     #[syntax(name = "mesg writ")]
     MesgWrit { command: Agent, message_id: Integer },
-    #[syntax(name = "mesg writ+")]
+    #[syntax(name = "mesg wrt+")]
     MesgWritPlus {
         agent: Agent,
         message_id: Integer,
@@ -269,7 +287,7 @@ pub enum Command {
         family: Integer,
         genus: Integer,
         species: Integer,
-        sprite_file: Integer,
+        sprite_file: SString,
         image_count: Integer,
         first_image: Integer,
         plane: Integer,
