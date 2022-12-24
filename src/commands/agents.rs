@@ -62,6 +62,11 @@ pub enum Agent {
     Mtoc { moniker: Box<SString> },
     #[syntax]
     Hots,
+    // Ports
+    #[syntax(name = "prt: frma")]
+    PrtFrma {
+        input_port: Box<Integer>,
+    },
 }
 
 fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {

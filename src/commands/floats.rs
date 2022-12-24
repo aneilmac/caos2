@@ -23,7 +23,7 @@ pub enum Float {
     Raw(F32Wrapper),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),
-    #[syntax(with_parser = "parse_integer_cast")]
+    #[syntax(with_parser = "parse_integer_cast")] // Something is wrong with this - position sensitive?
     FromInteger(Box<Integer>),
     #[syntax]
     Disq { other: Box<Agent> },

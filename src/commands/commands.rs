@@ -63,6 +63,7 @@ pub enum Command {
         genus: Integer,
         species: Integer,
     },
+    #[syntax]
     Frat {
         framerate: Integer,
     },
@@ -282,7 +283,7 @@ pub enum Command {
     #[syntax]
     Snap {
         filename: SString,
-        centre: Integer,
+        x_centre: Integer,
         y_centre: Integer,
         width: Integer,
         height: Integer,
@@ -1023,14 +1024,6 @@ pub enum Command {
     PrtBang {
         bang_strength: Integer,
     },
-    #[syntax(name = "prt: frma")]
-    PrtFrma {
-        input_port: Integer,
-    },
-    #[syntax(name = "prt: from")]
-    PrtFrom {
-        input_port: Integer,
-    },
     #[syntax(name = "prt: inew")]
     PrtInew {
         id: Integer,
@@ -1040,8 +1033,6 @@ pub enum Command {
         y: Integer,
         message_num: Integer,
     },
-    #[syntax(name = "prt: itot")]
-    PrtItot,
     #[syntax(name = "prt: izap")]
     PrtIzap {
         id: Integer,

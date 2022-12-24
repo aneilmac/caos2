@@ -519,6 +519,15 @@ pub enum Integer {
     Nwld,
     #[syntax]
     Wnti { world: Box<SString> },
+    // Ports
+    #[syntax(name = "prt: itot")]
+    PrtItot,
+    #[syntax(name = "prt: from")]
+    PrtFrom {
+        input_port: Box<Integer>,
+    },
+    //#[syntax(with_parser = "parse_float_cast")]
+    //FromFloat(Box<Float>),
 }
 
 impl From<i32> for Integer {
@@ -535,8 +544,14 @@ fn parse_literal(input: &str) -> CaosParseResult<&str, Integer> {
     map(LiteralInt::parse_caos, Integer::Raw)(input)
 }
 
+// fn parse_float_cast(input: &str) -> CaosParseResult<&str, Integer> {
+//     map(Float::parse_caos, |f| Integer::FromFloat(Box::new(f)))(input)
+// }
+
 #[cfg(test)]
 mod tests {
+    use crate::commands::Command;
+
     use super::*;
 
     #[test]
@@ -594,4 +609,19 @@ mod tests {
         let (_, res) = LiteralInt::parse_caos("32").expect("Good binary");
         assert_eq!(res, LiteralInt(32));
     }
+
+    // #[test]
+    // fn test_float_cast() {
+    //     let (_, res) = Command::parse_caos("snap va00 posx posy 119 139 100").expect("Valid command");
+    //     assert_eq!(
+    //         res,
+    //         Command::Snap { 
+    //             filename: SString::Variable(Box::new(Variable::Vaxx(0))), 
+    //             x_centre: Integer::FromFloat(Box::new(Float::Posx)), 
+    //             y_centre: Integer::FromFloat(Box::new(Float::Posy)), 
+    //             width: 119.into(), 
+    //             height: 139.into(), 
+    //             zoom_factor: 100.into()}
+    //     );
+    // }
 }
