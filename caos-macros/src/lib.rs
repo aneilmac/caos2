@@ -50,7 +50,7 @@ pub fn caos_evaluate_derive_fn(input: TokenStream) -> TokenStream {
                 type ReturnType = #ret_type;
                 fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
                     match self {
-                        #(#evaluators),*
+                        #(#evaluators)*
                     }
                 }
             }

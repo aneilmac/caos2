@@ -6,6 +6,7 @@ pub type Result<T> = std::result::Result<T, CaosError>;
 pub enum ErrorType {
     BlownStack,
     DecimalConversionFailure,
+    BadRegister,
 }
 
 #[derive(Debug, Clone)]

@@ -23,8 +23,8 @@ impl CaosParsable for Label {
 impl EvaluateCommand for Label {
     type ReturnType = String;
 
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
-        Ok(self.0)
+    fn evaluate(&self, _script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        Ok(self.0.clone())
     }
 }
 

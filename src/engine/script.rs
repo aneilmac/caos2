@@ -21,6 +21,14 @@ pub struct Script {
 }
 
 impl Script {
+    pub fn vaxx_mut(&mut self) -> &mut [Variadic; 100] {
+        &mut self.vaxx
+    }
+
+    pub fn vaxx(&self) -> &[Variadic; 100] {
+        &self.vaxx
+    }
+
     pub fn execute_next_command(&mut self) {
         let command = &self.commands[self.command_index];
         todo!()

@@ -1,5 +1,6 @@
 use crate::engine::AgentRef;
 
+#[derive(Debug, Clone)]
 pub enum Variadic {
     String(String),
     Integer(i32),

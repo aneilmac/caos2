@@ -1,4 +1,6 @@
 use crate::parser::CaosParseResult;
+use crate::{CaosError, ErrorType, Result};
+use crate::engine::{Variadic, Script};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::{
     bytes::complete::{tag_no_case, take},
@@ -9,7 +11,7 @@ use nom::{
 use super::{Agent, IntArg, SString};
 
 #[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(crate::engine::Variadic)]
+#[return_type(Variadic)]
 pub enum Variable {
     #[syntax]
     Velx,
@@ -26,7 +28,7 @@ pub enum Variable {
     Mvxx(u8),
     #[syntax(with_parser = "parse_ovxx")]
     Ovxx(u8),
-    #[syntax(with_parser = "parse_vaxx")]
+    #[syntax(with_parser = "parse_vaxx", with_evaluator="evaluate_vaxx")]
     Vaxx(u8),
     #[syntax(name = "_p1_")]
     P1,
@@ -50,6 +52,13 @@ fn parse_register<'a, 'b>(prefix: &'b str, input: &'a str) -> CaosParseResult<&'
     map_res(preceded(tag_no_case(prefix), take(2u32)), |s: &str| {
         s.parse::<u8>()
     })(input)
+}
+
+fn evaluate_vaxx(script: &mut Script, register: u8) -> Result<Variadic> {
+    script.vaxx_mut()
+    .get(register as usize)
+    .map(|s| (*s).clone())
+    .ok_or_else(|| CaosError::new(ErrorType::BadRegister))
 }
 
 #[cfg(test)]

@@ -7,13 +7,20 @@ pub fn to_match_expression(variant: &syn::Variant, evaluate_call: syn::Ident) ->
     match variant.fields {
         syn::Fields::Named(ref s) => {
             let s: Vec<_> = s.named.iter().map(|i| &i.ident).collect();
-            quote_spanned!(variant.span()=> Self::#name{#(#s),*} => #evaluate_call(#(<#s.evaluate(script)),*) )
+
+            quote_spanned!(variant.span()=> Self::#name{#(#s),*} => {
+                #(let #s = #s.evaluate(script)?; )*
+                #evaluate_call(script, #(#s),*) 
+            })
         }
         syn::Fields::Unnamed(ref s) => {
             let s: Vec<_> = s.unnamed.iter().enumerate().map(|(i, _)| format_ident!("arg{}", i) ).collect();
-            quote_spanned!(variant.span()=> Self::#name(#(#s),*) => #evaluate_call(#(<#s.evaluate(script)?),*) )
+            quote_spanned!(variant.span()=> Self::#name(#(#s),*) => {
+                #(let #s = #s.evaluate(script)?; )*
+                #evaluate_call(script, #(#s),*) 
+            })
         }
-        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => #evaluate_call() ),
+        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => #evaluate_call(), ),
     }
 }
 
@@ -22,11 +29,11 @@ pub fn to_match_todo_expression(variant: &syn::Variant) -> TokenStream {
     let todo_str = format!("Evaluator for `{}`", name);
     match variant.fields {
         syn::Fields::Named(..) => {
-            quote_spanned!(variant.span()=> Self::#name{..} => todo!(#todo_str))
+            quote_spanned!(variant.span()=> Self::#name{..} => todo!(#todo_str),)
         }
         syn::Fields::Unnamed(..) => {
-            quote_spanned!(variant.span()=> Self::#name(..) => todo!(#todo_str))
+            quote_spanned!(variant.span()=> Self::#name(..) => todo!(#todo_str),)
         }
-        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => todo!(#todo_str)),
+        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => todo!(#todo_str),),
     }
 }
