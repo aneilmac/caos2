@@ -1,6 +1,6 @@
 use super::{Anything, Decimal, IntArg, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList};
+use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::bytes::complete::tag;
 use nom::{
     branch::alt,
@@ -10,7 +10,8 @@ use nom::{
     sequence::delimited,
 };
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
+#[return_type(String)]
 pub enum SString {
     #[syntax(with_parser = "parse_raw")]
     Raw(String),

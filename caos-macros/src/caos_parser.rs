@@ -56,9 +56,12 @@ fn parse_variant_default(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2
     let keywords = keywords
         .split_whitespace()
         .map(|k| {
-            std::iter::once(quote_spanned!(variant.span()=> let (input, _) = tag_no_case(#k)(input)?;)).chain(
-                std::iter::once(quote_spanned!(variant.span()=> let (input, _) = caos_skippable1(input)?;)),
+            std::iter::once(
+                quote_spanned!(variant.span()=> let (input, _) = tag_no_case(#k)(input)?;),
             )
+            .chain(std::iter::once(
+                quote_spanned!(variant.span()=> let (input, _) = caos_skippable1(input)?;),
+            ))
         })
         .flatten();
     let keywords: Vec<_> = keywords.collect();

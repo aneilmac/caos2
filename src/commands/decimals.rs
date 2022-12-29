@@ -1,7 +1,10 @@
-use crate::parser::{CaosParsable, CaosParseResult};
+use crate::{parser::{CaosParsable, CaosParseResult}, engine::EvaluateCommand};
 
 use super::{Float, Integer, LiteralF32, LiteralInt, Variable};
-use nom::{combinator::{consumed, map}, branch::alt};
+use nom::{
+    branch::alt,
+    combinator::{consumed, map},
+};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Decimal {
@@ -35,9 +38,30 @@ impl CaosParsable for Decimal {
                 // TODO This might not be good for variable types
                 alt((
                     map(Variable::parse_caos, Decimal::Variable),
-                    map(Float::parse_caos, Decimal::Float), 
-                    map(Integer::parse_caos, Decimal::Integer)))(input)
+                    map(Float::parse_caos, Decimal::Float),
+                    map(Integer::parse_caos, Decimal::Integer),
+                ))(input)
             }
+        }
+    }
+}
+
+impl EvaluateCommand for Decimal {
+    type ReturnType = crate::engine::Variadic;
+
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        use crate::engine::Variadic;
+        match self {
+            Decimal::Variable(v) => { 
+                let v = v.evaluate(script)?;
+                if v.is_decimal() {
+                    Ok(v)
+                } else {
+                    Err(crate::CaosError::new(crate::ErrorType::DecimalConversionFailure))
+                }
+            },
+            Decimal::Integer(i) => i.evaluate(script).map(Variadic::from),
+            Decimal::Float(f) => f.evaluate(script).map(Variadic::from),
         }
     }
 }

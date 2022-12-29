@@ -1,4 +1,5 @@
 use super::LiteralInt;
+use crate::engine::EvaluateCommand;
 use crate::parser::caos_skippable1;
 use crate::parser::{CaosParsable, CaosParseResult};
 use nom::bytes::complete::tag_no_case;
@@ -12,6 +13,15 @@ use std::cmp::{max, min};
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum ByteString {
     Raw(Vec<u8>),
+}
+
+impl EvaluateCommand for ByteString {
+    type ReturnType = Vec<u8>;
+    fn evaluate(&self, _script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        match self {
+            Self::Raw(v) => Ok(v.clone()),
+        }
+    }
 }
 
 impl CaosParsable for ByteString {

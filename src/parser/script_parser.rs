@@ -18,7 +18,9 @@ pub fn parse_caos_script(input: &str) -> Result<(&str, Vec<Command>), VerboseErr
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::{Anything, Condition, ConditionType, Decimal, Float, Integer, Variable, IntArg, FloatArg};
+    use crate::commands::{
+        Anything, Condition, ConditionType, Decimal, FloatArg, IntArg, Integer, Variable,
+    };
 
     use super::*;
 
@@ -70,7 +72,9 @@ repe
                 Command::Tick {
                     tick_rate: IntArg::from_primary(9.into())
                 },
-                Command::Reps { count: IntArg::from_primary(100.into()) },
+                Command::Reps {
+                    count: IntArg::from_primary(100.into())
+                },
                 Command::NewSimp {
                     family: IntArg::from_primary(2.into()),
                     genus: IntArg::from_primary(10.into()),
@@ -111,11 +115,11 @@ repe
                     }
                 },
                 Command::Accg {
-                    acceleration:  FloatArg::from_primary(0.3f32.into())
+                    acceleration: FloatArg::from_primary(0.3f32.into())
                 },
                 Command::Else,
                 Command::Accg {
-                    acceleration:  FloatArg::from_primary(0.4f32.into())
+                    acceleration: FloatArg::from_primary(0.4f32.into())
                 },
                 Command::Endi,
                 Command::Mvto {
@@ -123,7 +127,7 @@ repe
                         value1: Box::new(IntArg::from_primary(217.into())),
                         value2: Box::new(IntArg::from_primary(2787.into()))
                     }),
-                    y:  FloatArg::from_primary(1840f32.into()),
+                    y: FloatArg::from_primary(1840f32.into()),
                 },
                 Command::Perm {
                     permiability: IntArg::from_primary(Integer::Rand {

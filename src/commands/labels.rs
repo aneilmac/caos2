@@ -1,4 +1,4 @@
-use crate::parser::{CaosParsable, CaosParseResult};
+use crate::{parser::{CaosParsable, CaosParseResult}, engine::EvaluateCommand};
 use nom::{bytes::complete::is_a, character::complete::alpha1, combinator::opt};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
@@ -17,6 +17,14 @@ impl CaosParsable for Label {
             input,
             Label(format!("{}{}", first_chars, remainder.unwrap_or(""))),
         ))
+    }
+}
+
+impl EvaluateCommand for Label {
+    type ReturnType = String;
+
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        Ok(self.0)
     }
 }
 

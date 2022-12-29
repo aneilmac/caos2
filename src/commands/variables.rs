@@ -1,5 +1,5 @@
 use crate::parser::CaosParseResult;
-use caos_macros::{CaosParsable, CommandList};
+use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::{
     bytes::complete::{tag_no_case, take},
     combinator::{map, map_res},
@@ -8,7 +8,8 @@ use nom::{
 
 use super::{Agent, IntArg, SString};
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
+#[return_type(crate::engine::Variadic)]
 pub enum Variable {
     #[syntax]
     Velx,

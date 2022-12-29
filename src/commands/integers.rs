@@ -1,6 +1,6 @@
-use super::{Agent, Anything, ByteString, IntArg, FloatArg, SString, Variable};
+use super::{Agent, Anything, ByteString, FloatArg, IntArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList};
+use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::branch::alt;
 use nom::bytes::complete::take_while1;
 use nom::character::complete::{anychar, char, i32};
@@ -49,7 +49,8 @@ fn parse_integer_binary(input: &str) -> CaosParseResult<&str, i32> {
     )(input)
 }
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
+#[return_type(i32)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
     Raw(LiteralInt),
@@ -68,9 +69,7 @@ pub enum Integer {
     #[syntax]
     Clac,
     #[syntax]
-    Clik {
-        which_value: Box<IntArg>,
-    },
+    Clik { which_value: Box<IntArg> },
     #[syntax]
     Fmly,
     #[syntax]
@@ -120,9 +119,7 @@ pub enum Integer {
         second: Box<Agent>,
     },
     #[syntax]
-    Visi {
-        check_all_cameras: Box<IntArg>,
-    },
+    Visi { check_all_cameras: Box<IntArg> },
     #[syntax]
     Wdth,
     #[syntax]
@@ -130,15 +127,11 @@ pub enum Integer {
     #[syntax]
     Cmry,
     #[syntax]
-    Loft {
-        filename: Box<SString>,
-    },
+    Loft { filename: Box<SString> },
     #[syntax]
     Meta,
     #[syntax]
-    Snax {
-        filename: Box<SString>,
-    },
+    Snax { filename: Box<SString> },
     #[syntax]
     Wdow,
     #[syntax]
@@ -162,9 +155,7 @@ pub enum Integer {
     #[syntax]
     Attn,
     #[syntax]
-    Body {
-        body_part: Box<IntArg>,
-    },
+    Body { body_part: Box<IntArg> },
     #[syntax]
     Bvar,
     #[syntax]
@@ -172,9 +163,7 @@ pub enum Integer {
     #[syntax]
     Cage,
     #[syntax]
-    Crea {
-        agent: Box<Agent>,
-    },
+    Crea { agent: Box<Agent> },
     #[syntax]
     Dead,
     #[syntax]
@@ -215,9 +204,7 @@ pub enum Integer {
     #[syntax]
     Cods,
     #[syntax]
-    Heap {
-        index: Box<IntArg>,
-    },
+    Heap { index: Box<IntArg> },
     #[syntax]
     Paws,
     #[syntax]
@@ -232,13 +219,9 @@ pub enum Integer {
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist coun")]
-    HistCoun {
-        moniker: Box<SString>,
-    },
+    HistCoun { moniker: Box<SString> },
     #[syntax(name = "hist cros")]
-    HistCros {
-        moniker: Box<SString>,
-    },
+    HistCros { moniker: Box<SString> },
     #[syntax(name = "hist find")]
     HistFind {
         moniker: Box<SString>,
@@ -252,17 +235,11 @@ pub enum Integer {
         from_index: Box<IntArg>,
     },
     #[syntax(name = "hist gend")]
-    HistGend {
-        moniker: Box<SString>,
-    },
+    HistGend { moniker: Box<SString> },
     #[syntax(name = "hist gnus")]
-    HistGnus {
-        moniker: Box<SString>,
-    },
+    HistGnus { moniker: Box<SString> },
     #[syntax(name = "hist mute")]
-    HistMute {
-        moniker: Box<SString>,
-    },
+    HistMute { moniker: Box<SString> },
     #[syntax(name = "hist rtim")]
     HistPrev {
         moniker: Box<SString>,
@@ -279,9 +256,7 @@ pub enum Integer {
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist vari")]
-    HistVari {
-        moniker: Box<SString>,
-    },
+    HistVari { moniker: Box<SString> },
     #[syntax(name = "hist wtik")]
     HistWnam {
         moniker: Box<SString>,
@@ -293,13 +268,9 @@ pub enum Integer {
         event_no: Box<IntArg>,
     },
     #[syntax]
-    Ooww {
-        moniker: Box<SString>,
-    },
+    Ooww { moniker: Box<SString> },
     #[syntax]
-    Keyd {
-        key_code: Box<IntArg>,
-    },
+    Keyd { key_code: Box<IntArg> },
     #[syntax]
     Mopx,
     #[syntax]
@@ -332,15 +303,9 @@ pub enum Integer {
     #[syntax]
     Down,
     #[syntax]
-    Gmap {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Gmap { x: Box<FloatArg>, y: Box<FloatArg> },
     #[syntax]
-    Grap {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Grap { x: Box<FloatArg>, y: Box<FloatArg> },
     #[syntax]
     Grid {
         agent: Box<Agent>,
@@ -376,13 +341,9 @@ pub enum Integer {
     #[syntax]
     Rght,
     #[syntax]
-    Room {
-        agent: Box<Agent>,
-    },
+    Room { agent: Box<Agent> },
     #[syntax]
-    Rtyp {
-        room_id: Box<IntArg>,
-    },
+    Rtyp { room_id: Box<IntArg> },
     #[syntax(name = "_up_")]
     Up,
     //Motion
@@ -402,15 +363,9 @@ pub enum Integer {
         delta_y: Box<FloatArg>,
     },
     #[syntax]
-    Tmvf {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Tmvf { x: Box<FloatArg>, y: Box<FloatArg> },
     #[syntax]
-    Tmvt {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Tmvt { x: Box<FloatArg>, y: Box<FloatArg> },
     #[syntax]
     Wall,
     // Resources
@@ -421,18 +376,14 @@ pub enum Integer {
         default_value: Box<IntArg>,
     },
     #[syntax(name = "pray coun")]
-    PrayCoun {
-        resource_type: Box<SString>,
-    },
+    PrayCoun { resource_type: Box<SString> },
     #[syntax(name = "pray deps")]
     PrayDeps {
         resource_name: Box<SString>,
         dp_install: Box<IntArg>,
     },
     #[syntax(name = "pray expo")]
-    PrayExpo {
-        chunk_name: Box<SString>,
-    },
+    PrayExpo { chunk_name: Box<SString> },
     #[syntax(name = "pray file")]
     PrayFile {
         resource_name: Box<SString>,
@@ -460,13 +411,9 @@ pub enum Integer {
         report_destination: Box<Variable>,
     },
     #[syntax(name = "pray size")]
-    PraySize {
-        resource_name: Box<SString>,
-    },
+    PraySize { resource_name: Box<SString> },
     #[syntax(name = "pray test")]
-    PrayTest {
-        resource_name: Box<SString>,
-    },
+    PrayTest { resource_name: Box<SString> },
     // Scripts
     #[syntax]
     Sorq {
@@ -489,21 +436,13 @@ pub enum Integer {
     #[syntax]
     Etik,
     #[syntax(name = "hist date")]
-    HistDate {
-        world_tick: Box<IntArg>,
-    },
+    HistDate { world_tick: Box<IntArg> },
     #[syntax(name = "hist sean")]
-    HistSean {
-        world_tick: Box<IntArg>,
-    },
+    HistSean { world_tick: Box<IntArg> },
     #[syntax(name = "hist time")]
-    HistTime {
-        world_tick: Box<IntArg>,
-    },
+    HistTime { world_tick: Box<IntArg> },
     #[syntax(name = "hist year")]
-    HistYear {
-        world_tick: Box<IntArg>,
-    },
+    HistYear { world_tick: Box<IntArg> },
     #[syntax]
     Mont,
     #[syntax]
@@ -541,34 +480,22 @@ pub enum Integer {
         index: Box<IntArg>,
     },
     #[syntax]
-    Ftoi {
-        number_to_convert: Box<FloatArg>,
-    },
+    Ftoi { number_to_convert: Box<FloatArg> },
     #[syntax]
     Rand {
         value1: Box<IntArg>,
         value2: Box<IntArg>,
     },
     #[syntax]
-    Rean {
-        catalogue_tag: Box<SString>,
-    },
+    Rean { catalogue_tag: Box<SString> },
     #[syntax]
-    Reaq {
-        catalogue_tag: Box<SString>,
-    },
+    Reaq { catalogue_tag: Box<SString> },
     #[syntax]
-    Stoi {
-        value: Box<SString>,
-    },
+    Stoi { value: Box<SString> },
     #[syntax]
-    Strl {
-        value: Box<SString>,
-    },
+    Strl { value: Box<SString> },
     #[syntax]
-    Type {
-        sometime: Box<Anything>,
-    },
+    Type { sometime: Box<Anything> },
     #[syntax]
     Vmjr,
     #[syntax]
@@ -590,16 +517,12 @@ pub enum Integer {
     #[syntax]
     Nwld,
     #[syntax]
-    Wnti {
-        world: Box<SString>,
-    },
+    Wnti { world: Box<SString> },
     // Ports
     #[syntax(name = "prt: itot")]
     PrtItot,
     #[syntax(name = "prt: from")]
-    PrtFrom {
-        input_port: Box<IntArg>,
-    },
+    PrtFrom { input_port: Box<IntArg> },
 }
 
 impl From<i32> for Integer {

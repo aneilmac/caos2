@@ -21,6 +21,12 @@ impl SyntaxToken {
         self.str_for_tag("with_parser")
     }
 
+    /// Find the contents of the metadata field `with_evaluator = "..."`
+    /// if it exists.
+    pub fn custom_evaluator(&self) -> Option<&syn::LitStr> {
+        self.str_for_tag("with_evaluator")
+    }
+
     fn str_for_tag(&self, tag: &str) -> Option<&syn::LitStr> {
         for m in self.meta.iter() {
             if let syn::NestedMeta::Meta(m) = m {

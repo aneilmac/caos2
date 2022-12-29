@@ -1,7 +1,9 @@
+//!
+//!  Produces implementations for the `CommandList` and `CaosParsable` derivatives.
+//!
+
 mod caos_parser;
-///
-/// Produces implementations for the `CommandList` and `CaosParsable` derivatives.
-///
+mod caos_evaluator;
 mod syntax_token;
 
 use proc_macro::TokenStream;
@@ -11,6 +13,53 @@ use syn::{parse_macro_input, Variant};
 
 use self::caos_parser::*;
 use self::syntax_token::SyntaxToken;
+
+#[proc_macro_derive(EvaluateCommand, attributes(return_type, syntax))]
+pub fn caos_evaluate_derive_fn(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+
+    let ret_type;
+    let ret_types: Vec<_> = input
+        .attrs
+        .iter()
+        .filter(|a| a.path.is_ident("return_type"))
+        .collect();
+        
+    if ret_types.len() != 1 {
+        panic!("Must have exactly 1 `#[ret_type]");
+    } else {
+        ret_type = ret_types.first().unwrap().parse_args::<syn::Type>().expect("Good path");
+    }
+
+    if let syn::Data::Enum(ref content) = input.data {
+        let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
+        let evaluators = marked_variants.iter().map(|(v, s)| {
+            match s.custom_evaluator() { 
+                Some(p) => {
+                    let custom_evaluator: syn::Ident = p.parse().expect("Expected valid function");
+                    caos_evaluator::to_match_expression(v, custom_evaluator)
+                }
+                None => {
+                    caos_evaluator::to_match_todo_expression(v)
+                }
+            }
+        });
+        let name = &input.ident;
+        let q = quote_spanned!(input.span() =>
+            impl crate::engine::EvaluateCommand for #name  {
+                type ReturnType = #ret_type;
+                fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+                    match self {
+                        #(#evaluators),*
+                    }
+                }
+            }
+        );
+        q.into()
+    } else {
+        panic!("This macro can only be used on enums");
+    }
+}
 
 /// Produces a const, static parameter on a type that derives from `CommandList` of the form:
 ///  `ALL_KEYWORDS : &[&str]`.
@@ -45,7 +94,7 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 
     if let syn::Data::Enum(ref content) = input.data {
-        let marked_variants: Vec<_> = marked_variants(content).collect();
+        let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
         let keywords = marked_variants.iter().filter_map(|(v, s)| {
             if s.custom_parser().is_none() {
                 Some(syntax_keyword(v, s))
@@ -105,7 +154,7 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
 
     if let syn::Data::Enum(ref content) = input.data {
-        let marked_variants: Vec<_> = marked_variants(content).collect();
+        let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
 
         let parse_combos = marked_variants.iter().map(|(v, s)| {
             let vname = v.ident.to_string();
@@ -148,14 +197,17 @@ fn syntax_keyword(variant: &Variant, syntax: &SyntaxToken) -> String {
 
 /// Discover all variants in an enum marked with the `#[syntax]` attribute. It is possible to have
 /// multiple syntax tokens per field but this is not used in practice.
-fn marked_variants(enum_content: &syn::DataEnum) -> impl Iterator<Item = (&Variant, SyntaxToken)> {
+fn marked_variants<'a, 'b: 'a>(
+    enum_content: &'a syn::DataEnum,
+    tag: &'b str,
+) -> impl Iterator<Item = (&'a Variant, SyntaxToken)> {
     return enum_content
         .variants
         .iter()
-        .map(|v| v.attrs.iter().map(move |a| (v, a)))
+        .map(move |v| v.attrs.iter().map(move |a| (v, a)))
         .flatten()
-        .filter_map(|(v, a)| {
-            if a.path.is_ident("syntax") {
+        .filter_map(move |(v, a)| {
+            if a.path.is_ident(tag) {
                 Some(if a.tokens.is_empty() {
                     (v, Default::default())
                 } else {

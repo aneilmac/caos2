@@ -1,6 +1,6 @@
-use super::{Agent, IntArg, FloatArg, SString};
+use super::{Agent, FloatArg, IntArg, SString};
 use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList};
+use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::combinator::map;
 use nom::number::complete::float;
 
@@ -32,14 +32,13 @@ impl CaosParsable for LiteralF32 {
     }
 }
 
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
+#[return_type(f32)]
 pub enum Float {
     #[syntax(with_parser = "parse_literal")]
     Raw(LiteralF32),
     #[syntax]
-    Disq {
-        other: Box<Agent>,
-    },
+    Disq { other: Box<Agent> },
     #[syntax]
     Fltx,
     #[syntax]
@@ -63,17 +62,13 @@ pub enum Float {
     #[syntax]
     Rnge,
     #[syntax]
-    Chem {
-        chemical: Box<IntArg>,
-    },
+    Chem { chemical: Box<IntArg> },
     #[syntax]
     Dftx,
     #[syntax]
     Dfty,
     #[syntax]
-    Driv {
-        drive: Box<IntArg>,
-    },
+    Driv { drive: Box<IntArg> },
     #[syntax]
     Loci {
         r#type: Box<IntArg>,
@@ -102,19 +97,13 @@ pub enum Float {
         ca_index: Box<IntArg>,
     },
     #[syntax]
-    Torx {
-        room_id: Box<IntArg>,
-    },
+    Torx { room_id: Box<IntArg> },
     #[syntax]
-    Tory {
-        room_id: Box<IntArg>,
-    },
+    Tory { room_id: Box<IntArg> },
     #[syntax]
     Accg,
     #[syntax]
-    Obst {
-        direction: Box<IntArg>,
-    },
+    Obst { direction: Box<IntArg> },
     #[syntax]
     Relx {
         first: Box<Agent>,
@@ -128,41 +117,23 @@ pub enum Float {
     #[syntax]
     Pace,
     #[syntax]
-    Acos {
-        x: Box<FloatArg>,
-    },
+    Acos { x: Box<FloatArg> },
     #[syntax]
-    Asin {
-        x: Box<FloatArg>,
-    },
+    Asin { x: Box<FloatArg> },
     #[syntax]
-    Atan {
-        x: Box<FloatArg>,
-    },
+    Atan { x: Box<FloatArg> },
     #[syntax(name = "cos_")]
-    Cos {
-        theta: Box<FloatArg>,
-    },
+    Cos { theta: Box<FloatArg> },
     #[syntax]
-    Itof {
-        number_to_convert: Box<IntArg>,
-    },
+    Itof { number_to_convert: Box<IntArg> },
     #[syntax(name = "sin_")]
-    Sin {
-        theta: Box<FloatArg>,
-    },
+    Sin { theta: Box<FloatArg> },
     #[syntax]
-    Sqrt {
-        value: Box<FloatArg>,
-    },
+    Sqrt { value: Box<FloatArg> },
     #[syntax]
-    Stof {
-        value: Box<SString>,
-    },
+    Stof { value: Box<SString> },
     #[syntax(name = "tan_")]
-    Tan {
-        theta: Box<FloatArg>,
-    },
+    Tan { theta: Box<FloatArg> },
 }
 
 impl From<f32> for Float {

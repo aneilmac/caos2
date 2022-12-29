@@ -1,11 +1,12 @@
 use super::{IntArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList};
+use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::combinator::map;
 
 /// Agent types represents a reference to an in-game CAOS
 /// Agent.
-#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
+#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
+#[return_type(crate::engine::AgentRef)]
 pub enum Agent {
     #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
@@ -73,8 +74,8 @@ fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
 
 #[cfg(test)]
 mod test {
-    use crate::commands::Integer;
     use super::*;
+    use crate::commands::Integer;
 
     #[test]
     fn test_simple_agent() {

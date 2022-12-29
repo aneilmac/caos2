@@ -1,9 +1,11 @@
-use crate::commands::{Agent, ByteString, Decimal, SString, Variable, Integer, Float};
+use crate::commands::{Agent, ByteString, Decimal, Float, Integer, SString, Variable};
+use crate::engine::EvaluateCommand;
 use crate::parser::{CaosParsable, CaosParseResult};
 use nom::branch::alt;
 use nom::combinator::map;
 
 #[derive(Eq, PartialEq, Debug, Clone)]
+
 pub enum Anything {
     Variable(Variable),
     String(SString),
@@ -45,5 +47,19 @@ impl CaosParsable for Anything {
             map(ByteString::parse_caos, Anything::ByteString),
             map(Agent::parse_caos, Anything::Agent),
         ))(input)
+    }
+}
+
+impl EvaluateCommand for Anything {
+    type ReturnType = crate::engine::Variadic;
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        use crate::engine::Variadic;
+        match self {
+            Anything::Variable(v) => v.evaluate(script),
+            Anything::String(s) => s.evaluate(script).map(Variadic::from),
+            Anything::Decimal(d) => d.evaluate(script).map(Variadic::from),
+            Anything::ByteString(_) => todo!(),
+            Anything::Agent(_) => todo!(),
+        }
     }
 }

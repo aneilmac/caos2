@@ -1,15 +1,16 @@
 use nom::branch::alt;
 use nom::combinator::map;
 
-use crate::commands::{Integer, Float, Variable};
+use crate::commands::{Float, Integer, Variable};
 
+use crate::engine::EvaluateCommand;
 use crate::parser::{CaosParsable, CaosParseResult};
 
 pub type IntArg = DecimalArg<Integer, Float>;
 
 pub type FloatArg = DecimalArg<Float, Integer>;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub enum DecimalArg<P, C> {
     Primary(P),
     Castable(C),
@@ -37,8 +38,10 @@ impl<P: CaosParsable, C> From<P> for DecimalArg<P, C> {
 }
 
 impl<P, C> CaosParsable for DecimalArg<P, C>
-    where P: CaosParsable,
-          C: CaosParsable {
+where
+    P: CaosParsable,
+    C: CaosParsable,
+{
     fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where
         Self: Sized,
@@ -51,12 +54,26 @@ impl<P, C> CaosParsable for DecimalArg<P, C>
     }
 }
 
+impl EvaluateCommand for IntArg {
+    type ReturnType = <Integer as EvaluateCommand>::ReturnType;
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        todo!()
+    }
+}
+
+impl EvaluateCommand for FloatArg {
+    type ReturnType = <Float as EvaluateCommand>::ReturnType;
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        todo!()
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::commands::{Command, Variable, SString};
+    use crate::commands::{Command, SString, Variable};
 
     use super::*;
-    
+
     #[test]
     fn test_integer_cast() {
         let (_, res) = Command::parse_caos("mvto rand 217 2787 1840").expect("Valid command");

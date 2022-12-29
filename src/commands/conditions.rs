@@ -1,4 +1,4 @@
-use crate::parser::caos_skippable1;
+use crate::{parser::caos_skippable1, engine::EvaluateCommand};
 use nom::{branch::alt, bytes::complete::tag_no_case, combinator::map};
 
 use super::Anything;
@@ -120,9 +120,17 @@ impl CaosParsable for ConditionType {
     }
 }
 
+impl EvaluateCommand for Condition {
+    type ReturnType = bool;
+
+    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+        todo!()
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::commands::{Variable, Command, Integer, Float, IntArg, FloatArg};
+    use crate::commands::{Command, Float, IntArg, Integer, Variable};
 
     use super::*;
 
@@ -269,43 +277,48 @@ mod tests {
 
     #[test]
     fn test_complex_condition() {
-        let (_, res) = Command::parse_caos("doif aslp ne 0 or dead eq 1 or uncs eq 1 or loci 1 1 4 9 ne 0.0").expect("Successful parse"); 
-        // doif (aslp ne 0) or (dead eq 1) or (uncs eq 1) or (loci 1 1 4 9 ne 0.0)
-        assert_eq!(res,
-            Command::Doif { condition: Condition::Combination { 
-                c_lhs: Box::new(Condition::Simple { 
-                    cond_type: ConditionType::Ne, 
-                    lhs: Integer::Aslp.into(), 
-                    rhs: Integer::from(0).into(), 
-                }), 
-                c_rhs: Box::new(Condition::Combination { 
-                    c_lhs: Box::new(Condition::Simple { 
-                        cond_type: ConditionType::Eq, 
-                        lhs: Integer::Dead.into(), 
-                        rhs: Integer::from(1).into(),
-                    }), 
-                    c_rhs: Box::new(Condition::Combination { 
-                        c_lhs: Box::new(Condition::Simple { 
-                            cond_type: ConditionType::Eq, 
-                            lhs: Integer::Uncs.into(), 
-                            rhs: Integer::from(1).into() 
+        let (_, res) =
+            Command::parse_caos("doif aslp ne 0 or dead eq 1 or uncs eq 1 or loci 1 1 4 9 ne 0.0")
+                .expect("Successful parse");
+        assert_eq!(
+            res,
+            Command::Doif {
+                condition: Condition::Combination {
+                    c_lhs: Box::new(Condition::Simple {
+                        cond_type: ConditionType::Ne,
+                        lhs: Integer::Aslp.into(),
+                        rhs: Integer::from(0).into(),
+                    }),
+                    c_rhs: Box::new(Condition::Combination {
+                        c_lhs: Box::new(Condition::Simple {
+                            cond_type: ConditionType::Eq,
+                            lhs: Integer::Dead.into(),
+                            rhs: Integer::from(1).into(),
                         }),
-                        c_rhs: Box::new(Condition::Simple { 
-                            cond_type: ConditionType::Ne, 
-                            lhs: Float::Loci { 
-                                r#type: Box::new(IntArg::from_primary(1.into())), 
-                                organ: Box::new(IntArg::from_primary(1.into())), 
-                                tissue: Box::new(IntArg::from_primary(4.into())), 
-                                id: Box::new(IntArg::from_primary(9.into())),
-                            }.into(), 
-                            rhs: Float::from(0.0).into()
-                        }), 
-                        join_type: JoinType::Or, 
-                    }), 
-                    join_type: JoinType::Or, 
-                }), 
-                join_type: JoinType::Or } }
+                        c_rhs: Box::new(Condition::Combination {
+                            c_lhs: Box::new(Condition::Simple {
+                                cond_type: ConditionType::Eq,
+                                lhs: Integer::Uncs.into(),
+                                rhs: Integer::from(1).into()
+                            }),
+                            c_rhs: Box::new(Condition::Simple {
+                                cond_type: ConditionType::Ne,
+                                lhs: Float::Loci {
+                                    r#type: Box::new(IntArg::from_primary(1.into())),
+                                    organ: Box::new(IntArg::from_primary(1.into())),
+                                    tissue: Box::new(IntArg::from_primary(4.into())),
+                                    id: Box::new(IntArg::from_primary(9.into())),
+                                }
+                                .into(),
+                                rhs: Float::from(0.0).into()
+                            }),
+                            join_type: JoinType::Or,
+                        }),
+                        join_type: JoinType::Or,
+                    }),
+                    join_type: JoinType::Or
+                }
+            }
         );
-        
     }
 }
