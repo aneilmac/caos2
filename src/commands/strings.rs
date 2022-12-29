@@ -1,3 +1,6 @@
+mod evaluators;
+
+use evaluators::*;
 use super::{Anything, Decimal, IntArg, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
@@ -13,7 +16,7 @@ use nom::{
 #[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
 #[return_type(String)]
 pub enum SString {
-    #[syntax(with_parser = "parse_raw")]
+    #[syntax(with_parser = "parse_raw", with_evaluator="eval_raw")]
     Raw(String),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),

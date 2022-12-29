@@ -7,6 +7,7 @@ pub enum ErrorType {
     BlownStack,
     DecimalConversionFailure,
     BadRegister,
+    ParseError,
 }
 
 #[derive(Debug, Clone)]

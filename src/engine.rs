@@ -13,7 +13,7 @@ pub use script::*;
 pub use stimulus_type::*;
 pub use variadic::*;
 
-pub(in crate) use evaluate_command::*;
+pub(crate) use evaluate_command::*;
 
 use std::collections::HashMap;
 

@@ -8,6 +8,7 @@ mod decimals;
 mod floats;
 mod integers;
 mod labels;
+mod literal_f32;
 mod strings;
 mod variables;
 
@@ -21,5 +22,6 @@ pub use decimals::*;
 pub use floats::*;
 pub use integers::*;
 pub use labels::*;
+pub use literal_f32::*;
 pub use strings::*;
 pub use variables::*;

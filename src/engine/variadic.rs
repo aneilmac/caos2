@@ -6,42 +6,42 @@ pub enum Variadic {
     Integer(i32),
     Float(f32),
     Agent(AgentRef),
-    ByteString(Vec<u8>)
+    ByteString(Vec<u8>),
 }
 
 impl Variadic {
     pub fn is_string(&self) -> bool {
         match self {
             Self::String(..) => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn is_integer(&self) -> bool {
         match self {
             Self::Integer(..) => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn is_float(&self) -> bool {
         match self {
             Self::Float(..) => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn is_agent(&self) -> bool {
         match self {
             Self::Agent(..) => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn is_byte_string(&self) -> bool {
         match self {
             Self::ByteString(..) => true,
-            _ => false
+            _ => false,
         }
     }
 
@@ -67,7 +67,6 @@ impl From<i32> for Variadic {
         Self::Integer(i)
     }
 }
-
 
 impl From<f32> for Variadic {
     fn from(f: f32) -> Self {

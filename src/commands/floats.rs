@@ -1,41 +1,17 @@
+mod evaluators;
+
 use super::{Agent, FloatArg, IntArg, SString};
 use crate::parser::{CaosParsable, CaosParseResult};
+use crate::commands::LiteralF32;
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::combinator::map;
-use nom::number::complete::float;
 
-/// We want strict equality for our tokens, so we wrap the f32 up and compare it bitwise to ensure
-/// "true" equality for token parsing.
-#[derive(Debug, Clone)]
-pub struct LiteralF32(f32);
-
-impl PartialEq for LiteralF32 {
-    fn eq(&self, other: &Self) -> bool {
-        self.0.to_bits() == other.0.to_bits()
-    }
-}
-
-impl Eq for LiteralF32 {}
-
-impl From<f32> for LiteralF32 {
-    fn from(f: f32) -> Self {
-        LiteralF32(f)
-    }
-}
-
-impl CaosParsable for LiteralF32 {
-    fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
-    where
-        Self: Sized,
-    {
-        map(float, LiteralF32)(input)
-    }
-}
+use evaluators::*;
 
 #[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
 #[return_type(f32)]
 pub enum Float {
-    #[syntax(with_parser = "parse_literal")]
+    #[syntax(with_parser = "parse_literal", with_evaluator="eval_raw")]
     Raw(LiteralF32),
     #[syntax]
     Disq { other: Box<Agent> },
@@ -130,9 +106,14 @@ pub enum Float {
     Sin { theta: Box<FloatArg> },
     #[syntax]
     Sqrt { value: Box<FloatArg> },
-    #[syntax]
+    #[syntax(with_evaluator = "eval_stof")]
+    /// Converts a string in decimal to a floating point number. 
+    /// Characters in the string after an initial number are quietly ignored. 
+    /// If there is no obvious number then zero is returned.
     Stof { value: Box<SString> },
-    #[syntax(name = "tan_")]
+    /// Returns tangent of theta. Theta should be in degrees. 
+    /// Watch out for those nasty discontinuities at 90 and 270.
+    #[syntax(name = "tan_", with_evaluator = "eval_tan")]
     Tan { theta: Box<FloatArg> },
 }
 

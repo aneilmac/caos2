@@ -1,4 +1,7 @@
-use crate::{parser::{CaosParsable, CaosParseResult}, engine::EvaluateCommand};
+use crate::{
+    engine::EvaluateCommand,
+    parser::{CaosParsable, CaosParseResult},
+};
 
 use super::{Float, Integer, LiteralF32, LiteralInt, Variable};
 use nom::{
@@ -52,14 +55,16 @@ impl EvaluateCommand for Decimal {
     fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
         use crate::engine::Variadic;
         match self {
-            Decimal::Variable(v) => { 
+            Decimal::Variable(v) => {
                 let v = v.evaluate(script)?;
                 if v.is_decimal() {
                     Ok(v)
                 } else {
-                    Err(crate::CaosError::new(crate::ErrorType::DecimalConversionFailure))
+                    Err(crate::CaosError::new(
+                        crate::ErrorType::DecimalConversionFailure,
+                    ))
                 }
-            },
+            }
             Decimal::Integer(i) => i.evaluate(script).map(Variadic::from),
             Decimal::Float(f) => f.evaluate(script).map(Variadic::from),
         }

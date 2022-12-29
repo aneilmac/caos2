@@ -2,8 +2,9 @@ use nom::branch::alt;
 use nom::combinator::map;
 
 use crate::commands::{Float, Integer, Variable};
+use crate::{CaosError, ErrorType};
 
-use crate::engine::EvaluateCommand;
+use crate::engine::{EvaluateCommand, Variadic};
 use crate::parser::{CaosParsable, CaosParseResult};
 
 pub type IntArg = DecimalArg<Integer, Float>;
@@ -54,17 +55,46 @@ where
     }
 }
 
-impl EvaluateCommand for IntArg {
-    type ReturnType = <Integer as EvaluateCommand>::ReturnType;
+impl<P, C> EvaluateCommand for DecimalArg<P, C>
+where
+    P: EvaluateCommand,
+    C: EvaluateCommand,
+    <P as EvaluateCommand>::ReturnType:
+        Castable<<C as EvaluateCommand>::ReturnType> + Castable<f32> + Castable<i32>,
+{
+    type ReturnType = <P as EvaluateCommand>::ReturnType;
     fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
-        todo!()
+        match self {
+            Self::Primary(p) => p.evaluate(script),
+            Self::Castable(c) => c.evaluate(script).map(|c| Self::ReturnType::cast(c)),
+            Self::Variable(v) => v.evaluate(script).and_then(|v| match v {
+                Variadic::Float(f) => Ok(Self::ReturnType::cast(f)),
+                Variadic::Integer(i) => Ok(Self::ReturnType::cast(i)),
+                _ => Err(CaosError::new(ErrorType::DecimalConversionFailure)),
+            }),
+        }
     }
 }
 
-impl EvaluateCommand for FloatArg {
-    type ReturnType = <Float as EvaluateCommand>::ReturnType;
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
-        todo!()
+trait Castable<T> {
+    fn cast(t: T) -> Self;
+}
+
+impl<T> Castable<T> for T {
+    fn cast(t: T) -> Self {
+        t
+    }
+}
+
+impl Castable<f32> for i32 {
+    fn cast(f: f32) -> Self {
+        f as Self
+    }
+}
+
+impl Castable<i32> for f32 {
+    fn cast(i: i32) -> Self {
+        i as Self
     }
 }
 

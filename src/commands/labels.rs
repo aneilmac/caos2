@@ -1,4 +1,7 @@
-use crate::{parser::{CaosParsable, CaosParseResult}, engine::EvaluateCommand};
+use crate::{
+    engine::EvaluateCommand,
+    parser::{CaosParsable, CaosParseResult},
+};
 use nom::{bytes::complete::is_a, character::complete::alpha1, combinator::opt};
 
 #[derive(Eq, PartialEq, Debug, Clone)]

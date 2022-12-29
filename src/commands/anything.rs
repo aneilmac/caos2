@@ -58,8 +58,8 @@ impl EvaluateCommand for Anything {
             Anything::Variable(v) => v.evaluate(script),
             Anything::String(s) => s.evaluate(script).map(Variadic::from),
             Anything::Decimal(d) => d.evaluate(script).map(Variadic::from),
-            Anything::ByteString(_) => todo!(),
-            Anything::Agent(_) => todo!(),
+            Anything::ByteString(b) => b.evaluate(script).map(Variadic::from),
+            Anything::Agent(a) => a.evaluate(script).map(Variadic::from),
         }
     }
 }

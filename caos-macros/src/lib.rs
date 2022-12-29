@@ -2,8 +2,8 @@
 //!  Produces implementations for the `CommandList` and `CaosParsable` derivatives.
 //!
 
-mod caos_parser;
 mod caos_evaluator;
+mod caos_parser;
 mod syntax_token;
 
 use proc_macro::TokenStream;
@@ -24,31 +24,34 @@ pub fn caos_evaluate_derive_fn(input: TokenStream) -> TokenStream {
         .iter()
         .filter(|a| a.path.is_ident("return_type"))
         .collect();
-        
+
     if ret_types.len() != 1 {
         panic!("Must have exactly 1 `#[ret_type]");
     } else {
-        ret_type = ret_types.first().unwrap().parse_args::<syn::Type>().expect("Good path");
+        ret_type = ret_types
+            .first()
+            .unwrap()
+            .parse_args::<syn::Type>()
+            .expect("Good path");
     }
 
     if let syn::Data::Enum(ref content) = input.data {
         let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
-        let evaluators = marked_variants.iter().map(|(v, s)| {
-            match s.custom_evaluator() { 
+        let evaluators = marked_variants
+            .iter()
+            .map(|(v, s)| match s.custom_evaluator() {
                 Some(p) => {
                     let custom_evaluator: syn::Ident = p.parse().expect("Expected valid function");
                     caos_evaluator::to_match_expression(v, custom_evaluator)
                 }
-                None => {
-                    caos_evaluator::to_match_todo_expression(v)
-                }
-            }
-        });
+                None => caos_evaluator::to_match_todo_expression(v),
+            });
         let name = &input.ident;
         let q = quote_spanned!(input.span() =>
             impl crate::engine::EvaluateCommand for #name  {
                 type ReturnType = #ret_type;
                 fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+                    use crate::engine::EvaluateCommandDeref;
                     match self {
                         #(#evaluators)*
                     }
