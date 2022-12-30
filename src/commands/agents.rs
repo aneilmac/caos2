@@ -1,3 +1,6 @@
+mod evaluators;
+
+use evaluators::*;
 use super::{IntArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
@@ -38,7 +41,7 @@ pub enum Agent {
     },
     #[syntax]
     Pntr,
-    #[syntax]
+    #[syntax(with_evaluator="eval_targ")]
     Targ,
     #[syntax]
     Twin {

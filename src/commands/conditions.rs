@@ -1,4 +1,7 @@
-use crate::{engine::EvaluateCommand, parser::caos_skippable1};
+use crate::{
+    engine::{EvaluateCommand, ScriptRefMut},
+    parser::caos_skippable1,
+};
 use nom::{branch::alt, bytes::complete::tag_no_case, combinator::map};
 
 use super::Anything;
@@ -123,8 +126,41 @@ impl CaosParsable for ConditionType {
 impl EvaluateCommand for Condition {
     type ReturnType = bool;
 
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
-        todo!()
+    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
+        match self {
+            Condition::Simple {
+                cond_type,
+                lhs,
+                rhs,
+            } => {
+                let lhs = lhs.evaluate(script)?;
+                let rhs = rhs.evaluate(script)?;
+                Ok(match cond_type {
+                    ConditionType::Eq => lhs.eq(&rhs)?,
+                    ConditionType::Ne => !lhs.eq(&rhs)?,
+                    ConditionType::Ge => lhs.partial_cmp(&rhs)?.map(|f| f.is_ge()).unwrap_or(false),
+                    ConditionType::Gt => lhs.partial_cmp(&rhs)?.map(|f| f.is_gt()).unwrap_or(false),
+                    ConditionType::Le => lhs.partial_cmp(&rhs)?.map(|f| f.is_le()).unwrap_or(false),
+                    ConditionType::Lt => lhs.partial_cmp(&rhs)?.map(|f| f.is_lt()).unwrap_or(false),
+                })
+            }
+            Condition::Combination {
+                c_lhs,
+                c_rhs,
+                join_type,
+            } => {
+                // According to the Creatures Wiki this conditional does **not** short
+                // circuit in the original CAOS implementation --
+                // thus we will not short circuit either until it can be proven it is an optimization
+                // that leads to incorrect behaviour.
+                let c_lhs = c_lhs.evaluate(script)?;
+                let c_rhs = c_rhs.evaluate(script)?;
+                Ok(match join_type {
+                    JoinType::And => c_lhs && c_rhs,
+                    JoinType::Or => c_lhs || c_rhs,
+                })
+            }
+        }
     }
 }
 

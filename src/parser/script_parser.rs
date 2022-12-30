@@ -1,4 +1,4 @@
-use crate::commands::Command;
+use crate::commands::{Command};
 use crate::parser::CaosParsable;
 use crate::parser::{caos_skippable0, caos_skippable1};
 use nom::combinator::all_consuming;

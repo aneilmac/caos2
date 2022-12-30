@@ -4,7 +4,7 @@ use nom::combinator::map;
 use crate::commands::{Float, Integer, Variable};
 use crate::{CaosError, ErrorType};
 
-use crate::engine::{EvaluateCommand, Variadic};
+use crate::engine::{EvaluateCommand, ScriptRefMut, Variadic};
 use crate::parser::{CaosParsable, CaosParseResult};
 
 pub type IntArg = DecimalArg<Integer, Float>;
@@ -63,7 +63,7 @@ where
         Castable<<C as EvaluateCommand>::ReturnType> + Castable<f32> + Castable<i32>,
 {
     type ReturnType = <P as EvaluateCommand>::ReturnType;
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
         match self {
             Self::Primary(p) => p.evaluate(script),
             Self::Castable(c) => c.evaluate(script).map(|c| Self::ReturnType::cast(c)),

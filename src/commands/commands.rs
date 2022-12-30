@@ -1,9 +1,12 @@
+mod evaluators;
+
 use super::{
     Agent, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, LiteralInt, SString,
     Variable,
 };
 use crate::parser::CaosParseResult;
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
+use evaluators::*;
 
 #[derive(CaosParsable, CommandList, EvaluateCommand, Eq, PartialEq, Clone, Debug)]
 #[return_type(())]
@@ -22,8 +25,6 @@ pub enum Command {
     Iscr,
     #[syntax]
     Rscr,
-    #[syntax]
-    Drft,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },
@@ -35,7 +36,6 @@ pub enum Command {
     Base { index: IntArg },
     #[syntax]
     Bhvr { permissions: IntArg },
-    #[syntax]
     #[syntax]
     Enum {
         family: IntArg,
@@ -988,7 +988,7 @@ pub enum Command {
     Mulv { var: Variable, mul: Decimal },
     #[syntax]
     Negv { var: Variable },
-    #[syntax]
+    #[syntax(with_evaluator="eval_orrv")]
     Orrv { var: Variable, value: IntArg },
     #[syntax]
     Reaf,

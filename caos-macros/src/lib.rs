@@ -48,10 +48,9 @@ pub fn caos_evaluate_derive_fn(input: TokenStream) -> TokenStream {
             });
         let name = &input.ident;
         let q = quote_spanned!(input.span() =>
-            impl crate::engine::EvaluateCommand for #name  {
+            impl<'a> crate::engine::EvaluateCommand for #name  {
                 type ReturnType = #ret_type;
-                fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
-                    use crate::engine::EvaluateCommandDeref;
+                fn evaluate(&self, script: &mut crate::engine::ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
                     match self {
                         #(#evaluators)*
                     }

@@ -1,4 +1,4 @@
-use crate::engine::{Script, Variadic};
+use crate::engine::{ScriptRefMut, Variadic};
 use crate::parser::CaosParseResult;
 use crate::{CaosError, ErrorType, Result};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
@@ -54,8 +54,9 @@ fn parse_register<'a, 'b>(prefix: &'b str, input: &'a str) -> CaosParseResult<&'
     })(input)
 }
 
-fn evaluate_vaxx(script: &mut Script, register: u8) -> Result<Variadic> {
+fn evaluate_vaxx(script: &mut ScriptRefMut<'_>, register: u8) -> Result<Variadic> {
     script
+        .script_data
         .vaxx_mut()
         .get(register as usize)
         .map(|s| (*s).clone())

@@ -1,4 +1,5 @@
 use crate::engine::AgentRef;
+use crate::{CaosError, ErrorType, Result};
 
 #[derive(Debug, Clone)]
 pub enum Variadic {
@@ -47,6 +48,32 @@ impl Variadic {
 
     pub fn is_decimal(&self) -> bool {
         self.is_integer() || self.is_float()
+    }
+
+    pub(crate) fn eq(&self, other: &Self) -> Result<bool> {
+        match (self, other) {
+            (Self::String(l0), Self::String(r0)) => Ok(l0 == r0),
+            (Self::Integer(l0), Self::Integer(r0)) => Ok(l0 == r0),
+            (Self::Float(l0), Self::Float(r0)) => Ok(l0 == r0),
+            (Self::Agent(l0), Self::Agent(r0)) => Ok(l0 == r0),
+            (Self::ByteString(l0), Self::ByteString(r0)) => Ok(l0 == r0),
+            (Self::Integer(l0), Self::Float(r0)) => Ok(*l0 as f32 == *r0),
+            (Self::Float(l0), Self::Integer(r0)) => Ok(*l0 == *r0 as f32),
+            _ => Err(CaosError::new(ErrorType::TypeMismatch)),
+        }
+    }
+
+    pub(crate) fn partial_cmp(&self, other: &Self) -> Result<Option<std::cmp::Ordering>> {
+        match (self, other) {
+            (Self::String(l0), Self::String(r0)) => Ok(l0.partial_cmp(r0)),
+            (Self::Integer(l0), Self::Integer(r0)) => Ok(l0.partial_cmp(r0)),
+            (Self::Float(l0), Self::Float(r0)) => Ok(l0.partial_cmp(r0)),
+            (Self::Agent(l0), Self::Agent(r0)) => Ok(l0.partial_cmp(r0)),
+            (Self::ByteString(l0), Self::ByteString(r0)) => Ok(l0.partial_cmp(r0)),
+            (Self::Integer(l0), Self::Float(r0)) => Ok((*l0 as f32).partial_cmp(r0)),
+            (Self::Float(l0), Self::Integer(r0)) => Ok(l0.partial_cmp(&(*r0 as f32))),
+            _ => Err(CaosError::new(ErrorType::TypeMismatch)),
+        }
     }
 }
 

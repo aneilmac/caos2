@@ -1,89 +1,69 @@
-use crate::engine::Script;
+use crate::engine::ScriptRefMut;
 use crate::Result;
 
 use super::AgentRef;
 
+/// Used to evaluate a Command structure and returns  its given `ReturnType`.
+/// E.g. an `IntArg` will be evaluated and produce an `i32`,
+/// a `Condition` will be evaluated and produce a `bool`.
 pub(crate) trait EvaluateCommand {
     type ReturnType;
 
-    fn evaluate(&self, script: &mut Script) -> Result<Self::ReturnType>;
+    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType>;
 }
 
 impl EvaluateCommand for u8 {
     type ReturnType = u8;
 
-    fn evaluate(&self, _script: &mut Script) -> Result<Self::ReturnType> {
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
         Ok(*self)
     }
 }
 
-impl EvaluateCommand for String {
-    type ReturnType = String;
-
-    fn evaluate(&self, _script: &mut Script) -> Result<Self::ReturnType> {
-        Ok(self.clone())
-    }
-}
-
-/// Helper trait to choose whether to pass an argument
-/// by ref or by copy. Is only used to neaten up the 
-/// signatures of the evaluate methods. For example:
-/// we can take arguments by `bool` as opposed to by `&bool`.
-pub(in crate) trait EvaluateCommandDeref {
-    type ReturnType;
-
-    fn ederef(self) -> Self::ReturnType;
-}
-
-impl<'a> EvaluateCommandDeref for &'a bool {
-    type ReturnType = bool;
-    fn ederef(self) -> Self::ReturnType {
-        *self
-    }
-}
-
-impl<'a> EvaluateCommandDeref for &'a u8 {
-    type ReturnType = u8;
-    fn ederef(self) -> Self::ReturnType {
-        *self
-    }
-}
-
-impl<'a> EvaluateCommandDeref for &'a i32 {
-    type ReturnType = i32;
-    fn ederef(self) -> Self::ReturnType {
-        *self
-    }
-}
-
-impl<'a> EvaluateCommandDeref for &'a f32 {
+impl EvaluateCommand for f32 {
     type ReturnType = f32;
-    fn ederef(self) -> Self::ReturnType {
-        *self
+
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
     }
 }
 
-impl<'a> EvaluateCommandDeref for &'a String {
-    type ReturnType = &'a str;
+impl EvaluateCommand for i32 {
+    type ReturnType = i32;
 
-    fn ederef(self) -> Self::ReturnType {
-        self
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
     }
 }
 
-impl<'a> EvaluateCommandDeref for &'a Vec<u8> {
-    type ReturnType = &'a [u8];
+impl EvaluateCommand for bool {
+    type ReturnType = bool;
 
-    fn ederef(self) -> Self::ReturnType {
-        self
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
     }
 }
 
-impl<'a> EvaluateCommandDeref for &'a crate::engine::Variadic {
-    type ReturnType = &'a crate::engine::Variadic;
+impl<'a> EvaluateCommand for &'a String {
+    type ReturnType = &'a String;
 
-    fn ederef(self) -> Self::ReturnType {
-        self
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
     }
 }
 
+impl<'a> EvaluateCommand for &'a Vec<u8> {
+    type ReturnType = &'a Vec<u8>;
+
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
+    }
+}
+
+impl<'a> EvaluateCommand for &'a AgentRef {
+    type ReturnType = &'a AgentRef;
+
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
+        Ok(*self)
+    }
+}

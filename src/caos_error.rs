@@ -8,6 +8,9 @@ pub enum ErrorType {
     DecimalConversionFailure,
     BadRegister,
     ParseError,
+    TypeMismatch,
+    TooManyInstallScripts,
+    TooManyRemovalScripts,
 }
 
 #[derive(Debug, Clone)]

@@ -9,7 +9,7 @@ pub fn to_match_expression(variant: &syn::Variant, evaluate_call: syn::Ident) ->
             let s: Vec<_> = s.named.iter().map(|i| &i.ident).collect();
             quote_spanned!(variant.span()=> Self::#name{#(#s),*} => {
                 #(let #s = #s.evaluate(script)?; )*
-                #evaluate_call(script, #((&#s).ederef()),*)
+                #evaluate_call(script, #(#s),*)
             })
         }
         syn::Fields::Unnamed(ref s) => {
@@ -21,10 +21,10 @@ pub fn to_match_expression(variant: &syn::Variant, evaluate_call: syn::Ident) ->
                 .collect();
             quote_spanned!(variant.span()=> Self::#name(#(#s),*) => {
                 #(let #s = #s.evaluate(script)?; )*
-                #evaluate_call(script, #((&#s).ederef()),*)
+                #evaluate_call(script, #(#s),*)
             })
         }
-        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => #evaluate_call(), ),
+        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => #evaluate_call(script), ),
     }
 }
 

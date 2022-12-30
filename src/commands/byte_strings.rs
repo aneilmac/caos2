@@ -1,5 +1,5 @@
 use super::LiteralInt;
-use crate::engine::EvaluateCommand;
+use crate::engine::{EvaluateCommand, ScriptRefMut};
 use crate::parser::caos_skippable1;
 use crate::parser::{CaosParsable, CaosParseResult};
 use nom::bytes::complete::tag_no_case;
@@ -17,7 +17,7 @@ pub enum ByteString {
 
 impl EvaluateCommand for ByteString {
     type ReturnType = Vec<u8>;
-    fn evaluate(&self, _script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
         match self {
             Self::Raw(v) => Ok(v.clone()),
         }

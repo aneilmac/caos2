@@ -1,5 +1,5 @@
 use crate::commands::{Agent, ByteString, Decimal, Float, Integer, SString, Variable};
-use crate::engine::EvaluateCommand;
+use crate::engine::{EvaluateCommand, ScriptRefMut};
 use crate::parser::{CaosParsable, CaosParseResult};
 use nom::branch::alt;
 use nom::combinator::map;
@@ -52,7 +52,7 @@ impl CaosParsable for Anything {
 
 impl EvaluateCommand for Anything {
     type ReturnType = crate::engine::Variadic;
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
         use crate::engine::Variadic;
         match self {
             Anything::Variable(v) => v.evaluate(script),

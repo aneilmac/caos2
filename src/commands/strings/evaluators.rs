@@ -1,6 +1,6 @@
+use crate::engine::ScriptRefMut;
 use crate::Result;
-use crate::engine::Script;
 
-pub(in super) fn eval_raw(_script: &mut Script, raw: &str) -> Result<String> {
-    Ok(raw.to_owned())
+pub(super) fn eval_raw(_script: &mut ScriptRefMut<'_>, raw: &String) -> Result<String> {
+    Ok(raw.clone())
 }

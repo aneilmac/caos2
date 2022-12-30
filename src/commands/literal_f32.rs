@@ -1,4 +1,4 @@
-use crate::engine::{Script, EvaluateCommand};
+use crate::engine::{EvaluateCommand, Script, ScriptRefMut};
 use crate::parser::{CaosParsable, CaosParseResult};
 use crate::Result;
 use nom::combinator::map;
@@ -11,7 +11,7 @@ pub struct LiteralF32(pub f32);
 
 impl EvaluateCommand for LiteralF32 {
     type ReturnType = f32;
-    fn evaluate(&self, _script: &mut Script) -> Result<Self::ReturnType> {
+    fn evaluate(&self, _script: &mut ScriptRefMut<'_>) -> Result<Self::ReturnType> {
         Ok(self.0)
     }
 }

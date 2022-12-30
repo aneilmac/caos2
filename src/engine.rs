@@ -27,3 +27,25 @@ impl Engine {
 
     pub fn tick(&mut self) {}
 }
+
+// Scripts send messages, which may trigger on other scripts
+// Scripts have data which is mutable, #
+// A script (running) may trigger a command,
+// 
+// Commands mutate (specific) variables
+// Commands mutate script data
+// Commands mutate agent data
+// Commands mutate world data
+// Commands change what command is run next - and in-fact do
+// 
+// Commands are run in sequence
+//
+// Commands may generate new scripts
+//
+// Deleting an agent deletes the associated scripts
+//
+// Agents live as long as the world
+// Scripts live as long as the agents
+// Commands live as long as the scripts
+
+// Commands should only run 1 at a time. Commands

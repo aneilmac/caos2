@@ -1,5 +1,5 @@
 use crate::{
-    engine::EvaluateCommand,
+    engine::{EvaluateCommand, ScriptRefMut},
     parser::{CaosParsable, CaosParseResult},
 };
 
@@ -52,7 +52,7 @@ impl CaosParsable for Decimal {
 impl EvaluateCommand for Decimal {
     type ReturnType = crate::engine::Variadic;
 
-    fn evaluate(&self, script: &mut crate::engine::Script) -> crate::Result<Self::ReturnType> {
+    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
         use crate::engine::Variadic;
         match self {
             Decimal::Variable(v) => {

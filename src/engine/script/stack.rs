@@ -1,6 +1,6 @@
 use crate::{CaosError, ErrorType, Result};
 
-pub(super) struct Stack(Vec<usize>);
+pub(crate) struct Stack(Vec<usize>);
 
 impl Stack {
     pub fn new() -> Self {
@@ -19,17 +19,21 @@ impl Stack {
         self.0.pop().ok_or_else(Self::new_blow_err)
     }
 
-    pub fn increment(&mut self) -> Result<()> {
+    pub fn increment_by(&mut self, steps: usize) -> Result<()> {
         self.0
             .last_mut()
             .ok_or_else(Self::new_blow_err)
-            .and_then(|i: &mut usize| match i.checked_add(1) {
+            .and_then(|i: &mut usize| match i.checked_add(steps) {
                 Some(j) => {
                     *i = j;
                     Ok(())
                 }
                 None => Err(Self::new_blow_err()),
             })
+    }
+
+    pub fn next(&mut self) -> Result<()> {
+        self.increment_by(1)
     }
 
     fn new_blow_err() -> CaosError {
