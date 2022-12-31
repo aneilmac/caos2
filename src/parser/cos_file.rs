@@ -245,32 +245,32 @@ mod tests {
     fn test_multi_events() {
         let input = "scrp 1 2 5 2000\ninst\nendm\n*make a blue print agent\nscrp 1 2 5 2000\nendm";
         let (s, cos_file) = CosFile::parse_caos(input).expect("Successful parse");
-        assert_eq!(s, ""); 
-        assert_eq!(cos_file, 
-        CosFile {
-            install_script: None,
-            removal_script: None,
-            event_scripts: vec![
-                EventScriptDefinition {
-                    family: 1,
-                    genus: 2,
-                    species: 5,
-                    script_number: 2000,
-                    definition: ScriptDefinition {
-                        commands: vec![Command::Inst]
-                    }
-                },
-                EventScriptDefinition {
-                    family: 1,
-                    genus: 2,
-                    species: 5,
-                    script_number: 2000,
-                    definition: ScriptDefinition {
-                        commands: vec![]
-                    }
-                },
-            ]
-        });
+        assert_eq!(s, "");
+        assert_eq!(
+            cos_file,
+            CosFile {
+                install_script: None,
+                removal_script: None,
+                event_scripts: vec![
+                    EventScriptDefinition {
+                        family: 1,
+                        genus: 2,
+                        species: 5,
+                        script_number: 2000,
+                        definition: ScriptDefinition {
+                            commands: vec![Command::Inst]
+                        }
+                    },
+                    EventScriptDefinition {
+                        family: 1,
+                        genus: 2,
+                        species: 5,
+                        script_number: 2000,
+                        definition: ScriptDefinition { commands: vec![] }
+                    },
+                ]
+            }
+        );
     }
 
     #[test]
@@ -402,26 +402,38 @@ mod tests {
                                             cond_type: ConditionType::Eq,
                                             lhs: Anything::Variable(Variable::Vaxx(0)),
                                             rhs: Anything::Decimal(Decimal::Integer(0.into()))
-                                        }
+                                        },
+                                        definition: ScriptDefinition {
+                                            commands: vec![Command::Accg {
+                                                acceleration: FloatArg::from_primary(0.1f32.into())
+                                            }]
+                                        },
+                                        else_definition: Some(ScriptDefinition {
+                                            commands: vec![Command::Doif {
+                                                condition: Condition::Simple {
+                                                    cond_type: ConditionType::Eq,
+                                                    lhs: Anything::Variable(Variable::Vaxx(0)),
+                                                    rhs: Anything::Decimal(Decimal::Integer(
+                                                        1.into()
+                                                    ))
+                                                },
+                                                definition: ScriptDefinition {
+                                                    commands: vec![Command::Accg {
+                                                        acceleration: FloatArg::from_primary(
+                                                            0.3f32.into()
+                                                        )
+                                                    },]
+                                                },
+                                                else_definition: Some(ScriptDefinition {
+                                                    commands: vec![Command::Accg {
+                                                        acceleration: FloatArg::from_primary(
+                                                            0.4f32.into()
+                                                        )
+                                                    },]
+                                                })
+                                            }]
+                                        })
                                     },
-                                    Command::Accg {
-                                        acceleration: FloatArg::from_primary(0.1f32.into())
-                                    },
-                                    Command::Elif {
-                                        condition: Condition::Simple {
-                                            cond_type: ConditionType::Eq,
-                                            lhs: Anything::Variable(Variable::Vaxx(0)),
-                                            rhs: Anything::Decimal(Decimal::Integer(1.into()))
-                                        }
-                                    },
-                                    Command::Accg {
-                                        acceleration: FloatArg::from_primary(0.3f32.into())
-                                    },
-                                    Command::Else,
-                                    Command::Accg {
-                                        acceleration: FloatArg::from_primary(0.4f32.into())
-                                    },
-                                    Command::Endi,
                                     Command::Mvto {
                                         x: FloatArg::from_castable(Integer::Rand {
                                             value1: Box::new(IntArg::from_primary(217.into())),
@@ -434,7 +446,7 @@ mod tests {
                                             value1: Box::new(IntArg::from_primary(0.into())),
                                             value2: Box::new(IntArg::from_primary(70.into()))
                                         })
-                                    },            
+                                    },
                                 ]
                             }
                         },

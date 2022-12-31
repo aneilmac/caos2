@@ -2,7 +2,7 @@ use crate::commands::{Command, LiteralInt};
 use crate::parser::{caos_skippable1, CaosParsable, CaosParseResult};
 use nom::branch::alt;
 use nom::bytes::complete::tag_no_case;
-use nom::combinator::{eof, map, opt};
+use nom::combinator::{cut, eof, map, opt};
 use nom::multi::separated_list0;
 use nom::sequence::tuple;
 
@@ -20,6 +20,12 @@ pub struct EventScriptDefinition {
 #[derive(Debug, Eq, PartialEq, Default, Clone)]
 pub struct ScriptDefinition {
     pub commands: Vec<Command>,
+}
+
+impl ScriptDefinition {
+    pub fn is_empty(&self) -> bool {
+        self.commands.is_empty()
+    }
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -101,25 +107,25 @@ impl Script {
     // 2. Must always have a closing ENDM.
     fn parse_event(input: &str) -> CaosParseResult<&str, Self> {
         let (input, _) = tag_no_case(Self::SCRP_TAG)(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, family) = LiteralInt::parse_caos(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, genus) = LiteralInt::parse_caos(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, species) = LiteralInt::parse_caos(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, script_number) = LiteralInt::parse_caos(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, definition) = Self::parse_definition(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, family) = cut(LiteralInt::parse_caos)(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, genus) = cut(LiteralInt::parse_caos)(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, species) = cut(LiteralInt::parse_caos)(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, script_number) = cut(LiteralInt::parse_caos)(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, definition) = cut(Self::parse_definition)(input)?;
 
         let input = if definition.commands.len() > 0 {
-            let (input, _) = caos_skippable1(input)?;
+            let (input, _) = cut(caos_skippable1)(input)?;
             input
         } else {
             input
         };
 
-        let (input, _) = tag_no_case(Self::ENDM_TAG)(input)?;
+        let (input, _) = cut(tag_no_case(Self::ENDM_TAG))(input)?;
 
         Ok((
             input,
@@ -138,8 +144,8 @@ impl Script {
         tag: &str,
     ) -> CaosParseResult<&'a str, ScriptDefinition> {
         let (input, _) = tag_no_case(tag)(input)?;
-        let (input, _) = caos_skippable1(input)?;
-        let (input, definition) = Self::parse_definition(input)?;
+        let (input, _) = cut(caos_skippable1)(input)?;
+        let (input, definition) = cut(Self::parse_definition)(input)?;
 
         // If at EOF, do an early return.
         if let (input, Some(_)) = opt(tuple((caos_skippable0, eof)))(input)? {

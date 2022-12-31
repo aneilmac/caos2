@@ -166,7 +166,10 @@ impl EvaluateCommand for Condition {
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::{Command, Float, IntArg, Integer, Variable};
+    use crate::{
+        commands::{Command, Float, IntArg, Integer, Variable},
+        parser::ScriptDefinition,
+    };
 
     use super::*;
 
@@ -313,9 +316,10 @@ mod tests {
 
     #[test]
     fn test_complex_condition() {
-        let (_, res) =
-            Command::parse_caos("doif aslp ne 0 or dead eq 1 or uncs eq 1 or loci 1 1 4 9 ne 0.0")
-                .expect("Successful parse");
+        let (_, res) = Command::parse_caos(
+            "doif aslp ne 0 or dead eq 1 or uncs eq 1 or loci 1 1 4 9 ne 0.0 endi",
+        )
+        .expect("Successful parse");
         assert_eq!(
             res,
             Command::Doif {
@@ -353,7 +357,9 @@ mod tests {
                         join_type: JoinType::Or,
                     }),
                     join_type: JoinType::Or
-                }
+                },
+                definition: ScriptDefinition::default(),
+                else_definition: None,
             }
         );
     }

@@ -8,7 +8,7 @@ use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use evaluators::*;
 use nom::{
     bytes::complete::tag_no_case,
-    combinator::cut,
+    combinator::{cut, opt},
     sequence::{terminated, tuple},
 };
 
@@ -16,6 +16,12 @@ use nom::{
 #[return_type(())]
 pub enum Command {
     // Flow -- keep this near the top to keep stack size reduced in debug builds.
+    #[syntax(with_parser = "parse_doif")]
+    Doif {
+        condition: Condition,
+        definition: ScriptDefinition,
+        else_definition: Option<ScriptDefinition>,
+    },
     #[syntax(with_parser = "parse_subr")]
     Subr {
         label: Label,
@@ -26,8 +32,11 @@ pub enum Command {
         count: IntArg,
         definition: ScriptDefinition,
     },
-    #[syntax(with_parser="parse_econ")]
-    Econ { agent: Agent, definition: ScriptDefinition },
+    #[syntax(with_parser = "parse_econ")]
+    Econ {
+        agent: Agent,
+        definition: ScriptDefinition,
+    },
     #[syntax(with_parser = "parse_enum")]
     Enum {
         family: IntArg,
@@ -35,21 +44,21 @@ pub enum Command {
         species: IntArg,
         definition: ScriptDefinition,
     },
-    #[syntax(with_parser="parse_etch")]
+    #[syntax(with_parser = "parse_etch")]
     Etch {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
         definition: ScriptDefinition,
     },
-    #[syntax(with_parser="parse_esee")]
+    #[syntax(with_parser = "parse_esee")]
     Esee {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
         definition: ScriptDefinition,
     },
-    #[syntax(with_parser="parse_epas")]
+    #[syntax(with_parser = "parse_epas")]
     Epas {
         family: IntArg,
         genus: IntArg,
@@ -632,15 +641,6 @@ pub enum Command {
     Outv { value: Decimal },
     #[syntax]
     Outx { text: SString },
-    // Flow
-    #[syntax]
-    Doif { condition: Condition },
-    #[syntax]
-    Elif { condition: Condition },
-    #[syntax]
-    Else,
-    #[syntax]
-    Endi,
     #[syntax]
     Ever,
     #[syntax]
@@ -1075,6 +1075,60 @@ pub enum Command {
     },
 }
 
+fn parse_doif(input: &str) -> CaosParseResult<&str, Command> {
+    let (input, command) = parse_doif_impl(input, "doif")?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, _) = cut(tag_no_case("endi"))(input)?;
+    Ok((input, command))
+}
+
+fn parse_elif(input: &str) -> CaosParseResult<&str, Command> {
+    parse_doif_impl(input, "elif")
+}
+
+fn parse_doif_impl<'a>(input: &'a str, tag: &str) -> CaosParseResult<&'a str, Command> {
+    let (input, _) = tag_no_case(tag)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (mut input, condition) = cut(Condition::parse_caos)(input)?;
+    let (input2, _) = cut(caos_skippable1)(input)?;
+    let (input2, definition) = cut(Script::parse_definition)(input2)?;
+
+    // Don't overconsume spaces.
+    if !definition.is_empty() {
+        input = input2;
+    }
+
+    let mut else_definition: Option<ScriptDefinition> = None;
+
+    let (mut input, elif) = opt(tuple((caos_skippable1, parse_elif)))(input)?;
+
+    if let Some((_, elif)) = elif {
+        else_definition = Some(ScriptDefinition {
+            commands: vec![elif],
+        });
+    } else {
+        let (input2, e) = opt(tuple((caos_skippable1, tag_no_case("else"))))(input)?;
+        if e.is_some() {
+            let (input3, _) = cut(caos_skippable1)(input2)?;
+            let (input3, d) = cut(Script::parse_definition)(input3)?;
+            if !d.is_empty() {
+                else_definition = Some(d);
+                input = input3;
+            } else {
+                input = input2;
+            }
+        }
+    }
+    Ok((
+        input,
+        Command::Doif {
+            condition,
+            definition,
+            else_definition,
+        },
+    ))
+}
+
 fn parse_subr(input: &str) -> CaosParseResult<&str, Command> {
     let (input, _) = tag_no_case("subr")(input)?;
     let (input, _) = cut(caos_skippable1)(input)?;
@@ -1099,7 +1153,10 @@ fn parse_reps(input: &str) -> CaosParseResult<&str, Command> {
     Ok((input, Command::Reps { count, definition }))
 }
 
-fn parse_enum_impl<'a>(input: &'a str, tag: &str) -> CaosParseResult<&'a str, (IntArg, IntArg, IntArg, ScriptDefinition)> {
+fn parse_enum_impl<'a>(
+    input: &'a str,
+    tag: &str,
+) -> CaosParseResult<&'a str, (IntArg, IntArg, IntArg, ScriptDefinition)> {
     let (input, _) = tag_no_case(tag)(input)?;
     let (input, _) = cut(caos_skippable1)(input)?;
     let (input, family) = cut(IntArg::parse_caos)(input)?;
@@ -1117,24 +1174,55 @@ fn parse_enum_impl<'a>(input: &'a str, tag: &str) -> CaosParseResult<&'a str, (I
 
 fn parse_enum<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
     let (input, (family, genus, species, definition)) = parse_enum_impl(input, "enum")?;
-    Ok((input, Command::Enum { family, genus, species, definition }))
+    Ok((
+        input,
+        Command::Enum {
+            family,
+            genus,
+            species,
+            definition,
+        },
+    ))
 }
 
 fn parse_etch<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
     let (input, (family, genus, species, definition)) = parse_enum_impl(input, "etch")?;
-    Ok((input, Command::Etch { family, genus, species, definition }))
+    Ok((
+        input,
+        Command::Etch {
+            family,
+            genus,
+            species,
+            definition,
+        },
+    ))
 }
 
 fn parse_esee<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
     let (input, (family, genus, species, definition)) = parse_enum_impl(input, "esee")?;
-    Ok((input, Command::Esee { family, genus, species, definition }))
+    Ok((
+        input,
+        Command::Esee {
+            family,
+            genus,
+            species,
+            definition,
+        },
+    ))
 }
 
 fn parse_epas<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
     let (input, (family, genus, species, definition)) = parse_enum_impl(input, "epas")?;
-    Ok((input, Command::Epas { family, genus, species, definition }))
+    Ok((
+        input,
+        Command::Epas {
+            family,
+            genus,
+            species,
+            definition,
+        },
+    ))
 }
-
 
 fn parse_econ(input: &str) -> CaosParseResult<&str, Command> {
     let (input, _) = tag_no_case("econ")(input)?;
