@@ -1,9 +1,9 @@
 mod evaluators;
 
-use evaluators::*;
 use super::{IntArg, SString, Variable};
 use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
+use evaluators::*;
 use nom::combinator::map;
 
 /// Agent types represents a reference to an in-game CAOS
@@ -41,7 +41,7 @@ pub enum Agent {
     },
     #[syntax]
     Pntr,
-    #[syntax(with_evaluator="eval_targ")]
+    #[syntax(with_evaluator = "eval_targ")]
     Targ,
     #[syntax]
     Twin {

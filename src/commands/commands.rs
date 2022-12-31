@@ -11,20 +11,6 @@ use evaluators::*;
 #[derive(CaosParsable, CommandList, EvaluateCommand, Eq, PartialEq, Clone, Debug)]
 #[return_type(())]
 pub enum Command {
-    // Script
-    #[syntax]
-    Scrp {
-        family: LiteralInt,
-        genus: LiteralInt,
-        species: LiteralInt,
-        script_number: LiteralInt,
-    },
-    #[syntax]
-    Endm,
-    #[syntax]
-    Iscr,
-    #[syntax]
-    Rscr,
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },
@@ -988,7 +974,7 @@ pub enum Command {
     Mulv { var: Variable, mul: Decimal },
     #[syntax]
     Negv { var: Variable },
-    #[syntax(with_evaluator="eval_orrv")]
+    #[syntax(with_evaluator = "eval_orrv")]
     Orrv { var: Variable, value: IntArg },
     #[syntax]
     Reaf,

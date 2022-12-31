@@ -1,4 +1,4 @@
-use crate::engine::{ScriptRefMut, AgentRef};
+use crate::engine::{AgentRef, ScriptRefMut};
 use crate::Result;
 
 pub(super) fn eval_targ(script: &mut ScriptRefMut<'_>) -> Result<AgentRef> {

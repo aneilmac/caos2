@@ -7,8 +7,8 @@ pub use script_type::*;
 use self::stack::Stack;
 use crate::engine::AgentRef;
 use crate::engine::Variadic;
-use crate::Result;
 use crate::parser::ScriptDefinition;
+use crate::Result;
 
 //#[derive(Clone)]
 pub(crate) struct ScriptRefMut<'a> {

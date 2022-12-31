@@ -1,4 +1,4 @@
-use caos2::parser::parse_caos_script;
+use caos2::parser::CosFile;
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn scan_file(file_content: &str) -> bool {
-    match parse_caos_script(&file_content) {
+    match CosFile::parse(&file_content) {
         Ok(..) => {
             println!(" -- successful parse!");
             true

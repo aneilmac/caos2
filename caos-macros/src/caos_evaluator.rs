@@ -24,7 +24,9 @@ pub fn to_match_expression(variant: &syn::Variant, evaluate_call: syn::Ident) ->
                 #evaluate_call(script, #(#s),*)
             })
         }
-        syn::Fields::Unit => quote_spanned!(variant.span()=> Self::#name => #evaluate_call(script), ),
+        syn::Fields::Unit => {
+            quote_spanned!(variant.span()=> Self::#name => #evaluate_call(script), )
+        }
     }
 }
 
