@@ -18,9 +18,10 @@ pub fn parse_variant(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2::To
 /// splits a list of parser functions into groups of 20 which are nested on top of one another
 /// to avoid this limit. Order is not preserved.
 pub fn alt_chunk(
-    inputs: impl Iterator<Item = proc_macro2::TokenStream>,
+    inputs: impl Iterator<Item = proc_macro2::TokenStream> + DoubleEndedIterator,
     chunk_size: usize,
 ) -> proc_macro2::TokenStream {
+    let inputs = inputs.rev();
     let mut v = Vec::<proc_macro2::TokenStream>::with_capacity(chunk_size);
     let mut final_token = quote!(fail);
     for parse_token in inputs {

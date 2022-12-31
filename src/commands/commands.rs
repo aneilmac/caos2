@@ -1,16 +1,61 @@
 mod evaluators;
 
 use super::{
-    Agent, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, LiteralInt, SString,
-    Variable,
+    Agent, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, SString, Variable,
 };
-use crate::parser::CaosParseResult;
+use crate::parser::{caos_skippable1, CaosParsable, CaosParseResult, Script, ScriptDefinition};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use evaluators::*;
+use nom::{
+    bytes::complete::tag_no_case,
+    combinator::cut,
+    sequence::{terminated, tuple},
+};
 
 #[derive(CaosParsable, CommandList, EvaluateCommand, Eq, PartialEq, Clone, Debug)]
 #[return_type(())]
 pub enum Command {
+    // Flow -- keep this near the top to keep stack size reduced in debug builds.
+    #[syntax(with_parser = "parse_subr")]
+    Subr {
+        label: Label,
+        definition: ScriptDefinition,
+    },
+    #[syntax(with_parser = "parse_reps")]
+    Reps {
+        count: IntArg,
+        definition: ScriptDefinition,
+    },
+    #[syntax(with_parser="parse_econ")]
+    Econ { agent: Agent, definition: ScriptDefinition },
+    #[syntax(with_parser = "parse_enum")]
+    Enum {
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        definition: ScriptDefinition,
+    },
+    #[syntax(with_parser="parse_etch")]
+    Etch {
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        definition: ScriptDefinition,
+    },
+    #[syntax(with_parser="parse_esee")]
+    Esee {
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        definition: ScriptDefinition,
+    },
+    #[syntax(with_parser="parse_epas")]
+    Epas {
+        family: IntArg,
+        genus: IntArg,
+        species: IntArg,
+        definition: ScriptDefinition,
+    },
     // Agents
     #[syntax]
     Anim { pose_list: ByteString },
@@ -22,24 +67,6 @@ pub enum Command {
     Base { index: IntArg },
     #[syntax]
     Bhvr { permissions: IntArg },
-    #[syntax]
-    Enum {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-    },
-    #[syntax]
-    Esee {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-    },
-    #[syntax]
-    Etch {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-    },
     #[syntax]
     Frat { framerate: IntArg },
     #[syntax]
@@ -75,8 +102,6 @@ pub enum Command {
         first_image: IntArg,
         plane: IntArg,
     },
-    #[syntax]
-    Next,
     #[syntax]
     Nohh,
     #[syntax]
@@ -625,14 +650,6 @@ pub enum Command {
     #[syntax]
     Loop,
     #[syntax]
-    Repe,
-    #[syntax]
-    Reps { count: IntArg },
-    #[syntax]
-    Retn,
-    #[syntax]
-    Subr { label: Label },
-    #[syntax]
     Untl { condition: Condition },
     // Genetics
     #[syntax(name = "gene clon")]
@@ -807,8 +824,6 @@ pub enum Command {
         y_velocity: FloatArg,
     },
     // Ports
-    #[syntax]
-    Econ { agent: Agent },
     #[syntax(name = "prt: bang")]
     PrtBang { bang_strength: IntArg },
     #[syntax(name = "prt: inew")]
@@ -1009,12 +1024,6 @@ pub enum Command {
         species: IntArg,
     },
     #[syntax]
-    Epas {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-    },
-    #[syntax]
     Gpas {
         family: IntArg,
         genus: IntArg,
@@ -1064,4 +1073,119 @@ pub enum Command {
         rotation: IntArg,
         swap: IntArg,
     },
+}
+
+fn parse_subr(input: &str) -> CaosParseResult<&str, Command> {
+    let (input, _) = tag_no_case("subr")(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, label) = cut(Label::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, definition) = cut(terminated(
+        Script::parse_definition,
+        tuple((caos_skippable1, tag_no_case("retn"))),
+    ))(input)?;
+    Ok((input, Command::Subr { label, definition }))
+}
+
+fn parse_reps(input: &str) -> CaosParseResult<&str, Command> {
+    let (input, _) = tag_no_case("reps")(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, count) = cut(IntArg::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, definition) = cut(terminated(
+        Script::parse_definition,
+        tuple((caos_skippable1, tag_no_case("repe"))),
+    ))(input)?;
+    Ok((input, Command::Reps { count, definition }))
+}
+
+fn parse_enum_impl<'a>(input: &'a str, tag: &str) -> CaosParseResult<&'a str, (IntArg, IntArg, IntArg, ScriptDefinition)> {
+    let (input, _) = tag_no_case(tag)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, family) = cut(IntArg::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, genus) = cut(IntArg::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, species) = cut(IntArg::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, definition) = cut(terminated(
+        Script::parse_definition,
+        tuple((caos_skippable1, tag_no_case("next"))),
+    ))(input)?;
+    Ok((input, (family, genus, species, definition)))
+}
+
+fn parse_enum<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
+    let (input, (family, genus, species, definition)) = parse_enum_impl(input, "enum")?;
+    Ok((input, Command::Enum { family, genus, species, definition }))
+}
+
+fn parse_etch<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
+    let (input, (family, genus, species, definition)) = parse_enum_impl(input, "etch")?;
+    Ok((input, Command::Etch { family, genus, species, definition }))
+}
+
+fn parse_esee<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
+    let (input, (family, genus, species, definition)) = parse_enum_impl(input, "esee")?;
+    Ok((input, Command::Esee { family, genus, species, definition }))
+}
+
+fn parse_epas<'a>(input: &'a str) -> CaosParseResult<&'a str, Command> {
+    let (input, (family, genus, species, definition)) = parse_enum_impl(input, "epas")?;
+    Ok((input, Command::Epas { family, genus, species, definition }))
+}
+
+
+fn parse_econ(input: &str) -> CaosParseResult<&str, Command> {
+    let (input, _) = tag_no_case("econ")(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, agent) = cut(Agent::parse_caos)(input)?;
+    let (input, _) = cut(caos_skippable1)(input)?;
+    let (input, definition) = cut(terminated(
+        Script::parse_definition,
+        tuple((caos_skippable1, tag_no_case("next"))),
+    ))(input)?;
+    Ok((input, Command::Econ { agent, definition }))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_subr() {
+        let input = "subr foo inst retn";
+        let (_, result) = Command::parse_caos(input).expect("Successful parse");
+
+        assert_eq!(
+            result,
+            Command::Subr {
+                label: Label::from(String::from("foo")),
+                definition: ScriptDefinition {
+                    commands: vec![Command::Inst]
+                }
+            }
+        )
+    }
+
+    #[test]
+    fn test_parse_subr_recusrive() {
+        let input = "subr foo subr bar inst retn retn";
+        let (_, result) = Command::parse_caos(input).expect("Successful parse");
+
+        assert_eq!(
+            result,
+            Command::Subr {
+                label: Label::from(String::from("foo")),
+                definition: ScriptDefinition {
+                    commands: vec![Command::Subr {
+                        label: Label::from(String::from("bar")),
+                        definition: ScriptDefinition {
+                            commands: vec![Command::Inst]
+                        }
+                    }]
+                }
+            }
+        )
+    }
 }

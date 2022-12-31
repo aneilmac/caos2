@@ -7,6 +7,18 @@ use nom::{bytes::complete::is_a, character::complete::alpha1, combinator::opt};
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
 
+impl From<String> for Label {
+    fn from(s: String) -> Self {
+        Label(s)
+    }
+}
+
+impl From<Label> for String {
+    fn from(l: Label) -> Self {
+        l.0
+    }
+}
+
 impl CaosParsable for Label {
     fn parse_caos(input: &str) -> CaosParseResult<&str, Self>
     where

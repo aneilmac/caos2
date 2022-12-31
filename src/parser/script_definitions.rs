@@ -8,7 +8,7 @@ use nom::sequence::tuple;
 
 use super::caos_skippable0;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub struct EventScriptDefinition {
     pub definition: ScriptDefinition,
     pub family: i32,
@@ -17,12 +17,12 @@ pub struct EventScriptDefinition {
     pub script_number: i32,
 }
 
-#[derive(Debug, Eq, PartialEq, Default)]
+#[derive(Debug, Eq, PartialEq, Default, Clone)]
 pub struct ScriptDefinition {
     pub commands: Vec<Command>,
 }
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub enum Script {
     Install(ScriptDefinition),
     Removal(ScriptDefinition),
@@ -174,9 +174,15 @@ impl CaosParsable for Script {
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::IntArg;
+    use crate::commands::{Agent, FloatArg, IntArg};
 
     use super::*;
+
+    const EVENT_SCRIPT: &str = r#"scrp 2 18 14 12
+** egg eat script
+    stim writ from 80 1
+    kill ownr
+endm"#;
 
     #[test]
     fn test_parse_definition() {
@@ -283,5 +289,30 @@ mod tests {
     fn test_event_script_no_endm() {
         let input = "scrp 4 0 0 34\ninst";
         Script::parse_caos(input).expect_err("No endm");
+    }
+
+    #[test]
+    fn test_known_event_script() {
+        let (s, i) = Script::parse_caos(EVENT_SCRIPT).expect("Successful parse");
+        assert_eq!(s, "");
+        assert_eq!(
+            i,
+            Script::Event(EventScriptDefinition {
+                definition: ScriptDefinition {
+                    commands: vec![
+                        Command::StimWrit {
+                            creature: Agent::From,
+                            stimulus: IntArg::from_primary(80.into()),
+                            strength: FloatArg::from_primary(1f32.into())
+                        },
+                        Command::Kill { agent: Agent::Ownr }
+                    ]
+                },
+                family: 2,
+                genus: 18,
+                species: 14,
+                script_number: 12
+            })
+        );
     }
 }
