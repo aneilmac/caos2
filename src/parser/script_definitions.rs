@@ -1,8 +1,8 @@
 use crate::commands::{Command, LiteralInt};
 use crate::parser::{caos_skippable1, CaosParsable, CaosParseResult};
-use nom::branch::alt;
 use nom::bytes::complete::tag_no_case;
 use nom::combinator::{cut, eof, map, opt};
+use nom::error::{ErrorKind, ParseError, VerboseError};
 use nom::multi::separated_list0;
 use nom::sequence::tuple;
 
@@ -36,10 +36,10 @@ pub enum Script {
 }
 
 impl Script {
-    pub const ISCR_TAG: &str = "iscr";
-    pub const SCRP_TAG: &str = "scrp";
-    pub const RSCR_TAG: &str = "rscr";
-    pub const ENDM_TAG: &str = "endm";
+    pub const ISCR_TAG: &'static str = "iscr";
+    pub const SCRP_TAG: &'static str = "scrp";
+    pub const RSCR_TAG: &'static str = "rscr";
+    pub const ENDM_TAG: &'static str = "endm";
 
     pub fn definition(&self) -> &ScriptDefinition {
         match self {
@@ -170,11 +170,28 @@ impl Script {
 
 impl CaosParsable for Script {
     fn parse_caos(input: &str) -> CaosParseResult<&str, Self> {
-        alt((
-            Self::parse_install_script,
-            Self::parse_event,
-            Self::parse_removal_script,
-        ))(input)
+        // This is a specifically unrolled `alt()` to try and reduce
+        // stack overflow in debug builds.
+
+        let res = Self::parse_event(input);
+        if res.is_ok() {
+            return res;
+        }
+
+        let res = Self::parse_install_script(input);
+        if res.is_ok() {
+            return res;
+        }
+
+        let res = Self::parse_removal_script(input);
+        if res.is_ok() {
+            return res;
+        }
+
+        Err(nom::Err::Error(VerboseError::from_error_kind(
+            input,
+            ErrorKind::Alt,
+        )))
     }
 }
 

@@ -1,9 +1,9 @@
 use crate::engine::{EvaluateCommand, ScriptRefMut};
 use crate::parser::{CaosParsable, CaosParseResult};
-use nom::branch::alt;
 use nom::bytes::complete::take_while1;
-use nom::character::complete::{anychar, char, i32};
+use nom::character::complete::{anychar, char, i32 as i32p};
 use nom::combinator::{map, map_res};
+use nom::error::{ErrorKind, ParseError, VerboseError};
 use nom::sequence::{delimited, preceded};
 
 /// Represents an integer that can only be parsed as a numeric literal.
@@ -23,17 +23,25 @@ impl CaosParsable for LiteralInt {
     where
         Self: Sized,
     {
-        map(
-            alt((
-                // Allow parsing regular numbers
-                i32,
-                // Allow parsing a characters as a number
-                parse_integer_char,
-                // Allows parsing of binary sequences
-                parse_integer_binary,
-            )),
-            LiteralInt,
-        )(input)
+        let res: CaosParseResult<&str, i32> = i32p(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, LiteralInt(res)));
+        }
+
+        let res: CaosParseResult<&str, i32> = parse_integer_char(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, LiteralInt(res)));
+        }
+
+        let res: CaosParseResult<&str, i32> = parse_integer_binary(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, LiteralInt(res)));
+        }
+
+        Err(nom::Err::Error(VerboseError::from_error_kind(
+            input,
+            ErrorKind::Alt,
+        )))
     }
 }
 

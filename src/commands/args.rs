@@ -1,5 +1,4 @@
-use nom::branch::alt;
-use nom::combinator::map;
+use nom::error::{ErrorKind, ParseError, VerboseError};
 
 use crate::commands::{Float, Integer, Variable};
 use crate::{CaosError, ErrorType};
@@ -47,11 +46,28 @@ where
     where
         Self: Sized,
     {
-        alt((
-            map(Variable::parse_caos, Self::Variable),
-            map(P::parse_caos, Self::Primary),
-            map(C::parse_caos, Self::Castable),
-        ))(input)
+        // This is a specifically unrolled `alt()` to try and reduce
+        // stack overflow in debug builds.
+
+        let res = Variable::parse_caos(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, Self::Variable(res)));
+        }
+
+        let res = P::parse_caos(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, Self::Primary(res)));
+        }
+
+        let res = C::parse_caos(input);
+        if let Ok((input, res)) = res {
+            return Ok((input, Self::Castable(res)));
+        }
+
+        Err(nom::Err::Error(VerboseError::from_error_kind(
+            input,
+            ErrorKind::Alt,
+        )))
     }
 }
 

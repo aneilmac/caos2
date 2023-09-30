@@ -174,10 +174,9 @@ pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
                 fn parse_caos<'a>(input: &'a str) -> CaosParseResult<&'a str, Self> {
                     use crate::parser::caos_skippable1;
                     use nom::bytes::complete::tag_no_case;
-                    use nom::branch::alt;
-                    use nom::combinator::{fail, cut};
+                    use nom::combinator::{cut};
                     use nom::error::context;
-
+                    use nom::error::{VerboseError, ErrorKind, ParseError};
                     context(#name_as_str, #alt_statement)(input)
                 }
             }

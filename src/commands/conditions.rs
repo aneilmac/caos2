@@ -151,8 +151,7 @@ impl EvaluateCommand for Condition {
             } => {
                 // According to the Creatures Wiki this conditional does **not** short
                 // circuit in the original CAOS implementation --
-                // thus we will not short circuit either until it can be proven it is an optimization
-                // that leads to incorrect behaviour.
+                // thus we will not short circuit either.
                 let c_lhs = c_lhs.evaluate(script)?;
                 let c_rhs = c_rhs.evaluate(script)?;
                 Ok(match join_type {

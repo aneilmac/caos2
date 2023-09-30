@@ -50,6 +50,8 @@ mod test {
         map_res(digit1, |s: &str| s.parse::<u32>().map(Foo::MagicParse))(input)
     }
 
+
+
     #[test]
     fn test_failed_args() {
         Foo::parse_caos("not: vald")

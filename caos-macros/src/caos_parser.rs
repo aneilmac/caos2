@@ -14,30 +14,25 @@ pub fn parse_variant(variant: &Variant, syntax: &SyntaxToken) -> proc_macro2::To
     }
 }
 
-/// Workaround for nom's `alt` method. `alt` has a limit of 21 tuple entries -- this function,
-/// splits a list of parser functions into groups of 20 which are nested on top of one another
-/// to avoid this limit. Order is not preserved.
+/// Builds up an "alt" system.
 pub fn alt_chunk(
     inputs: impl Iterator<Item = proc_macro2::TokenStream> + DoubleEndedIterator,
-    chunk_size: usize,
+    _chunk_size: usize,
 ) -> proc_macro2::TokenStream {
-    let inputs = inputs.rev();
-    let mut v = Vec::<proc_macro2::TokenStream>::with_capacity(chunk_size);
-    let mut final_token = quote!(fail);
-    for parse_token in inputs {
-        if v.len() < chunk_size {
-            v.push(parse_token)
-        } else {
-            final_token = quote!(alt((#(#v),* , #final_token)));
-            v.clear();
-            v.push(parse_token);
+    quote!(
+        |input| {
+            #( 
+                let res = #inputs(input);
+                if res.is_ok() {
+                    return res;
+                }
+            )*
+            return Err(nom::Err::Error(VerboseError::from_error_kind(
+                input,
+                ErrorKind::Alt,
+            )));
         }
-    }
-
-    if !v.is_empty() {
-        final_token = quote!(alt((#(#v),* , #final_token)));
-    }
-    return final_token;
+    )
 }
 
 /// If `with_parser` is not specified this method produces the default parser for a CAOS command.
