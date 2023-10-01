@@ -1,6 +1,6 @@
 condition        =  { simple_condition ~ (condition_join ~ simple_condition)* }
 simple_condition = _{ anything ~ condition_operator ~ anything }
-anything = { variable | string | decimal | literal_byte_string | agent }
+anything         =  { variable | string | decimal | literal_byte_string | agent }
 
 condition_eq       =  { "=" | ^"eq" }
 condition_ge       =  { ">=" | ^"ge" }
@@ -9,12 +9,12 @@ condition_le       =  { "<=" | ^"le" }
 condition_ne       =  { "<>" | ^"ne" }
 condition_lt       =  { "<" | ^"lt" }
 condition_operator = _{
-  condition_eq
-| condition_ge
-| condition_gt
-| condition_le
-| condition_ne
-| condition_lt
+    condition_eq
+  | condition_ge
+  | condition_gt
+  | condition_le
+  | condition_ne
+  | condition_lt
 }
 condition_and      =  { ^"and" }
 condition_or       =  { ^"or" }

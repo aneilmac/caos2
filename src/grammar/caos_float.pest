@@ -1,7 +1,7 @@
 float_arg = _{ float | int | variable }
 
 float = {
-  literal_float
+    literal_float
   | float_disq
   | float_fltx
   | float_flty
@@ -42,7 +42,7 @@ float = {
   | float_sqrt
   | float_stof
   | float_tan
-  }
+}
 
 float_disq = { ^"disq" ~ agent_arg }
 float_fltx = { ^"fltx" }
@@ -78,9 +78,9 @@ float_pace = { ^"pace" }
 float_acos = { ^"acos" ~ float_arg }
 float_asin = { ^"asin" ~ float_arg }
 float_atan = { ^"atan" ~ float_arg }
-float_cos = { ^"cos_" ~ float_arg }
+float_cos  = { ^"cos_" ~ float_arg }
 float_itof = { ^"itof" ~ int_arg }
-float_sin = { ^"sin_" ~ float_arg }
+float_sin  = { ^"sin_" ~ float_arg }
 float_sqrt = { ^"sqrt" ~ float_arg }
 float_stof = { ^"stof" ~ string_arg }
-float_tan = { ^"tan_" ~ float_arg }
+float_tan  = { ^"tan_" ~ float_arg }

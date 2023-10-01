@@ -13,10 +13,10 @@ remove_script          = { remove_script_start_tag ~ script_contents ~ remove_sc
 event_script           = { event_script_header ~ script_contents ~ end_script_tag }
 
 event_script_header = {
-event_script_start_tag ~ literal_int // Family
-~ literal_int // Genus
-~ literal_int // Species
-~ literal_int // Script number
+    event_script_start_tag ~ literal_int // Family
+  ~ literal_int // Genus
+  ~ literal_int // Species
+  ~ literal_int // Script number
 }
 
 script_contents = { command* }

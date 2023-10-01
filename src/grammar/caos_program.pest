@@ -5,10 +5,11 @@
 // Likewise both the install script and removal script end tags may be implicitly defined.
 // Event scripts are always well defined.
 program = _{
+  
   | program_only_implicit
   | program_implicit_install
   | program_nonimplicit_install
-  }
+}
 
 program_only_implicit       = _{ implict_install_script ~ EOI }
 program_implicit_install    = _{ implict_install_script ~ (remove_script | event_script)* }
