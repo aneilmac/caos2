@@ -41,7 +41,7 @@ label = @{ ASCII_ALPHA+ ~ (ASCII_ALPHANUMERIC | "_")* }
 
 // Decimal.
 // 
-// Note this differnts from int_arg / float arg in the sense
+// Note this differnt from int_arg / float arg in the sense
 // this can hold either value, as opposed to a type containing a castable value.
 decimal     =  { float | int }
 decimal_arg = _{ variable | decimal }

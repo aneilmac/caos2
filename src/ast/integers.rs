@@ -1,12 +1,10 @@
-use super::{Agent, Anything, ByteString, FloatArg, IntArg, LiteralInt, SString, Variable};
-use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
-use nom::combinator::map;
+use super::{Agent, Anything, ByteString, FloatArg, IntArg, SString, Variable};
+use caos_macros::{CaosParsable, CommandList};
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
-    Raw(LiteralInt),
+    Literal(i32),
     #[syntax]
     Attr,
     #[syntax]
@@ -195,9 +193,7 @@ pub enum Integer {
     HistMute { moniker: Box<SString> },
     #[syntax(name = "hist rtim")]
     #[syntax(name = "hist prev")]
-    HistPrev {
-        moniker: Box<SString>
-    },
+    HistPrev { moniker: Box<SString> },
     HistRtim {
         moniker: Box<SString>,
         event_no: Box<IntArg>,
@@ -488,45 +484,6 @@ pub enum Integer {
 
 impl From<i32> for Integer {
     fn from(i: i32) -> Self {
-        Integer::Raw(i.into())
-    }
-}
-
-impl From<LiteralInt> for Integer {
-    fn from(i: LiteralInt) -> Self {
-        Integer::Raw(i)
-    }
-}
-
-fn parse_literal(input: &str) -> CaosParseResult<&str, Integer> {
-    map(LiteralInt::parse_caos, Integer::Raw)(input)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_literal_int() {
-        let (_, res) = Integer::parse_caos("3").expect("Valid int");
-        assert_eq!(res, 3.into());
-    }
-
-    #[test]
-    fn test_simple_int() {
-        let (_, res) = Integer::parse_caos("cabb").expect("Valid int");
-        assert_eq!(res, Integer::Cabb);
-    }
-
-    #[test]
-    fn test_integer() {
-        let (_, res) = LiteralInt::parse_caos("%11").expect("Good binary");
-        assert_eq!(res, LiteralInt(3));
-
-        let (_, res) = LiteralInt::parse_caos("'A'").expect("Good binary");
-        assert_eq!(res, LiteralInt(65));
-
-        let (_, res) = LiteralInt::parse_caos("32").expect("Good binary");
-        assert_eq!(res, LiteralInt(32));
+        Integer::Literal(i.into())
     }
 }

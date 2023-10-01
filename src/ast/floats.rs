@@ -1,17 +1,28 @@
-mod evaluators;
-
 use super::{Agent, FloatArg, IntArg, SString};
-use crate::commands::LiteralF32;
-use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
-use nom::combinator::map;
+use caos_macros::{CaosParsable, CommandList};
 
-use evaluators::*;
+#[derive(PartialEq, Debug, Clone)]
+pub struct LitF32(f32);
+
+impl Eq for LitF32 {
+}
+
+impl From<LitF32> for f32 {
+    fn from(l: LitF32) -> f32 {
+        l.0
+    }
+}
+
+impl From<f32> for LitF32 {
+    fn from(l: f32) -> LitF32 {
+        LitF32(l)
+    }
+}
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Float {
     #[syntax(with_parser = "parse_literal")]
-    Raw(LiteralF32),
+    Literal(LitF32),
     #[syntax]
     Disq { other: Box<Agent> },
     #[syntax]
@@ -118,27 +129,7 @@ pub enum Float {
 
 impl From<f32> for Float {
     fn from(f: f32) -> Self {
-        Float::Raw(f.into())
+        Float::Literal(f.into())
     }
 }
 
-impl From<LiteralF32> for Float {
-    fn from(f: LiteralF32) -> Self {
-        Float::Raw(f)
-    }
-}
-
-fn parse_literal(input: &str) -> CaosParseResult<&str, Float> {
-    map(LiteralF32::parse_caos, Float::Raw)(input)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_literal_float() {
-        let (_, res) = Float::parse_caos("3.134").expect("Valid float");
-        assert_eq!(res, Float::Raw(LiteralF32(3.134)));
-    }
-}

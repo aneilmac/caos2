@@ -1,12 +1,14 @@
-mod caos_parsable;
-mod caos_parse_result;
-mod cos_file;
-mod script_definitions;
-mod skippable;
+use pest_derive::Parser;
 
-pub use cos_file::*;
-pub use script_definitions::*;
-
-pub(crate) use caos_parsable::*;
-pub(crate) use caos_parse_result::CaosParseResult;
-pub(crate) use skippable::*;
+#[derive(Parser)]
+#[grammar = "grammar/base.pest"]
+#[grammar = "grammar/caos_agent.pest"]
+#[grammar = "grammar/caos_command.pest"]
+#[grammar = "grammar/caos_float.pest"]
+#[grammar = "grammar/caos_int.pest"]
+#[grammar = "grammar/caos_program.pest"]
+#[grammar = "grammar/caos_string.pest"]
+#[grammar = "grammar/caos_variable.pest"]
+#[grammar = "grammar/condition.pest"]
+#[grammar = "grammar/script.pest"]
+struct CaosParser;

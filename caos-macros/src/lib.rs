@@ -16,51 +16,7 @@ use self::syntax_token::SyntaxToken;
 
 #[proc_macro_derive(EvaluateCommand, attributes(return_type, syntax))]
 pub fn caos_evaluate_derive_fn(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as syn::DeriveInput);
-
-    let ret_type;
-    let ret_types: Vec<_> = input
-        .attrs
-        .iter()
-        .filter(|a| a.path.is_ident("return_type"))
-        .collect();
-
-    if ret_types.len() != 1 {
-        panic!("Must have exactly 1 `#[ret_type]");
-    } else {
-        ret_type = ret_types
-            .first()
-            .unwrap()
-            .parse_args::<syn::Type>()
-            .expect("Good path");
-    }
-
-    if let syn::Data::Enum(ref content) = input.data {
-        let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
-        let evaluators = marked_variants
-            .iter()
-            .map(|(v, s)| match s.custom_evaluator() {
-                Some(p) => {
-                    let custom_evaluator: syn::Ident = p.parse().expect("Expected valid function");
-                    caos_evaluator::to_match_expression(v, custom_evaluator)
-                }
-                None => caos_evaluator::to_match_todo_expression(v),
-            });
-        let name = &input.ident;
-        let q = quote_spanned!(input.span() =>
-            impl<'a> crate::engine::EvaluateCommand for #name  {
-                type ReturnType = #ret_type;
-                fn evaluate(&self, script: &mut crate::engine::ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
-                    match self {
-                        #(#evaluators)*
-                    }
-                }
-            }
-        );
-        q.into()
-    } else {
-        panic!("This macro can only be used on enums");
-    }
+    input
 }
 
 /// Produces a const, static parameter on a type that derives from `CommandList` of the form:
@@ -154,37 +110,8 @@ pub fn command_list_fn(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(CaosParsable, attributes(syntax))]
 pub fn caos_parsable_derive_fn(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as syn::DeriveInput);
-
-    if let syn::Data::Enum(ref content) = input.data {
-        let marked_variants: Vec<_> = marked_variants(content, "syntax").collect();
-
-        let parse_combos = marked_variants.iter().map(|(v, s)| {
-            let vname = v.ident.to_string();
-            let parser = parse_variant(v, s);
-            quote_spanned!(v.span()=> context(#vname, #parser))
-        });
-
-        let alt_statement = alt_chunk(parse_combos, 20);
-
-        let name = &input.ident;
-        let name_as_str = name.to_string();
-
-        let q = quote_spanned!(input.span() =>
-            impl crate::parser::CaosParsable for #name  {
-                fn parse_caos<'a>(input: &'a str) -> CaosParseResult<&'a str, Self> {
-                    use crate::parser::caos_skippable1;
-                    use nom::bytes::complete::tag_no_case;
-                    use nom::combinator::{cut};
-                    use nom::error::context;
-                    use nom::error::{VerboseError, ErrorKind, ParseError};
-                    context(#name_as_str, #alt_statement)(input)
-                }
-            }
-        );
-        q.into()
-    } else {
-        panic!("This macro can only be used on enums");
-    }
+    quote_spanned!(input.span() =>
+    ).into()
 }
 
 /// For each SyntaxToken, produces it's keyword, if none have been provided, we

@@ -1,15 +1,9 @@
-mod evaluators;
-
 use super::{IntArg, SString, Variable};
-use crate::parser::{CaosParsable, CaosParseResult};
-use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
-use evaluators::*;
-use nom::combinator::map;
+use caos_macros::CaosParsable;
 
 /// Agent types represents a reference to an in-game CAOS
 /// Agent.
-#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(crate::engine::AgentRef)]
+#[derive(CaosParsable, Eq, PartialEq, Debug, Clone)]
 pub enum Agent {
     #[syntax(with_parser = "parse_variable")]
     Variable(Variable),
@@ -69,32 +63,4 @@ pub enum Agent {
     // Ports
     #[syntax(name = "prt: frma")]
     PrtFrma { input_port: Box<IntArg> },
-}
-
-fn parse_variable(input: &str) -> CaosParseResult<&str, Agent> {
-    map(Variable::parse_caos, Agent::Variable)(input)
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    use crate::commands::Integer;
-
-    #[test]
-    fn test_simple_agent() {
-        let (_, agent) = Agent::parse_caos("hots").expect("Valid Agent");
-        assert_eq!(agent, Agent::Hots);
-    }
-
-    #[test]
-    fn test_compound_agent() {
-        let (_, agent) = Agent::parse_caos("twin _it_ %10").expect("Valid Agent");
-        assert_eq!(
-            agent,
-            Agent::Twin {
-                original: Box::new(Agent::It),
-                agent_null: Box::new(IntArg::from(Integer::from(2)))
-            }
-        );
-    }
 }
