@@ -10,8 +10,7 @@ use nom::{
 
 use super::{Agent, IntArg, SString};
 
-#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(Variadic)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Variable {
     #[syntax]
     Velx,
@@ -28,7 +27,7 @@ pub enum Variable {
     Mvxx(u8),
     #[syntax(with_parser = "parse_ovxx")]
     Ovxx(u8),
-    #[syntax(with_parser = "parse_vaxx", with_evaluator = "evaluate_vaxx")]
+    #[syntax(with_parser = "parse_vaxx")]
     Vaxx(u8),
     #[syntax(name = "_p1_")]
     P1,

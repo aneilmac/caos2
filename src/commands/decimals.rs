@@ -49,27 +49,6 @@ impl CaosParsable for Decimal {
     }
 }
 
-impl EvaluateCommand for Decimal {
-    type ReturnType = crate::engine::Variadic;
-
-    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
-        use crate::engine::Variadic;
-        match self {
-            Decimal::Variable(v) => {
-                let v = v.evaluate(script)?;
-                if v.is_decimal() {
-                    Ok(v)
-                } else {
-                    Err(crate::CaosError::new(
-                        crate::ErrorType::DecimalConversionFailure,
-                    ))
-                }
-            }
-            Decimal::Integer(i) => i.evaluate(script).map(Variadic::from),
-            Decimal::Float(f) => f.evaluate(script).map(Variadic::from),
-        }
-    }
-}
 
 impl From<Integer> for Decimal {
     fn from(i: Integer) -> Self {

@@ -1,0 +1,88 @@
+string_arg = _{ string | variable }
+
+string = {
+  literal_string
+  | string_catx
+  | string_hand
+  | string_wild
+  | string_bkds
+  | string_ptxt
+  | string_face
+  | string_dbg
+  | string_dbga
+  | string_fvwm
+  | string_innl
+  | string_gtos
+  | string_hist_foto
+  | string_hist_mon1
+  | string_hist_mon2
+  | string_hist_name
+  | string_hist_next
+  | string_hist_prev
+  | string_hist_utxt
+  | string_hist_wnam
+  | string_bkds
+  | string_emid
+  | string_erid
+  | string_mloc
+  | string_rate
+  | string_rloc
+  | string_pray_agts
+  | string_pray_next
+  | string_pray_prev
+  | string_caos
+  | string_rmsc
+  | string_vois
+  | string_rtif
+  | string_gamn
+  | string_gnam
+  | string_read
+  | string_subs
+  | string_vtos
+  | string_pswd
+  | string_wnam
+  | string_wrld
+  | string_wuid
+}
+
+string_catx =  { ^"catx" ~ int_arg }
+string_hand = { ^"hand" }
+string_wild =  { ^"wild" ~ int_arg ~ int_arg ~ int_arg ~ string ~ int_arg }
+string_bkd = { ^"bkgd" ~ int_arg }
+string_ptxt = { ^"ptxt" }
+string_face = { ^"face" }
+string_dbg = { ^"dbg#" ~ int_arg }
+string_dbga = { ^"dbga" ~ int_arg }
+string_fvwm = { ^"fvwm" ~ string_arg }
+string_innl = { ^"innl" }
+string_gtos = { ^"gtos" ~ int_arg }
+string_hist_foto = { ^"hist" ~ ^"foto" ~ string_arg ~ int_arg }
+string_hist_mon1 = { ^"hist" ~ ^"mon1" ~ string_arg ~ int_arg }
+string_hist_mon2 = { ^"hist" ~ ^"mon2" ~ string_arg ~ int_arg }
+string_hist_name = { ^"hist" ~ ^"name" ~ string_arg }
+string_hist_next = { ^"hist" ~ ^"next" ~ string_arg }
+string_hist_prev = { ^"hist" ~ ^"prev" ~ string_arg }
+string_hist_utxt = { ^"hist" ~ ^"utxt" ~ string_arg ~ int_arg }
+string_hist_wnam = { ^"hist" ~ ^"wnam" ~ string_arg ~ int_arg }
+string_bkds = { ^"bkds" ~ int_arg }
+string_emid = { ^"emid" }
+string_erid = { ^"erid" ~ int_arg }
+string_mloc = { ^"mloc" ~ int_arg }
+string_rate = { ^"rate" ~ int_arg ~ int_arg }
+string_rloc = { ^"rloc" ~ int_arg }
+string_pray_agts = { ^"pray" ~ ^"agts" ~ string_arg ~ string_arg ~ string_arg }
+string_pray_next = { ^"pray" ~ ^"next" ~ string_arg ~ string_arg }
+string_pray_prev = { ^"pray" ~ ^"prev" ~ string_arg ~ string_arg }
+string_caos = { ^"caos" ~ int_arg ~ int_arg ~ anything ~ anything ~ string_arg ~ int_arg ~ int_arg ~ variable }
+string_rmsc = { ^"rmsc" ~ int_arg ~ int_arg }
+string_vois = { ^"vois" }
+string_rtif = { ^"rtif" ~ int_arg ~ string_arg }
+string_gamn = { ^"gamn" ~ string_arg }
+string_gnam = { ^"gnam" }
+string_read = { ^"read" ~ string_arg ~ int_arg }
+string_subs = { ^"subs" ~ string_arg ~ int_arg ~ int_arg }
+string_vtos = { ^"vtos" ~ decimal_arg }
+string_pswd = { ^"pswd" ~ string_arg }
+string_wnam = { ^"wnam" }
+string_wrld = { ^"wrld" ~ int_arg }
+string_wuid = { ^"wuid" }

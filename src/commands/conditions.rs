@@ -123,46 +123,6 @@ impl CaosParsable for ConditionType {
     }
 }
 
-impl EvaluateCommand for Condition {
-    type ReturnType = bool;
-
-    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
-        match self {
-            Condition::Simple {
-                cond_type,
-                lhs,
-                rhs,
-            } => {
-                let lhs = lhs.evaluate(script)?;
-                let rhs = rhs.evaluate(script)?;
-                Ok(match cond_type {
-                    ConditionType::Eq => lhs.eq(&rhs)?,
-                    ConditionType::Ne => !lhs.eq(&rhs)?,
-                    ConditionType::Ge => lhs.partial_cmp(&rhs)?.map(|f| f.is_ge()).unwrap_or(false),
-                    ConditionType::Gt => lhs.partial_cmp(&rhs)?.map(|f| f.is_gt()).unwrap_or(false),
-                    ConditionType::Le => lhs.partial_cmp(&rhs)?.map(|f| f.is_le()).unwrap_or(false),
-                    ConditionType::Lt => lhs.partial_cmp(&rhs)?.map(|f| f.is_lt()).unwrap_or(false),
-                })
-            }
-            Condition::Combination {
-                c_lhs,
-                c_rhs,
-                join_type,
-            } => {
-                // According to the Creatures Wiki this conditional does **not** short
-                // circuit in the original CAOS implementation --
-                // thus we will not short circuit either.
-                let c_lhs = c_lhs.evaluate(script)?;
-                let c_rhs = c_rhs.evaluate(script)?;
-                Ok(match join_type {
-                    JoinType::And => c_lhs && c_rhs,
-                    JoinType::Or => c_lhs || c_rhs,
-                })
-            }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use crate::{

@@ -1,0 +1,340 @@
+int_arg = _{ int | float | variable }
+
+int = {
+  literal_int
+  | int_attr
+  | int_base
+  | int_bhvr 
+  | int_cati
+  | int_clac
+  | int_clik
+  | int_fmly
+  | int_gnus
+  | int_hght
+  | int_imsk
+  | int_mira
+  | int_mows
+  | int_paus
+  | int_plne
+  | int_pose
+  | int_puhl
+  | int_pupt
+  | int_seee
+  | int_spcs
+  | int_tick
+  | int_totl
+  | int_touc
+  | int_visi
+  | int_wdth
+  | int_cmrx
+  | int_cmry
+  | int_loft
+  | int_meta
+  | int_snax
+  | int_wdow
+  | int_wndb
+  | int_wndh
+  | int_wndl
+  | int_wndr
+  | int_wndt
+  | int_wndw
+  | int_npgs
+  | int_page
+  | int_aslp
+  | int_attn
+  | int_body
+  | int_bvar
+  | int_byit
+  | int_cage
+  | int_crea
+  | int_dead
+  | int_decn
+  | int_dirn
+  | int_drea
+  | int_drv
+  | int_expr
+  | int_face
+  | int_ins 
+  | int_orgi 
+  | int_orgn 
+  | int_tage 
+  | int_uncs 
+  | int_zomb 
+  | int_code 
+  | int_codf 
+  | int_codg 
+  | int_codp 
+  | int_cods 
+  | int_heap 
+  | int_paws 
+  | int_unid 
+  | int_inni 
+  | int_inok 
+  | int_hist_cage
+  | int_hist_coun
+  | int_hist_cros
+  | int_hist_find
+  | int_hist_finr
+  | int_hist_gend
+  | int_hist_gnus
+  | int_hist_mute
+  | int_hist_prev
+  | int_hist_rtim
+  | int_hist_tage
+  | int_hist_type
+  | int_hist_vari
+  | int_hist_wnam
+  | int_hist_wtik
+  | int_hist_wuid
+  | int_ooww 
+  | int_keyd 
+  | int_mopx 
+  | int_mopy 
+  | int_pure 
+  | int_addm 
+  | int_addr 
+  | int_door 
+  | int_down 
+  | int_gmap 
+  | int_grap 
+  | int_grid 
+  | int_hirp 
+  | int_left 
+  | int_link 
+  | int_lorp 
+  | int_maph 
+  | int_mapk 
+  | int_mapw 
+  | int_perm 
+  | int_rght 
+  | int_room 
+  | int_rtyp 
+  | int_up 
+  | int_aero 
+  | int_elas 
+  | int_fall 
+  | int_fric 
+  | int_movs 
+  | int_tmvb 
+  | int_tmvh 
+  | int_tmvt 
+  | int_wall 
+  | int_pray_agti
+  | int_pray_coun
+  | int_pray_deps
+  | int_pray_expo
+  | int_pray_file
+  | int_pray_impo
+  | int_pray_injt
+  | int_pray_make
+  | int_pray_size
+  | int_pray_test
+  | int_sorq 
+  | int_mute 
+  | int_date 
+  | int_dayt 
+  | int_etik 
+  | int_hist_date
+  | int_hist_sean
+  | int_hist_time
+  | int_hist_year
+  | int_mont 
+  | int_msec 
+  | int_race 
+  | int_rtim 
+  | int_scol 
+  | int_sean 
+  | int_time 
+  | int_wolf 
+  | int_wpau 
+  | int_wtik 
+  | int_year 
+  | int_char 
+  | int_ftoi 
+  | int_rand 
+  | int_rean 
+  | int_reaq 
+  | int_stoi 
+  | int_strl 
+  | int_type 
+  | int_vmjr 
+  | int_vmnr 
+  | int_cabb 
+  | int_cabl 
+  | int_cabp 
+  | int_cabr 
+  | int_cabt 
+  | int_cabv 
+  | int_nwld 
+  | int_wnti 
+  | int_prt_itot 
+  | int_ptr_from 
+  }
+
+int_attr = { ^"attr" }
+int_base = { ^"base" }
+int_bhvr = { ^"bhvr" }
+int_cati = { ^"cati" ~ int_arg ~ int_arg ~ int_arg }
+int_clac = { ^"clac" }
+int_clik = { ^"clik" ~ int_arg }
+int_fmly = { ^"fmly" }
+int_gnus = { ^"gnus" }
+int_hght = { ^"hght" }
+int_imsk = { ^"imsk" }
+int_mira = { ^"mira" }
+int_mows = { ^"mows" }
+int_paus = { ^"paus" }
+int_plne = { ^"plne" }
+int_pose = { ^"pose" }
+int_puhl = { ^"puhl" ~ int_arg ~ int_arg }
+int_pupt = { ^"pupt" ~ int_arg ~ int_arg }
+int_seee = { ^"seee" ~ int_arg ~ int_arg }
+int_spcs = { ^"spcs" }
+int_tick = { ^"tick" }
+int_totl = { ^"totl" ~ int_arg ~ int_arg ~ int_arg }
+int_touc = { ^"touc" ~ agent_arg ~ agent_arg }
+int_visi = { ^"visi" ~ int_arg }
+int_wdth = { ^"wdth" }
+int_cmrx = { ^"cmrx" }
+int_cmry = { ^"cmry" }
+int_loft = { ^"loft" ~ string_arg }
+int_meta = { ^"meta" }
+int_snax = { ^"snax" ~ string_arg }
+int_wdow = { ^"wdow" }
+int_wndb = { ^"wndb" }
+int_wndh = { ^"wndh" }
+int_wndl = { ^"wndl" }
+int_wndr = { ^"wndr" }
+int_wndt = { ^"wndt" }
+int_wndw = { ^"wndw" }
+int_npgs = { ^"npgs" }
+int_page = { ^"page" }
+int_aslp = { ^"aslp" }
+int_attn = { ^"attn" }
+int_body = { ^"body" ~ int_arg }
+int_bvar = { ^"bvar" }
+int_byit = { ^"byit" }
+int_cage = { ^"cage" }
+int_crea = { ^"crea" ~ agent_arg }
+int_dead = { ^"dead" }
+int_decn = { ^"decn" }
+int_dirn = { ^"dirn" }
+int_drea = { ^"drea" }
+int_drv  = { ^"drv!" }
+int_expr = { ^"expr" }
+int_face = { ^"face" }
+int_ins  = { ^"ins#" }
+int_orgi = { ^"orgi" ~ int_arg ~ int_arg }
+int_orgn = { ^"orgn" }
+int_tage = { ^"tage" }
+int_uncs = { ^"uncs" }
+int_zomb = { ^"zomb" }
+int_code = { ^"code" }
+int_codf = { ^"codf" }
+int_codg = { ^"codg" }
+int_codp = { ^"codp" }
+int_cods = { ^"cods" }
+int_heap = { ^"heap" ~ int_arg }
+int_paws = { ^"paws" }
+int_unid = { ^"unid" }
+int_inni = { ^"inni" }
+int_inok = { ^"inok" }
+int_hist_cage = { ^"hist" ~ ^"cage" ~ string_arg ~ int_arg }
+int_hist_coun = { ^"hist" ~ ^"coun" ~ string_arg }
+int_hist_cros = { ^"hist" ~ ^"cros" ~ string_arg }
+int_hist_find = { ^"hist" ~ ^"find" ~ string_arg ~ int_arg ~ int_arg }
+int_hist_finr = { ^"hist" ~ ^"finr" ~ string_arg ~ int_arg ~ int_arg }
+int_hist_gend = { ^"hist" ~ ^"gend" ~ string_arg }
+int_hist_gnus = { ^"hist" ~ ^"gnus" ~ string_arg }
+int_hist_mute = { ^"hist" ~ ^"mute" ~ string_arg }
+int_hist_prev = { ^"hist" ~ ^"prev" ~ string_arg }
+int_hist_rtim = { ^"hist" ~ ^"rtim" ~ string_arg ~ int_arg }
+int_hist_tage = { ^"hist" ~ ^"tage" ~ string_arg ~ int_arg }
+int_hist_type = { ^"hist" ~ ^"type" ~ string_arg ~ int_arg }
+int_hist_vari = { ^"hist" ~ ^"vari" ~ string_arg }
+int_hist_wnam = { ^"hist" ~ ^"wnam" ~ string_arg ~ int_arg }
+int_hist_wtik = { ^"hist" ~ ^"wtik" ~ string_arg ~ int_arg }
+int_hist_wuid = { ^"hist" ~ ^"wuid" ~ string_arg ~ int_arg }
+int_ooww = { ^"ooww" ~ string_arg }
+int_keyd = { ^"keyd" ~ int_arg }
+int_mopx = { ^"mopx" }
+int_mopy = { ^"mopy" }
+int_pure = { ^"pure" }
+int_addm = { ^"addm" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ string_arg }
+int_addr = { ^"addr" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+int_door = { ^"door" ~ int_arg ~ int_arg }
+int_down = { ^"down" }
+int_gmap = { ^"gmap" ~ float_arg ~ float_arg }
+int_grap = { ^"grap" ~ float_arg ~ float_arg }
+int_grid = { ^"grid" ~ agent_arg ~ int_arg }
+int_hirp = { ^"hirp" ~ int_arg ~ int_arg ~ int_arg }
+int_left = { ^"left" }
+int_link = { ^"link" ~ int_arg ~ int_arg }
+int_lorp = { ^"lorp" ~ int_arg ~ int_arg ~ int_arg }
+int_maph = { ^"maph" }
+int_mapk = { ^"mapk" }
+int_mapw = { ^"mapw" }
+int_perm = { ^"perm" }
+int_rght = { ^"rght" }
+int_room = { ^"room" ~ agent_arg }
+int_rtyp = { ^"rtyp" ~ int_arg }
+int_up   = { ^"_up_" }
+int_aero = { ^"aero" }
+int_elas = { ^"elas" }
+int_fall = { ^"fall" }
+int_fric = { ^"fric" }
+int_movs = { ^"movs" }
+int_tmvb = { ^"tmvb" ~ float_arg ~ float_arg }
+int_tmvh = { ^"tmvh" ~ float_arg ~ float_arg }
+int_tmvt = { ^"tmvt" ~ float_arg ~ float_arg }
+int_wall = { ^"wall" }
+int_pray_agti = { ^"pray" ~ ^"agti" ~ string_arg ~ string_arg ~ int_arg }
+int_pray_coun = { ^"pray" ~ ^"coun" ~ string_arg }
+int_pray_deps = { ^"pray" ~ ^"deps" ~ string_arg ~ int_arg }
+int_pray_expo = { ^"pray" ~ ^"expo" ~ string_arg }
+int_pray_file = { ^"pray" ~ ^"file" ~ string_arg ~ string_arg ~ int_arg }
+int_pray_impo = { ^"pray" ~ ^"impo" ~ string_arg ~ int_arg ~ int_arg }
+int_pray_injt = { ^"pray" ~ ^"injt" ~ string_arg ~ int_arg ~ variable }
+int_pray_make = { ^"pray" ~ ^"make" ~ int_arg ~ string_arg ~ int_arg ~ string_arg ~ variable }
+int_pray_size = { ^"pray" ~ ^"size" ~ string_arg }
+int_pray_test = { ^"pray" ~ ^"test" ~ string_arg }
+int_sorq = { ^"sorq" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+int_mute = { ^"mute" ~ int_arg ~ int_arg }
+int_date = { ^"date" }
+int_dayt = { ^"dayt" }
+int_etik = { ^"etik" }
+int_hist_date = { ^"hist" ~ ^"date" ~ int_arg }
+int_hist_sean = { ^"hist" ~ ^"sean" ~ int_arg }
+int_hist_time = { ^"hist" ~ ^"time" ~ int_arg }
+int_hist_year = { ^"hist" ~ ^"year" ~ int_arg }
+int_mont = { ^"mont" }
+int_msec = { ^"msec" }
+int_race = { ^"race" }
+int_rtim = { ^"rtim" }
+int_scol = { ^"scol" ~ int_arg ~ int_arg ~ literal_byte_string ~ literal_byte_string }
+int_sean = { ^"sean" }
+int_time = { ^"time" }
+int_wolf = { ^"wolf" ~ int_arg ~ int_arg }
+int_wpau = { ^"wpau" }
+int_wtik = { ^"wtik" }
+int_year = { ^"year" }
+int_char = { ^"char" ~ string_arg ~ int_arg }
+int_ftoi = { ^"ftoi" ~ float_arg }
+int_rand = { ^"rand" ~ int_arg ~ int_arg }
+int_rean = { ^"rean" ~ string_arg }
+int_reaq = { ^"reaq" ~ string_arg }
+int_stoi = { ^"stoi" ~ string_arg }
+int_strl = { ^"strl" ~ string_arg }
+int_type = { ^"type" ~ anything }
+int_vmjr = { ^"vmjr" }
+int_vmnr = { ^"vmnr" }
+int_cabb = { ^"cabb" }
+int_cabl = { ^"cabl" }
+int_cabp = { ^"cabp" }
+int_cabr = { ^"cabr" }
+int_cabt = { ^"cabt" }
+int_cabv = { ^"cabv" }
+int_nwld = { ^"nwld" }
+int_wnti = { ^"wnti" ~ string_arg }
+int_prt_itot = { ^"prt:" ~ ^"itot" }
+int_ptr_from = { ^"ptr:" ~ ^"from" ~ int_arg }

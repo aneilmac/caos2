@@ -1,0 +1,54 @@
+// Literal int
+int_decimal       = @{ "-"{0, 1} ~ ASCII_DIGIT+ }
+int_binary_prefix = _{ "%" }
+int_binary        = @{ ("0" | "1")+ }
+int_char_delimits = _{ "'" }
+int_char_escape   =  { "\\'" }
+int_character          = @{ !"'" ~ (int_char_escape | ASCII) }
+literal_int       =  {
+int_decimal
+| (int_binary_prefix ~ int_binary)
+| (int_char_delimits ~ int_character ~ int_char_delimits)
+}
+
+// Literal string
+string_raw       = @{ (!("\\" | "\"") ~ ASCII)+ }
+escape_character = _{ "\\" }
+escape_newline   =  { "n" }
+escape_quote     =  { "\"" }
+escape_backslash =  { "\\" }
+string_delimits  = _{ "\"" }
+string_escape    = ${
+(escape_character ~ escape_newline)
+| (escape_character ~ escape_quote)
+| (escape_character ~ escape_backslash)
+}
+string_content   = _{ (string_raw | string_escape)* }
+literal_string   = ${ string_delimits ~ string_content ~ string_delimits }
+
+// Literal byte string
+literal_byte_string = { "[" ~ literal_int* ~ "]" }
+
+// Literal floats
+
+whole_number = @{"-"{0, 1} ~ ASCII_DIGIT+}
+decimal_part = @{ASCII_DIGIT+}
+
+literal_float = @{
+    whole_number ~ "." ~ decimal_part
+  |  "." ~ decimal_part
+  }
+
+// Label
+label = @{ ASCII_ALPHA+ ~ (ASCII_ALPHANUMERIC | "_")* }
+
+// Decimal.
+//
+// Note this differnts from int_arg / float arg in the sense
+// this can hold either value, as opposed to a type containing a castable value.
+decimal = { float | int  }
+decimal_arg = _{ variable | decimal }
+
+// Whitespace + Comments
+WHITESPACE = _{ " " | "\t" | NEWLINE }
+COMMENT    = _{ "*" ~ (!NEWLINE ~ ANY)* ~ NEWLINE }

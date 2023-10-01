@@ -1,4 +1,5 @@
-use caos2::parser::CosFile;
+use caos2::CaosParser;
+use pest::Parser;
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -26,13 +27,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn scan_file(file_content: &str) -> bool {
-    match CosFile::parse(&file_content) {
+    match CaosParser::parse(caos2::Rule::program, &file_content) {
         Ok(..) => {
             println!(" -- successful parse!");
             true
         }
         Err(e) => {
-            let err = nom::error::convert_error(file_content, e);
+            let err = e.to_string();
             println!("-- failed with error:\n{}", err);
             false
         }

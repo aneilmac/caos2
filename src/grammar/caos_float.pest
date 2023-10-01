@@ -1,0 +1,86 @@
+float_arg = _{ float | int | variable }
+
+float = {
+  literal_float
+  | float_disq
+  | float_fltx
+  | float_flty
+  | float_mthx
+  | float_mthy
+  | float_posb
+  | float_posl
+  | float_posr
+  | float_post
+  | float_posx
+  | float_posy
+  | float_rnge
+  | float_chem
+  | float_dftx
+  | float_dfty
+  | float_driv
+  | float_loci
+  | float_orgf
+  | float_uftx
+  | float_ufty
+  | float_innf
+  | float_movx
+  | float_movy
+  | float_prop
+  | float_torx
+  | float_tory
+  | float_accg
+  | float_obst
+  | float_relx
+  | float_rely
+  | float_pace
+  | float_acos
+  | float_asin
+  | float_atan
+  | float_cos
+  | float_itof
+  | float_sin
+  | float_sqrt
+  | float_stof
+  | float_tan
+  }
+
+float_disq = { ^"disq" ~ agent_arg }
+float_fltx = { ^"fltx" }
+float_flty = { ^"flty" }
+float_mthx = { ^"mthx" }
+float_mthy = { ^"mthy" }
+float_posb = { ^"posb" }
+float_posl = { ^"posl" }
+float_posr = { ^"posr" }
+float_post = { ^"post" }
+float_posx = { ^"posx" }
+float_posy = { ^"posy" }
+float_rnge = { ^"rnge" }
+float_chem = { ^"chem" ~ int_arg }
+float_dftx = { ^"dftx" }
+float_dfty = { ^"dfty" }
+float_driv = { ^"driv" ~ int_arg }
+float_loci = { ^"loci" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+float_orgf = { ^"orgf" ~ int_arg ~ int_arg }
+float_uftx = { ^"uftx" }
+float_ufty = { ^"ufty" }
+float_innf = { ^"innf" }
+float_movx = { ^"movx" }
+float_movy = { ^"movy" }
+float_prop = { ^"prop" ~ int_arg ~ int_arg }
+float_torx = { ^"torx" ~ int_arg }
+float_tory = { ^"tory" ~ int_arg }
+float_accg = { ^"accg" }
+float_obst = { ^"obst" ~ int_arg }
+float_relx = { ^"relx" ~ agent_arg ~ agent_arg }
+float_rely = { ^"rely" ~ agent_arg ~ agent_arg }
+float_pace = { ^"pace" }
+float_acos = { ^"acos" ~ float_arg }
+float_asin = { ^"asin" ~ float_arg }
+float_atan = { ^"atan" ~ float_arg }
+float_cos = { ^"cos_" ~ float_arg }
+float_itof = { ^"itof" ~ int_arg }
+float_sin = { ^"sin_" ~ float_arg }
+float_sqrt = { ^"sqrt" ~ float_arg }
+float_stof = { ^"stof" ~ string_arg }
+float_tan = { ^"tan_" ~ float_arg }

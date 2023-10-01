@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 nom = "7.1.1"
+pest = "^2.7"
+pest_derive = "^2.7"
 caos-macros = { path = "caos-macros" }
 
 [[example]]

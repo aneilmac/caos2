@@ -8,10 +8,9 @@ use nom::combinator::map;
 
 use evaluators::*;
 
-#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(f32)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Float {
-    #[syntax(with_parser = "parse_literal", with_evaluator = "eval_raw")]
+    #[syntax(with_parser = "parse_literal")]
     Raw(LiteralF32),
     #[syntax]
     Disq { other: Box<Agent> },
@@ -106,14 +105,14 @@ pub enum Float {
     Sin { theta: Box<FloatArg> },
     #[syntax]
     Sqrt { value: Box<FloatArg> },
-    #[syntax(with_evaluator = "eval_stof")]
     /// Converts a string in decimal to a floating point number.
     /// Characters in the string after an initial number are quietly ignored.
     /// If there is no obvious number then zero is returned.
+    #[syntax]
     Stof { value: Box<SString> },
     /// Returns tangent of theta. Theta should be in degrees.
     /// Watch out for those nasty discontinuities at 90 and 270.
-    #[syntax(name = "tan_", with_evaluator = "eval_tan")]
+    #[syntax(name = "tan_")]
     Tan { theta: Box<FloatArg> },
 }
 

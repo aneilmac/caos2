@@ -71,27 +71,6 @@ where
     }
 }
 
-impl<P, C> EvaluateCommand for DecimalArg<P, C>
-where
-    P: EvaluateCommand,
-    C: EvaluateCommand,
-    <P as EvaluateCommand>::ReturnType:
-        Castable<<C as EvaluateCommand>::ReturnType> + Castable<f32> + Castable<i32>,
-{
-    type ReturnType = <P as EvaluateCommand>::ReturnType;
-    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
-        match self {
-            Self::Primary(p) => p.evaluate(script),
-            Self::Castable(c) => c.evaluate(script).map(|c| Self::ReturnType::cast(c)),
-            Self::Variable(v) => v.evaluate(script).and_then(|v| match v {
-                Variadic::Float(f) => Ok(Self::ReturnType::cast(f)),
-                Variadic::Integer(i) => Ok(Self::ReturnType::cast(i)),
-                _ => Err(CaosError::new(ErrorType::DecimalConversionFailure)),
-            }),
-        }
-    }
-}
-
 trait Castable<T> {
     fn cast(t: T) -> Self;
 }

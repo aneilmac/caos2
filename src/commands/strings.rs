@@ -13,10 +13,9 @@ use nom::{
     sequence::delimited,
 };
 
-#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(String)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum SString {
-    #[syntax(with_parser = "parse_raw", with_evaluator = "eval_raw")]
+    #[syntax(with_parser = "parse_raw")]
     Raw(String),
     #[syntax(with_parser = "parse_variable")]
     Variable(Box<Variable>),

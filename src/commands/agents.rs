@@ -41,7 +41,7 @@ pub enum Agent {
     },
     #[syntax]
     Pntr,
-    #[syntax(with_evaluator = "eval_targ")]
+    #[syntax]
     Targ,
     #[syntax]
     Twin {

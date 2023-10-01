@@ -1,0 +1,15 @@
+// The program is a collection of scripts.
+// 
+// There is one install script, one removal script, and multiple event scripts.
+// The install script start tag may be implicitly defined at the start of a file.
+// Likewise both the install script and removal script end tags may be implicitly defined.
+// Event scripts are always well defined.
+program = _{
+  | program_only_implicit
+  | program_implicit_install
+  | program_nonimplicit_install
+  }
+
+program_only_implicit       = _{ implict_install_script ~ EOI }
+program_implicit_install    = _{ implict_install_script ~ (remove_script | event_script)* }
+program_nonimplicit_install = _{ SOI ~ (install_script | remove_script | event_script)* }

@@ -3,8 +3,7 @@ use crate::parser::{CaosParsable, CaosParseResult};
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
 use nom::combinator::map;
 
-#[derive(CaosParsable, EvaluateCommand, CommandList, Eq, PartialEq, Debug, Clone)]
-#[return_type(i32)]
+#[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
 pub enum Integer {
     #[syntax(with_parser = "parse_literal")]
     Raw(LiteralInt),
@@ -195,7 +194,11 @@ pub enum Integer {
     #[syntax(name = "hist mute")]
     HistMute { moniker: Box<SString> },
     #[syntax(name = "hist rtim")]
+    #[syntax(name = "hist prev")]
     HistPrev {
+        moniker: Box<SString>
+    },
+    HistRtim {
         moniker: Box<SString>,
         event_no: Box<IntArg>,
     },
@@ -211,8 +214,12 @@ pub enum Integer {
     },
     #[syntax(name = "hist vari")]
     HistVari { moniker: Box<SString> },
-    #[syntax(name = "hist wtik")]
+    #[syntax(name = "hist wnam")]
     HistWnam {
+        moniker: Box<SString>,
+        event_no: Box<IntArg>,
+    },
+    HistWtik {
         moniker: Box<SString>,
         event_no: Box<IntArg>,
     },

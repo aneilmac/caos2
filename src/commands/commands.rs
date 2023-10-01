@@ -518,7 +518,7 @@ pub enum Command {
         drive4: IntArg,
         adjust4: FloatArg,
     },
-    #[syntax(name = "sway tact")]
+    #[syntax(name = "sway writ")]
     SwayWrit {
         creature: Agent,
         drive1: IntArg,
@@ -989,7 +989,7 @@ pub enum Command {
     Mulv { var: Variable, mul: Decimal },
     #[syntax]
     Negv { var: Variable },
-    #[syntax(with_evaluator = "eval_orrv")]
+    #[syntax]
     Orrv { var: Variable, value: IntArg },
     #[syntax]
     Reaf,

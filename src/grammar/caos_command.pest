@@ -1,0 +1,574 @@
+command = {
+    command_doif
+  | command_subr
+  | command_reps
+  | command_econ
+  | command_enum
+  | command_etch
+  | command_esee
+  | command_epass
+  | command_loop_untl
+  | command_loop_ever
+  | command_anim
+  | command_anms
+  | command_attr
+  | command_base
+  | command_bhvr
+  | command_frat
+  | command_gait
+  | command_gall
+  | command_hand
+  | command_kill
+  | command_mesg_writ
+  | command_mesg_wrt
+  | command_mira
+  | command_new_simp
+  | command_nohh
+  | command_over
+  | command_paus
+  | command_plne
+  | command_pose
+  | command_puhl
+  | command_pupt
+  | command_rnge
+  | command_rtar
+  | command_show
+  | command_star
+  | command_tick
+  | command_tint
+  | command_ttar
+  | command_brn_dmpb
+  | command_brn_dmpd
+  | command_brn_dmpl
+  | command_brn_dmpn
+  | command_brn_dmpt
+  | command_brn_setd
+  | command_brn_setl
+  | command_brn_setn
+  | command_brn_sett
+  | command_bkgd
+  | command_brmi
+  | command_cmra
+  | command_cmrp
+  | command_cmrt
+  | command_frsh
+  | command_line
+  | command_meta
+  | command_scam
+  | command_snap
+  | command_trck
+  | command_wdow
+  | command_zoom
+  | command_fcus
+  | command_frmt
+  | command_grpl
+  | command_grpv
+  | command_new_comp
+  | command_page
+  | command_part
+  | command_pat_butt 
+  | command_pat_cmra 
+  | command_pat_dull 
+  | command_pat_fixd 
+  | command_pat_grph 
+  | command_pat_kill 
+  | command_pat_text 
+  | command_ptxt
+  | command_ages  
+  | command_apptr
+  | command_aslp  
+  | command_body  
+  | command_born  
+  | command_chem  
+  | command_dead  
+  | command_dirn  
+  | command_done  
+  | command_drea  
+  | command_driv  
+  | command_face  
+  | command_forf  
+  | command_hair  
+  | command_injr  
+  | command_like  
+  | command_loci  
+  | command_ltcy  
+  | command_mate  
+  | command_mvft  
+  | command_new_crea 
+  | command_newc 
+  | command_norm 
+  | commmand_nude
+  | commmand_ordr_shou
+  | commmand_ordr_sign
+  | commmand_ordr_writ
+  | commmand_sayn 
+  | commmand_spnl 
+  | command_stim_shou
+  | command_stim_sign
+  | command_stim_tact
+  | command_stim_writ
+  | command_sway_shou
+  | command_sway_sign
+  | command_sway_tact
+  | command_sway_writ
+  | command_touc  
+  | command_uncs  
+  | command_urge_shou
+  | command_urge_sign
+  | command_urge_tact
+  | command_urge_writ
+  | command_vocb  
+  | command_walk  
+  | command_wear  
+  | command_zomb  
+  | command_apro  
+  | command_dbg_asrt 
+  | command_dbg_cpro 
+  | command_dbg_flsh 
+  | command_dbg_html 
+  | command_dbg_outs 
+  | command_dbg_outv 
+  | command_dbg_paws 
+  | command_dbg_play 
+  | command_dbg_poll 
+  | command_dbg_prof 
+  | command_dbg_tack 
+  | command_dbg_tock 
+  | command_dbg_wtik 
+  | command_help  
+  | command_mann  
+  | command_memx  
+  | command_file_glob
+  | command_file_iclo
+  | command_file_iope
+  | command_file_jdel
+  | command_file_oclo
+  | command_file_oflu
+  | command_file_oope
+  | command_outs  
+  | command_outv  
+  | command_outx  
+  | command_goto  
+  | command_gsub  
+  | command_gene_clon
+  | command_gene_cros
+  | command_gene_kill
+  | command_gene_load
+  | command_gene_move
+  | command_hist_evnt
+  | command_hist_foto
+  | command_hist_name
+  | command_hist_utxt
+  | command_hist_wipe
+  | command_clac  
+  | command_clik  
+  | command_imsk
+  | command_mous
+  | command_pure
+  | command_tran
+  | command_addb  
+  | command_altr  
+  | command_calc  
+  | command_delm  
+  | command_delr  
+  | command_dmap  
+  | command_doca  
+  | command_door  
+  | command_emit  
+  | command_link  
+  | command_mapd  
+  | command_mapk  
+  | command_perm  
+  | command_prop  
+  | command_rate  
+  | command_rtyp  
+  | command_accg  
+  | command_aero  
+  | command_elas  
+  | command_flto  
+  | command_frel  
+  | command_fric  
+  | command_mvby  
+  | command_mvsf  
+  | command_mvto  
+  | command_velo  
+  | command_prt_bang 
+  | command_prt_inew 
+  | command_prt_izap 
+  | command_prt_join 
+  | command_prt_krak 
+  | command_prt_name 
+  | command_prt_onew 
+  | command_prt_otot 
+  | command_prt_ozap 
+  | command_prt_send 
+  | command_pray_grab
+  | command_pray_refr
+  | command_gids_fmly
+  | command_gids_gnus
+  | command_gids_root
+  | command_gids_spec
+  | command_inst 
+  | command_lock 
+  | command_scrx 
+  | command_slow 
+  | command_sorc 
+  | command_stop 
+  | command_stpt 
+  | command_unlk 
+  | command_wait 
+  | command_fade 
+  | command_mclr 
+  | command_midi 
+  | command_mmsc 
+  | command_rclr 
+  | command_rmsc 
+  | command_sezz 
+  | command_sndc 
+  | command_snde 
+  | command_sndl 
+  | command_sndq 
+  | command_stpc 
+  | command_strk 
+  | command_voic 
+  | command_vois 
+  | command_volm 
+  | command_wpau 
+  | command_absv 
+  | command_adds 
+  | command_addv 
+  | command_andv 
+  | command_char 
+  | command_delg
+  | command_divv
+  | command_modv
+  | command_mulv
+  | command_negv
+  | command_orrv
+  | command_reaf
+  | command_seta
+  | command_sets
+  | command_setv
+  | command_subv
+  | command_targ
+  | command_cabn
+  | command_cabp
+  | command_cabv
+  | command_cabw
+  | command_dpas
+  | command_gpas
+  | command_new_vhcl 
+  | command_rpas
+  | command_spas
+  | command_delw
+  | command_load
+  | command_pswd
+  | command_quit
+  | command_rgam
+  | command_save
+  | command_tntx
+  | command_wrld
+  | command_wtnt
+  }
+
+command_doif = {
+^"doif" ~ condition ~ script_contents ~ command_elif* ~ command_else{0, 1} ~ ^"endi"
+}
+command_elif = { ^"elif" ~ condition ~ script_contents }
+command_else = { ^"else" ~ script_contents }
+
+command_subr = {
+^"subr" ~ label ~ script_contents ~ ^"retn"
+}
+
+command_reps = {
+^"reps" ~ int_arg ~ script_contents ~ ^"repe"
+}
+
+command_econ = {
+^"econ" ~ agent_arg ~ script_contents ~ ^"next"
+}
+
+command_enum = {
+^"enum" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+}
+
+command_etch = {
+^"etch" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+}
+
+command_esee = {
+^"esee" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+}
+
+command_epass = {
+^"etch" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+}
+
+command_loop_untl = { 
+    ^"loop" ~ script_contents ~ ^"untl" ~ condition 
+}
+command_loop_ever = { 
+    ^"loop" ~ script_contents ~ ^"ever" 
+}
+
+command_anim = { ^"anim" ~ literal_byte_string }
+command_anms = { ^"anms" ~ string_arg }
+command_attr = { ^"attr" ~ int_arg }
+command_base = { ^"base" ~ int_arg }
+command_bhvr = { ^"bhvr" ~ int_arg }
+command_frat = { ^"frat" ~ int_arg }
+command_gait = { ^"gait" ~ int_arg }
+command_gall = { ^"gall" ~ string_arg ~ int_arg }
+command_hand = { ^"hand" ~ string_arg }
+command_kill = { ^"kill" ~ agent_arg }
+command_mesg_writ = { ^"mesg" ~ ^"writ" ~ agent_arg ~ int_arg }
+command_mesg_wrt = { ^"mesg" ~ ^"wrt+" ~ agent_arg ~ int_arg ~ anything ~ anything ~ int_arg }
+command_mira = { ^"mira" ~ int_arg }
+command_new_simp = { ^"new:" ~ ^"simp" ~ int_arg ~ int_arg ~ int_arg ~ string_arg ~ int_arg ~ int_arg ~ int_arg }
+command_nohh = { ^"nohh" }
+command_over = { ^"over" }
+command_paus = { ^"paus" ~ int_arg }
+command_plne = { ^"plne" ~ int_arg }
+command_pose = { ^"pose" ~ int_arg }
+command_puhl = { ^"puhl" ~ int_arg ~ int_arg ~ int_arg }
+command_pupt = { ^"pupt" ~ int_arg ~ int_arg ~ int_arg }
+command_rnge = { ^"rnge" ~ float_arg }
+command_rtar = { ^"rtar" ~ int_arg ~ int_arg ~ int_arg }
+command_show = { ^"show" ~ int_arg }
+command_star = { ^"star" ~ int_arg ~ int_arg ~ int_arg }
+command_tick = { ^"tick" ~ int_arg }
+command_tint = { ^"tint" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_ttar = { ^"ttar" ~ int_arg ~ int_arg ~ int_arg }
+command_brn_dmpb = { ^"brn:" ~ ^"dmpb" }
+command_brn_dmpd = { ^"brn:" ~ ^"dmpd" ~ int_arg ~ int_arg }
+command_brn_dmpl = { ^"brn:" ~ ^"dmpl" ~ int_arg }
+command_brn_dmpn = { ^"brn:" ~ ^"dmpn" ~ int_arg ~ int_arg }
+command_brn_dmpt = { ^"brn:" ~ ^"dmpt" ~ int_arg }
+command_brn_setd = { ^"brn:" ~ ^"setd" ~ int_arg ~ int_arg ~ int_arg ~ float_arg }
+command_brn_setl = { ^"brn:" ~ ^"setl" ~ int_arg ~ int_arg ~ float_arg }
+command_brn_setn = { ^"brn:" ~ ^"setn" ~ int_arg ~ int_arg ~ int_arg ~ float_arg }
+command_brn_sett = { ^"brn:" ~ ^"sett" ~ int_arg ~ int_arg ~ float_arg }
+command_bkgd = { ^"bkgd" ~ int_arg ~ string_arg ~ int_arg }
+command_brmi = { ^"brmi" ~ int_arg ~ int_arg }
+command_cmra = { ^"cmra" ~ int_arg ~ int_arg ~ int_arg }
+command_cmrp = { ^"cmrp" ~ int_arg ~ int_arg ~ int_arg }
+command_cmrt = { ^"cmrt" ~ int_arg }
+command_frsh = { ^"frsh" }
+command_line = { ^"line" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_meta = { ^"meta" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_scam = { ^"scam" ~ agent_arg ~ int_arg }
+command_snap = { ^"snap" ~ string_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_trck = { ^"trck" ~ agent_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_wdow = { ^"wdow" }
+command_zoom = { ^"zoom" ~ int_arg ~ int_arg ~ int_arg }
+command_fcus = { ^"fcus" }
+command_frmt = { ^"frmt" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_grpl = { ^"grpl" ~ int_arg ~ int_arg ~ int_arg ~ float_arg ~ float_arg }
+command_grpv = { ^"grpv" ~ int_arg ~ float_arg }
+command_new_comp = { ^"new:" ~ ^"comp" ~ int_arg ~ int_arg ~ int_arg ~ string_arg ~ int_arg ~ int_arg ~ int_arg }
+command_page = { ^"page" ~ int_arg }
+command_part = { ^"part" ~ int_arg }
+command_pat_butt = { ^"pat:" ~ ^"butt" ~ int_arg ~ string_arg ~ int_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg ~ literal_byte_string ~ int_arg ~ int_arg }
+command_pat_cmra = { ^"pat:" ~ ^"cmra" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_pat_dull = { ^"pat:" ~ ^"dull" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg }
+command_pat_fixd = { ^"pat:" ~ ^"fixd" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg ~ string_arg }
+command_pat_grph = { ^"pat:" ~ ^"grph" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg }
+command_pat_kill = { ^"pat:" ~ ^"kill" ~ int_arg }
+command_pat_text = { ^"pat:" ~ ^"text" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg ~ int_arg ~ string_arg }
+command_ptxt = { ^"ptxt" ~ string_arg }
+command_ages = { ^"ages" ~ int_arg }
+command_apptr = { "^appr" }
+command_aslp = { ^"aslp" ~ int_arg }
+command_body = { ^"body" ~ int_arg ~ int_arg }
+command_born = { ^"born" }
+command_chem = { ^"chem" ~ int_arg ~ float_arg }
+command_dead = { ^"dead" }
+command_dirn = { ^"dirn" ~ int_arg }
+command_done = { ^"done" }
+command_drea = { ^"drea" ~ int_arg }
+command_driv = { ^"driv" ~ int_arg ~ float_arg }
+command_face = { ^"face" ~ int_arg }
+command_forf = { ^"forf" ~ agent_arg }
+command_hair = { ^"hair" ~ int_arg }
+command_injr = { ^"injr" ~ int_arg ~ int_arg }
+command_like = { ^"like" ~ agent_arg }
+command_loci = { ^"loci" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ float_arg }
+command_ltcy = { ^"ltcy" ~ int_arg ~ int_arg ~ int_arg }
+command_mate = { ^"mate" }
+command_mvft = { ^"mvft" ~ float_arg ~ float_arg }
+command_new_crea = { ^"new:" ~ ^"crea" ~ int_arg ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
+command_newc = { ^"newc" ~ int_arg ~ agent_arg ~ int_arg ~ int_arg ~ int_arg } 
+command_norm = { ^"norn" ~ agent_arg }
+commmand_nude = { ^"nude" }
+commmand_ordr_shou = { ^"ordr" ~ ^"shou" ~ string_arg }
+commmand_ordr_sign = { ^"ordr" ~ ^"sign" ~ string_arg }
+commmand_ordr_writ = { ^"ordr" ~ ^"writ" ~ agent_arg ~ string_arg }
+commmand_sayn  = { ^"sayn" } 
+commmand_spnl  = { ^"spnl" ~ string_arg ~ int_arg ~ float_arg }
+command_stim_shou = { ^"stim" ~ ^"shou" ~ int_arg ~ float_arg }
+command_stim_sign = { ^"stim" ~ ^"sign" ~ int_arg ~ float_arg }
+command_stim_tact = { ^"stim" ~ ^"tact" ~ int_arg ~ float_arg }
+command_stim_writ = { ^"stim" ~ ^"writ" ~ agent_arg ~ int_arg ~ float_arg }
+command_sway_shou = { ^"sway" ~ ^"shou" ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg }
+command_sway_sign = { ^"sway" ~ ^"sign" ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg }
+command_sway_tact = { ^"sway" ~ ^"tact" ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg }
+command_sway_writ = { ^"sway" ~ ^"writ" ~ agent_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg }
+command_touc = { ^"touc" } 
+command_uncs = { ^"uncs" ~ int_arg } 
+command_urge_shou = { ^"urge" ~ ^"shou" ~ float_arg ~ int_arg ~ float_arg }
+command_urge_sign = { ^"urge" ~ ^"sign" ~ float_arg ~ int_arg ~ float_arg }
+command_urge_tact = { ^"urge" ~ ^"tact" ~ float_arg ~ int_arg ~ float_arg }
+command_urge_writ = { ^"urge" ~ ^"writ" ~ agent_arg ~ int_arg ~ float_arg ~ int_arg ~ float_arg }
+command_vocb = { ^"vocb" }
+command_walk = { ^"walk" }
+command_wear = { ^"wear" ~ int_arg ~ int_arg ~ int_arg }
+command_zomb = { ^"zomb" ~int_arg }
+command_apro = { ^"apro" ~ string_arg }
+command_dbg_asrt = { ^"dbg:" ~ ^"asrt" ~ condition }
+command_dbg_cpro = { ^"dbg:" ~ ^"cpro" }
+command_dbg_flsh = { ^"dbg:" ~ ^"flsh" }
+command_dbg_html = { ^"dbg:" ~ ^"html" ~ int_arg }
+command_dbg_outs = { ^"dbg:" ~ ^"outs" ~ string_arg }
+command_dbg_outv = { ^"dbg:" ~ ^"outv" ~ decimal_arg }
+command_dbg_paws = { ^"dbg:" ~ ^"paws" }
+command_dbg_play = { ^"dbg:" ~ ^"play" } 
+command_dbg_poll = { ^"dbg:" ~ ^"poll" } 
+command_dbg_prof = { ^"dbg:" ~ ^"prof" } 
+command_dbg_tack = { ^"dbg:" ~ ^"tack" ~ agent_arg }
+command_dbg_tock = { ^"dbg:" ~ ^"tock" }
+command_dbg_wtik = { ^"dbg:" ~ ^"wtik" ~ int_arg }
+command_help = { ^"help" }
+command_mann = { ^"mann" ~ string_arg }
+command_memx = { ^"memx" }
+command_file_glob = { ^"file" ~ ^"glob" ~ int_arg ~ string_arg }
+command_file_iclo = { ^"file" ~ ^"iclo" }
+command_file_iope = { ^"file" ~ ^"iope" ~ int_arg ~ string_arg }
+command_file_jdel = { ^"file" ~ ^"jdel" ~ int_arg ~ string_arg }
+command_file_oclo = { ^"file" ~ ^"oclo" }
+command_file_oflu = { ^"file" ~ ^"oflu" }
+command_file_oope = { ^"file" ~ ^"oope" ~ int_arg ~ string_arg ~ int_arg }
+command_outs = { ^"outs" ~ string_arg }
+command_outv = { ^"outv" ~ decimal_arg }
+command_outx = { ^"outx" ~ string_arg }
+command_goto = { ^"goto" ~ label }
+command_gsub = { ^"gsub" ~ label }
+command_gene_clon = { ^"gene" ~ ^"clon" ~ agent_arg ~ int_arg ~ agent_arg ~ int_arg }
+command_gene_cros = { ^"gene" ~ ^"cros" ~ agent_arg ~ int_arg ~ agent_arg ~ int_arg ~ agent_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_gene_kill = { ^"gene" ~ ^"kill" ~ agent_arg ~ int_arg }
+command_gene_load = { ^"gene" ~ ^"load" ~ agent_arg ~ int_arg ~ string_arg }
+command_gene_move = { ^"gene" ~ ^"move" ~ agent_arg ~ int_arg ~ agent_arg ~ string_arg }
+command_hist_evnt = { ^"hist" ~ ^"evnt" ~ string_arg ~ int_arg ~ string_arg ~ string_arg }
+command_hist_foto = { ^"hist" ~ ^"foto" ~ string_arg ~ int_arg ~ string_arg }
+command_hist_name = { ^"hist" ~ ^"name" ~ string_arg ~ string_arg }
+command_hist_utxt = { ^"hist" ~ ^"utxt" ~ string_arg ~ int_arg ~ string_arg }
+command_hist_wipe = { ^"hist" ~ ^"wipe" ~ string_arg }
+command_clac = { ^"clac" ~ int_arg }
+command_clik = { ^"clik" ~ int_arg ~ int_arg ~ int_arg }
+command_imsk  = { ^"imsk" ~ int_arg }
+command_mous  = { ^"mous" ~ int_arg }
+command_pure  = { ^"pure" ~ int_arg }
+command_tran  = { ^"tran" ~ int_arg ~ int_arg }
+command_addb = { ^"addb" ~ int_arg ~ string_arg }
+command_altr = { ^"altr" ~ int_arg ~ int_arg ~ float_arg }
+command_calc = { ^"calc" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_delm = { ^"delm" ~ int_arg }
+command_delr = { ^"delr" ~ int_arg }
+command_dmap = { ^"dmap" ~ int_arg }
+command_doca = { ^"doca" ~ int_arg }
+command_door = { ^"door" ~ int_arg ~ int_arg ~ int_arg }
+command_emit = { ^"emit" ~ int_arg ~ float_arg }
+command_link = { ^"link" ~ int_arg ~ int_arg ~ int_arg }
+command_mapd = { ^"mapd" ~ int_arg ~ int_arg }
+command_mapk = { ^"mapk" }
+command_perm = { ^"perm" ~ int_arg }
+command_prop = { ^"prop" ~ int_arg ~ int_arg ~ float_arg }
+command_rate = { ^"rate" ~ int_arg ~ int_arg ~ float_arg ~ float_arg ~ float_arg }
+command_rtyp = { ^"rtyp" ~ int_arg ~ int_arg }
+command_accg = { ^"accg" ~ float_arg }
+command_aero = { ^"aero" ~ int_arg }
+command_elas = { ^"elas" ~ int_arg }
+command_flto = { ^"flto" ~ float_arg ~ float_arg }
+command_frel = { ^"frel" ~ agent_arg }
+command_fric = { ^"fric" ~ int_arg }
+command_mvby = { ^"mvby" ~ float_arg ~ float_arg }
+command_mvsf = { ^"mvsf" ~ float_arg ~ float_arg }
+command_mvto = { ^"mvto" ~ float_arg ~ float_arg }
+command_velo = { ^"velo" ~ float_arg ~ float_arg }
+command_prt_bang = { ^"prt:" ~ ^"bang" ~ int_arg }
+command_prt_inew = { ^"prt:" ~ ^"inew" ~ int_arg ~ string_arg ~ string_arg ~ int_arg ~ int_arg ~ int_arg }
+command_prt_izap = { ^"prt:" ~ ^"izap" ~ int_arg }
+command_prt_join = { ^"prt:" ~ ^"join" ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
+command_prt_krak = { ^"prt:" ~ ^"krak" ~ agent_arg ~ int_arg ~ int_arg }
+command_prt_name = { ^"prt:" ~ ^"name" ~ agent_arg ~ int_arg ~ int_arg }
+command_prt_onew = { ^"prt:" ~ ^"onew" ~ int_arg ~ string_arg ~ string_arg ~ int_arg ~ int_arg }
+command_prt_otot = { ^"prt:" ~ ^"otot" }
+command_prt_ozap = { ^"prt:" ~ ^"ozap" ~ int_arg }
+command_prt_send = { ^"prt:" ~ ^"send" ~ int_arg ~ anything }
+command_pray_grab = { ^"pray" ~ ^"grab" ~ int_arg }
+command_pray_refr = { ^"pray" ~ ^"refr" }
+command_gids_fmly = { ^"gids" ~ ^"fmly" ~ int_arg }
+command_gids_gnus = { ^"gids" ~ ^"gnus" ~ int_arg ~ int_arg }
+command_gids_root = { ^"gids" ~ ^"root" }
+command_gids_spec = { ^"gids" ~ ^"spec" ~ int_arg ~ int_arg ~ int_arg }
+command_inst = { ^"inst" }
+command_lock = { ^"lock" }
+command_scrx = { ^"scrx" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_slow = { ^"slow" }
+command_sorc = { ^"sorc" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_stop = { ^"stop" }
+command_stpt = { ^"stpt" }
+command_unlk = { ^"unlk" }
+command_wait = { ^"wait" ~ int_arg }
+command_fade = { ^"fade" }
+command_mclr = { ^"mclr" ~ int_arg ~ int_arg }
+command_midi = { ^"midi" ~ string_arg }
+command_mmsc = { ^"mmsc" ~ int_arg ~ int_arg ~ string_arg }
+command_rclr = { ^"rclr" ~ int_arg ~ int_arg }
+command_rmsc = { ^"rmsc" ~ int_arg ~ int_arg ~ string_arg }
+command_sezz = { ^"sezz" }
+command_sndc = { ^"sndc" ~ string_arg }
+command_snde = { ^"snde" ~ string_arg } 
+command_sndl = { ^"sndl" ~ string_arg } 
+command_sndq = { ^"sndq" ~ string_arg ~ int_arg }
+command_stpc = { ^"stpc" }
+command_strk = { ^"strk" ~ int_arg ~ string_arg }
+command_voic = { ^"voic" ~ int_arg ~ int_arg ~ int_arg }
+command_vois = { ^"vois" ~ string_arg }
+command_volm = { ^"volm" ~ int_arg }
+command_wpau = { ^"wpau" ~ int_arg }
+command_absv = { ^"absv" ~ variable }
+command_adds = { ^"adds" ~ variable ~ string_arg }
+command_addv = { ^"addv" ~ variable ~ decimal_arg }
+command_andv = { ^"andv" ~ variable ~ int_arg }
+command_char = { ^"char" ~ variable ~ int_arg ~ int_arg }
+command_delg= { ^"delg" ~ string_arg }
+command_divv= { ^"divv" ~ variable ~ decimal_arg }
+command_modv= { ^"modv" ~ variable ~ int_arg }
+command_mulv= { ^"mulv" ~ variable ~ decimal_arg }
+command_negv= { ^"negv" ~ variable }
+command_orrv= { ^"orrv" ~ variable ~ int_arg }
+command_reaf= { ^"reaf" }
+command_seta= { ^"seta" ~ variable ~ agent_arg }
+command_sets= { ^"sets" ~ variable ~ string_arg }
+command_setv= { ^"setv" ~ variable ~ decimal_arg }
+command_subv= { ^"subv" ~ variable ~ decimal_arg }
+command_targ= { ^"targ" ~ agent_arg }
+command_cabn= { ^"cabn" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_cabp= { ^"cabp" ~ int_arg }
+command_cabv= { ^"cabv" ~ int_arg }
+command_cabw= { ^"cabw" ~ int_arg }
+command_dpas= { ^"dpas" ~ int_arg ~ int_arg ~ int_arg }
+command_gpas= { ^"gpas" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
+command_new_vhcl = { ^"new:" ~ ^"vhcl" ~ int_arg ~ int_arg ~ int_arg ~ string_arg ~ int_arg ~ int_arg ~ int_arg }
+command_rpas =  { ^"rpas" ~ agent_arg ~ agent_arg }
+command_spas = { ^"spas" ~ agent_arg ~ agent_arg }
+command_delw = { ^"delw" ~ string_arg }
+command_load = { ^"load" ~ string_arg }
+command_pswd = { ^"pswd" ~ string_arg }
+command_quit = { ^"quit" }
+command_rgam = { ^"rgam" }
+command_save = { ^"save" }
+command_tntx = { ^"tntw" ~ int_arg }
+command_wrld = { ^"wlrd" ~ string_arg }
+command_wtnt = { ^"wtnt" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }

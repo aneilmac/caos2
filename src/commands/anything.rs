@@ -50,16 +50,3 @@ impl CaosParsable for Anything {
     }
 }
 
-impl EvaluateCommand for Anything {
-    type ReturnType = crate::engine::Variadic;
-    fn evaluate(&self, script: &mut ScriptRefMut<'_>) -> crate::Result<Self::ReturnType> {
-        use crate::engine::Variadic;
-        match self {
-            Anything::Variable(v) => v.evaluate(script),
-            Anything::String(s) => s.evaluate(script).map(Variadic::from),
-            Anything::Decimal(d) => d.evaluate(script).map(Variadic::from),
-            Anything::ByteString(b) => b.evaluate(script).map(Variadic::from),
-            Anything::Agent(a) => a.evaluate(script).map(Variadic::from),
-        }
-    }
-}
