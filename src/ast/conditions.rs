@@ -29,4 +29,3 @@ pub enum ConditionType {
     Le,
     Lt,
 }
-

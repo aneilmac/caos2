@@ -8,7 +8,11 @@ edition = "2021"
 [dependencies]
 pest = "^2.7"
 pest_derive = "^2.7"
+lazy_static = "^1.4"
 caos-macros = { path = "caos-macros" }
+
+[dev-dependencies]
+walkdir = "^2.4"
 
 [[example]]
 name="scan_file"

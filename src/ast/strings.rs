@@ -1,5 +1,5 @@
 use super::{Anything, Decimal, IntArg, Variable};
-use caos_macros::{CaosParsable, EvaluateCommand};
+use caos_macros::CaosParsable;
 
 #[derive(CaosParsable, Eq, PartialEq, Debug, Clone)]
 pub enum SString {

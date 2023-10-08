@@ -1,22 +1,17 @@
-end_script_tag = _{ ^"endm" }
-
-install_script_start_tag = _{ ^"iscr" }
-install_script_end_tag   = _{ end_script_tag | &remove_script_start_tag | &event_script_start_tag | EOI }
-
-remove_script_start_tag = _{ ^"rscr" }
-remove_script_end_tag   = _{ end_script_tag | &install_script_start_tag | &event_script_start_tag | EOI }
-event_script_start_tag  = _{ ^"scrp" }
-
-install_script         = { install_script_start_tag ~ script_contents ~ install_script_end_tag }
-implict_install_script = { SOI ~ script_contents ~ install_script_end_tag }
-remove_script          = { remove_script_start_tag ~ script_contents ~ remove_script_end_tag }
-event_script           = { event_script_header ~ script_contents ~ end_script_tag }
-
-event_script_header = {
-    event_script_start_tag ~ literal_int // Family
-  ~ literal_int // Genus
-  ~ literal_int // Species
-  ~ literal_int // Script number
-}
+install_script = { install_script_start_tag{0, 1} ~ script_contents ~ end_script_tag }
+remove_script  = { remove_script_start_tag ~ script_contents ~ remove_script_end_tag }
+event_script   = { event_script_header ~ script_contents ~ end_script_tag }
 
 script_contents = { command* }
+
+install_script_start_tag = _{ ^"iscr" }
+remove_script_start_tag = _{ ^"rscr" }
+
+event_script_start_tag  = _{ ^"scrp" }
+event_script_header = {
+    event_script_start_tag ~ literal_int ~ literal_int ~ literal_int ~ literal_int
+}
+
+end_script_tag = _{ ^"endm" }
+install_script_end_tag   = _{ end_script_tag | &remove_script_start_tag | &event_script_start_tag | EOI }
+remove_script_end_tag   = _{ end_script_tag | &install_script_start_tag | &event_script_start_tag | EOI }

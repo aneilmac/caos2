@@ -4,8 +4,7 @@ use caos_macros::{CaosParsable, CommandList};
 #[derive(PartialEq, Debug, Clone)]
 pub struct LitF32(f32);
 
-impl Eq for LitF32 {
-}
+impl Eq for LitF32 {}
 
 impl From<LitF32> for f32 {
     fn from(l: LitF32) -> f32 {
@@ -132,4 +131,3 @@ impl From<f32> for Float {
         Float::Literal(f.into())
     }
 }
-

@@ -1,4 +1,4 @@
-use super::{IntArg, SString, Variable};
+use super::{AgentArg, IntArg, SString, SStringArg, Variable};
 use caos_macros::CaosParsable;
 
 /// Agent types represents a reference to an in-game CAOS
@@ -17,7 +17,7 @@ pub enum Agent {
     Iitt,
     #[syntax]
     Ncls {
-        previous: Box<Agent>,
+        previous: Box<AgentArg>,
         family: Box<IntArg>,
         genus: Box<IntArg>,
         species: Box<IntArg>,
@@ -28,7 +28,7 @@ pub enum Agent {
     Ownr,
     #[syntax]
     Pcls {
-        next: Box<Agent>,
+        next: Box<AgentArg>,
         family: Box<IntArg>,
         genus: Box<IntArg>,
         species: Box<IntArg>,
@@ -39,7 +39,7 @@ pub enum Agent {
     Targ,
     #[syntax]
     Twin {
-        original: Box<Agent>,
+        original: Box<AgentArg>,
         agent_null: Box<IntArg>,
     },
     #[syntax(name = "_it_")]
@@ -55,9 +55,9 @@ pub enum Agent {
     #[syntax]
     Tack,
     #[syntax]
-    Mtoa { moniker: Box<SString> },
+    Mtoa { moniker: Box<SStringArg> },
     #[syntax]
-    Mtoc { moniker: Box<SString> },
+    Mtoc { moniker: Box<SStringArg> },
     #[syntax]
     Hots,
     // Ports

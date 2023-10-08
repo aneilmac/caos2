@@ -6,16 +6,17 @@ variable = {
   | variable_vely
   | variable_avar
   | variable_game
-  | varaible_p1
+  | variable_p1
   | variable_p2
 }
 
-variable_mvxx = @{ ^"mv" ~ ASCII_DIGIT ~ ASCII_DIGIT }
-variable_ovxx = @{ ^"ov" ~ ASCII_DIGIT ~ ASCII_DIGIT }
-variable_vaxx = @{ ^"va" ~ ASCII_DIGIT ~ ASCII_DIGIT }
-variable_velx =  { ^"velx" }
-variable_vely =  { ^"vely" }
-variable_avar =  { ^"avar" ~ agent_arg ~ int_arg }
-variable_game =  { ^"game" ~ string_arg }
-varaible_p1   =  { ^"_p1_" }
-variable_p2   =  { ^"_p2_" }
+variable_digit = @{ ASCII_DIGIT ~ ASCII_DIGIT }
+variable_mvxx =  ${ ^"mv" ~ variable_digit }
+variable_ovxx =  ${ ^"ov" ~ variable_digit }
+variable_vaxx =  ${ ^"va" ~ variable_digit }
+variable_velx =   { ^"velx" }
+variable_vely =   { ^"vely" }
+variable_avar =   { ^"avar" ~ agent_arg ~ int_arg }
+variable_game =   { ^"game" ~ string_arg }
+variable_p1   =   { ^"_p1_" }
+variable_p2   =   { ^"_p2_" }

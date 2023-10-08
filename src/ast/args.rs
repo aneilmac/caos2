@@ -1,17 +1,35 @@
-use super::{Float, Integer, Variable};
+use super::{Agent, Decimal, Float, Integer, SString, Variable};
 
-pub type IntArg = DecimalArg<Integer, Float>;
+pub type IntArg = CastableArg<Integer, Float>;
 
-pub type FloatArg = DecimalArg<Float, Integer>;
+pub type FloatArg = CastableArg<Float, Integer>;
 
 #[derive(Eq, PartialEq, Debug, Clone)]
-pub enum DecimalArg<P, C> {
+pub enum AgentArg {
+    Agent(Agent),
+    Variable(Variable),
+}
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+pub enum SStringArg {
+    String(SString),
+    Variable(Variable),
+}
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+pub enum DecimalArg {
+    Decimal(Decimal),
+    Variable(Variable),
+}
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+pub enum CastableArg<P, C> {
     Primary(P),
     Castable(C),
     Variable(Variable),
 }
 
-impl<P, C> DecimalArg<P, C> {
+impl<P, C> CastableArg<P, C> {
     pub fn from_primary(p: P) -> Self {
         Self::Primary(p)
     }

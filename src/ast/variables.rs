@@ -1,5 +1,4 @@
-use super::{Agent, IntArg, SString};
-use crate::{CaosError, ErrorType, Result};
+use super::{AgentArg, IntArg, SStringArg};
 use caos_macros::CaosParsable;
 
 #[derive(CaosParsable, Eq, PartialEq, Debug, Clone)]
@@ -10,11 +9,11 @@ pub enum Variable {
     Vely,
     #[syntax]
     Avar {
-        agent: Box<Agent>,
+        agent: Box<AgentArg>,
         index: Box<IntArg>,
     },
     #[syntax]
-    Game { variable_name: Box<SString> },
+    Game { variable_name: Box<SStringArg> },
     #[syntax(with_parser = "parse_mvxx")]
     Mvxx(u8),
     #[syntax(with_parser = "parse_ovxx")]
