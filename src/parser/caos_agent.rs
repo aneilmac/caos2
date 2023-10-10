@@ -1,5 +1,5 @@
-use super::parse_variable;
-use crate::{ast::Agent, ast::AgentArg, parse_int_arg, parse_string_arg, CaosError, Rule};
+use super::{parse_int_arg, parse_string_arg, parse_variable};
+use crate::{ast::Agent, ast::AgentArg, CaosError, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_agent(pair: Pair<Rule>) -> Result<Agent, CaosError> {

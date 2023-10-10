@@ -2,7 +2,7 @@ use std::error::Error;
 
 pub type Result<T> = std::result::Result<T, CaosError>;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum ErrorType {
     BlownStack,
     DecimalConversionFailure,
@@ -11,9 +11,10 @@ pub enum ErrorType {
     TypeMismatch,
     TooManyInstallScripts,
     TooManyRemovalScripts,
+    SubError(Box<dyn Error>),
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct CaosError {
     pub error_type: ErrorType,
     message: String,
@@ -25,6 +26,10 @@ impl CaosError {
             error_type,
             message,
         }
+    }
+
+    pub fn new_from_error(e: Box<dyn Error>) -> Self {
+        CaosError::new(ErrorType::SubError(e), String::new())
     }
 
     pub(crate) fn new_parse_error(p: pest::iterators::Pair<crate::Rule>) -> Self {

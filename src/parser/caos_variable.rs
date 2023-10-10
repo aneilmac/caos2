@@ -1,3 +1,4 @@
+use super::{parse_agent_arg, parse_int_arg, parse_string_arg};
 use crate::{ast::Variable, CaosError, Rule};
 use pest::iterators::Pair;
 
@@ -59,8 +60,8 @@ pub fn parse_variable(pair: Pair<Rule>) -> Result<Variable, CaosError> {
                 int = it.next().ok_or(CaosError::new_parse_error(pair))?;
             }
             Ok(Variable::Avar {
-                agent: super::parse_agent_arg(agent).map(Box::new)?,
-                index: super::parse_int_arg(int).map(Box::new)?,
+                agent: parse_agent_arg(agent).map(Box::new)?,
+                index: parse_int_arg(int).map(Box::new)?,
             })
         }
         Rule::variable_game => {
@@ -69,7 +70,7 @@ pub fn parse_variable(pair: Pair<Rule>) -> Result<Variable, CaosError> {
                 .into_inner()
                 .next()
                 .ok_or(CaosError::new_parse_error(pair))?;
-            let string = super::parse_string_arg(string)?;
+            let string = parse_string_arg(string)?;
             Ok(Variable::Game {
                 variable_name: Box::new(string),
             })

@@ -1,7 +1,7 @@
-use crate::{
-    ast::SString, ast::SStringArg, parse_anything, parse_decimal_arg, parse_int_arg,
-    parse_string_literal, parse_variable, CaosError, Rule,
+use super::{
+    parse_anything, parse_decimal_arg, parse_int_arg, parse_string_literal, parse_variable,
 };
+use crate::{ast::SString, ast::SStringArg, CaosError, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_string(pair: Pair<Rule>) -> Result<SString, CaosError> {

@@ -1,8 +1,8 @@
-use crate::{
-    ast::IntArg, ast::Integer, parse_agent_arg, parse_anything, parse_bytestring_literal,
-    parse_float, parse_float_arg, parse_int_literal, parse_string_arg, parse_variable, CaosError,
-    Rule,
+use super::{
+    parse_agent_arg, parse_anything, parse_bytestring_literal, parse_float, parse_float_arg,
+    parse_int_literal, parse_string_arg, parse_variable,
 };
+use crate::{ast::IntArg, ast::Integer, CaosError, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_int(pair: Pair<Rule>) -> Result<Integer, CaosError> {

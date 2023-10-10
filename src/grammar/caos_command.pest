@@ -266,7 +266,7 @@ command = {
   | command_quit
   | command_rgam
   | command_save
-  | command_tntx
+  | command_tntw
   | command_wrld
   | command_wtnt
 }
@@ -569,6 +569,6 @@ command_pswd       = { ^"pswd" ~ string_arg }
 command_quit       = { ^"quit" }
 command_rgam       = { ^"rgam" }
 command_save       = { ^"save" }
-command_tntx       = { ^"tntw" ~ int_arg }
+command_tntw       = { ^"tntw" ~ int_arg }
 command_wrld       = { ^"wlrd" ~ string_arg }
 command_wtnt       = { ^"wtnt" ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg ~ int_arg }

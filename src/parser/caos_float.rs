@@ -1,7 +1,8 @@
-use crate::{
-    ast::Float, ast::FloatArg, parse_agent_arg, parse_float_literal, parse_int, parse_int_arg,
-    parse_string_arg, parse_variable, CaosError, Rule,
+use super::{
+    parse_agent_arg, parse_float_literal, parse_int, parse_int_arg, parse_string_arg,
+    parse_variable,
 };
+use crate::{ast::Float, ast::FloatArg, CaosError, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_float(pair: Pair<Rule>) -> Result<Float, CaosError> {

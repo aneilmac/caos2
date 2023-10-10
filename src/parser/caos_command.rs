@@ -4,8 +4,8 @@ mod r#loop;
 mod subr;
 
 use crate::{ast::Command, CaosError, ErrorType, Rule};
-use pest::iterators::Pair;
 use doif::*;
+use pest::iterators::Pair;
 use r#enum::*;
 use r#loop::*;
 use subr::*;
@@ -32,6 +32,6 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
         Rule::command_epass => parse_command_epass(pair),
         Rule::command_loop_untl => parse_command_loop_untl(pair),
         Rule::command_loop_ever => parse_command_loop_ever(pair),
-        _ => todo!()
+        _ => todo!(),
     }
 }

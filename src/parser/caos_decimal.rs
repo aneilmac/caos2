@@ -1,7 +1,5 @@
-use crate::{
-    ast::Decimal, ast::DecimalArg, parse_float, parse_int, parse_variable, CaosError, ErrorType,
-    Rule,
-};
+use super::{parse_float, parse_int, parse_variable};
+use crate::{ast::Decimal, ast::DecimalArg, CaosError, ErrorType, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_decimal(pair: Pair<Rule>) -> Result<Decimal, CaosError> {

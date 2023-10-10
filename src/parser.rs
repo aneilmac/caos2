@@ -10,17 +10,17 @@ mod caos_variable;
 mod condition;
 mod script;
 
-pub use base::*;
-pub use caos_agent::*;
-pub use caos_command::*;
-pub use caos_decimal::*;
-pub use caos_float::*;
-pub use caos_int::*;
-pub use caos_program::*;
-pub use caos_string::*;
-pub use caos_variable::*;
-pub use condition::*;
-pub use script::*;
+use base::*;
+use caos_agent::*;
+use caos_command::*;
+use caos_decimal::*;
+use caos_float::*;
+use caos_int::*;
+use caos_program::*;
+use caos_string::*;
+use caos_variable::*;
+use condition::*;
+use script::*;
 
 use crate::{
     ast::{CosFile, Label},
@@ -672,7 +672,13 @@ lazy_static::lazy_static! {
 //     }
 // }
 
-pub fn parse_cos(cos_content: &str) -> Result<CosFile, Error<Rule>> {
-    let mut res = CaosParser::parse(Rule::program, cos_content)?;
-    todo!()
+pub fn parse_cos(cos_content: &str) -> Result<CosFile, CaosError> {
+    let res = CaosParser::parse(Rule::program, cos_content)
+        .map_err(|e| CaosError::new_from_error(Box::new(e)))?
+        .next()
+        .ok_or(CaosError::new(
+            ErrorType::ParseError { line: 0, col: 0 },
+            String::from("Unknown parsing error"),
+        ))?;
+    parse_program(res)
 }

@@ -1,7 +1,7 @@
+use super::{parse_agent, parse_bytestring_literal, parse_decimal, parse_string, parse_variable};
 use crate::{
     ast::{Anything, Condition, ConditionType, JoinType},
-    parse_agent, parse_bytestring_literal, parse_decimal, parse_string, parse_variable, CaosError,
-    Rule,
+    CaosError, Rule,
 };
 use pest::iterators::Pair;
 
