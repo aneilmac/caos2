@@ -1780,7 +1780,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_cage() {
+    fn test_int_hist_cage() {
         for p in CaosParser::parse(Rule::int, "HIST CAGE HAND 0").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),
@@ -1793,7 +1793,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_coun() {
+    fn test_int_hist_coun() {
         for p in CaosParser::parse(Rule::int, "HIST COUN HAND").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),
@@ -1805,7 +1805,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_cros() {
+    fn test_int_hist_cros() {
         for p in CaosParser::parse(Rule::int, "HIST CROS HAND").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),
@@ -1817,7 +1817,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_find() {
+    fn test_int_hist_find() {
         for p in CaosParser::parse(Rule::int, "HIST FIND HAND 1 2").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),
@@ -1831,7 +1831,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_finr() {
+    fn test_int_hist_finr() {
         for p in CaosParser::parse(Rule::int, "HIST FINR HAND 1 2").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),
@@ -1845,7 +1845,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_gend() {
+    fn test_int_hist_gend() {
         for p in CaosParser::parse(Rule::int, "HIST GEND HAND").expect("Parsed") {
             assert_eq!(
                 parse_int(p).expect("Parsed variable"),

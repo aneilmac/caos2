@@ -644,7 +644,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_foto() {
+    fn test_string_hist_foto() {
         for p in CaosParser::parse(Rule::string, "hist foto HAND ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -657,7 +657,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_mon1() {
+    fn test_string_hist_mon1() {
         for p in CaosParser::parse(Rule::string, "hist mon1 HAND ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -670,7 +670,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_mon2() {
+    fn test_string_hist_mon2() {
         for p in CaosParser::parse(Rule::string, "hist mon2 HAND ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -683,7 +683,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_name() {
+    fn test_string_hist_name() {
         for p in CaosParser::parse(Rule::string, "hist name HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -695,7 +695,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_next() {
+    fn test_string_hist_next() {
         for p in CaosParser::parse(Rule::string, "hist next HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -707,7 +707,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_prev() {
+    fn test_string_hist_prev() {
         for p in CaosParser::parse(Rule::string, "hist prev HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -719,7 +719,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_utxt() {
+    fn test_string_hist_utxt() {
         for p in CaosParser::parse(Rule::string, "hist utxt HAND ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -732,7 +732,7 @@ mod tests {
     }
 
     #[test]
-    fn test_hist_wnam() {
+    fn test_string_hist_wnam() {
         for p in CaosParser::parse(Rule::string, "hist wnam HAND ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -745,7 +745,7 @@ mod tests {
     }
 
     #[test]
-    fn test_bkds() {
+    fn test_string_bkds() {
         for p in CaosParser::parse(Rule::string, "bkds ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -757,14 +757,14 @@ mod tests {
     }
 
     #[test]
-    fn test_emid() {
+    fn test_string_emid() {
         for p in CaosParser::parse(Rule::string, "EMID").expect("Parsed") {
             assert_eq!(parse_string(p).expect("Parsed variable"), SString::Emid,);
         }
     }
 
     #[test]
-    fn test_erid() {
+    fn test_string_erid() {
         for p in CaosParser::parse(Rule::string, "ERID ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -776,7 +776,7 @@ mod tests {
     }
 
     #[test]
-    fn test_mloc() {
+    fn test_string_mloc() {
         for p in CaosParser::parse(Rule::string, "MLOC ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -788,7 +788,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rate() {
+    fn test_string_rate() {
         for p in CaosParser::parse(Rule::string, "RATE ATTR ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -801,7 +801,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rloc() {
+    fn test_string_rloc() {
         for p in CaosParser::parse(Rule::string, "RLOc ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -813,7 +813,7 @@ mod tests {
     }
 
     #[test]
-    fn test_pray_agts() {
+    fn test_string_pray_agts() {
         for p in CaosParser::parse(Rule::string, "pray agts HAND HAND HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -827,7 +827,7 @@ mod tests {
     }
 
     #[test]
-    fn test_pray_next() {
+    fn test_string_pray_next() {
         for p in CaosParser::parse(Rule::string, "pray NEXT HAND HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -840,7 +840,7 @@ mod tests {
     }
 
     #[test]
-    fn test_pray_prev() {
+    fn test_string_pray_prev() {
         for p in CaosParser::parse(Rule::string, "PRAY prev hand HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -874,7 +874,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rmsc() {
+    fn test_string_rmsc() {
         for p in CaosParser::parse(Rule::string, "RMSC ATTR ATTR").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -887,14 +887,14 @@ mod tests {
     }
 
     #[test]
-    fn test_vois() {
+    fn test_string_vois() {
         for p in CaosParser::parse(Rule::string, "VOIS").expect("Parsed") {
             assert_eq!(parse_string(p).expect("Parsed variable"), SString::Vois);
         }
     }
 
     #[test]
-    fn test_rtif() {
+    fn test_string_rtif() {
         for p in CaosParser::parse(Rule::string, "RTIF ATTR HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -907,7 +907,7 @@ mod tests {
     }
 
     #[test]
-    fn test_gamn() {
+    fn test_string_gamn() {
         for p in CaosParser::parse(Rule::string, "GAMN HAND").expect("Parsed") {
             assert_eq!(
                 parse_string(p).expect("Parsed variable"),
@@ -919,7 +919,7 @@ mod tests {
     }
 
     #[test]
-    fn test_gnam() {
+    fn test_string_gnam() {
         for p in CaosParser::parse(Rule::string, "GNAM").expect("Parsed") {
             assert_eq!(parse_string(p).expect("Parsed variable"), SString::Gnam);
         }

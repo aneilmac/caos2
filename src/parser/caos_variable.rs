@@ -91,7 +91,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_mvxx() {
+    fn test_variable_mvxx() {
         for p in CaosParser::parse(Rule::variable, "MV00").expect("Parsed") {
             assert_eq!(
                 parse_variable(p).expect("Parsed variable"),
@@ -113,13 +113,13 @@ mod tests {
     }
 
     #[test]
-    fn test_mvxx_fail() {
+    fn test_variable_mvxx_fail() {
         CaosParser::parse(Rule::variable, "MV3").expect_err("Not enough characters");
         CaosParser::parse(Rule::variable, "MVFF").expect_err("Incorrect characters");
     }
 
     #[test]
-    fn test_ovxx() {
+    fn test_variable_ovxx() {
         for p in CaosParser::parse(Rule::variable, "ov00").expect("Parsed") {
             assert_eq!(
                 parse_variable(p).expect("Parsed variable"),
@@ -141,13 +141,13 @@ mod tests {
     }
 
     #[test]
-    fn test_ovxx_fail() {
+    fn test_variable_ovxx_fail() {
         CaosParser::parse(Rule::variable, "OV3").expect_err("Not enough characters");
         CaosParser::parse(Rule::variable, "OVFF").expect_err("Incorrect characters");
     }
 
     #[test]
-    fn test_vaxx() {
+    fn test_variable_vaxx() {
         for p in CaosParser::parse(Rule::variable, "va00").expect("Parsed") {
             assert_eq!(
                 parse_variable(p).expect("Parsed variable"),
@@ -169,13 +169,13 @@ mod tests {
     }
 
     #[test]
-    fn test_vaxx_fail() {
+    fn test_variable_vaxx_fail() {
         CaosParser::parse(Rule::variable, "va3").expect_err("Not enough characters");
         CaosParser::parse(Rule::variable, "vaFF").expect_err("Incorrect characters");
     }
 
     #[test]
-    fn test_game() {
+    fn test_variable_game() {
         for p in CaosParser::parse(Rule::variable, r#"GAME "Hello""#).expect("Parsed") {
             assert_eq!(
                 parse_variable(p).expect("Parsed variable"),
@@ -189,7 +189,7 @@ mod tests {
     }
 
     #[test]
-    fn test_avar() {
+    fn test_variable_avar() {
         for p in CaosParser::parse(Rule::variable, r#"avar CARR 34"#).expect("Parsed") {
             assert_eq!(
                 parse_variable(p).expect("Parsed variable"),
