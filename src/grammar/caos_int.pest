@@ -168,7 +168,7 @@ int = {
   | int_nwld
   | int_wnti
   | int_prt_itot
-  | int_ptr_from
+  | int_prt_from
 }
 
 int_attr      = { ^"attr" }
@@ -285,7 +285,7 @@ int_fall      = { ^"fall" }
 int_fric      = { ^"fric" }
 int_movs      = { ^"movs" }
 int_tmvb      = { ^"tmvb" ~ float_arg ~ float_arg }
-int_tmvf      = { ^"tmvh" ~ float_arg ~ float_arg }
+int_tmvf      = { ^"tmvf" ~ float_arg ~ float_arg }
 int_tmvt      = { ^"tmvt" ~ float_arg ~ float_arg }
 int_wall      = { ^"wall" }
 int_pray_agti = { ^"pray" ~ ^"agti" ~ string_arg ~ string_arg ~ int_arg }
@@ -337,4 +337,4 @@ int_cabv      = { ^"cabv" }
 int_nwld      = { ^"nwld" }
 int_wnti      = { ^"wnti" ~ string_arg }
 int_prt_itot  = { ^"prt:" ~ ^"itot" }
-int_ptr_from  = { ^"ptr:" ~ ^"from" ~ int_arg }
+int_prt_from  = { ^"prt:" ~ ^"from" ~ int_arg }
