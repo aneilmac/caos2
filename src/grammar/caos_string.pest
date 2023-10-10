@@ -5,7 +5,7 @@ string = {
   | string_catx
   | string_hand
   | string_wild
-  | string_bkds
+  | string_bkgd
   | string_ptxt
   | string_face
   | string_dbg
@@ -48,7 +48,7 @@ string = {
 string_catx      = { ^"catx" ~ int_arg }
 string_hand      = { ^"hand" }
 string_wild      = { ^"wild" ~ int_arg ~ int_arg ~ int_arg ~ string ~ int_arg }
-string_bkd       = { ^"bkgd" ~ int_arg }
+string_bkgd      = { ^"bkgd" ~ int_arg }
 string_ptxt      = { ^"ptxt" }
 string_face      = { ^"face" }
 string_dbg       = { ^"dbg#" ~ int_arg }
@@ -82,7 +82,7 @@ string_gnam      = { ^"gnam" }
 string_read      = { ^"read" ~ string_arg ~ int_arg }
 string_subs      = { ^"subs" ~ string_arg ~ int_arg ~ int_arg }
 string_vtos      = { ^"vtos" ~ decimal_arg }
-string_pswd      = { ^"pswd" ~ string_arg }
+string_pswd      = { ^"pswd" ~ int_arg }
 string_wnam      = { ^"wnam" }
 string_wrld      = { ^"wrld" ~ int_arg }
 string_wuid      = { ^"wuid" }

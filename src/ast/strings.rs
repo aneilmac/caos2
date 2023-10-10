@@ -1,4 +1,4 @@
-use super::{Anything, Decimal, IntArg, Variable};
+use super::{Anything, DecimalArg, IntArg, SStringArg, Variable};
 use caos_macros::CaosParsable;
 
 #[derive(CaosParsable, Eq, PartialEq, Debug, Clone)]
@@ -14,7 +14,7 @@ pub enum SString {
         family: Box<IntArg>,
         genus: Box<IntArg>,
         species: Box<IntArg>,
-        tag_stub: Box<SString>,
+        tag_stub: Box<SStringArg>,
         offset: Box<IntArg>,
     },
     #[syntax]
@@ -28,40 +28,40 @@ pub enum SString {
     #[syntax]
     Dbga { variable: Box<IntArg> },
     #[syntax]
-    Fvwm { name: Box<SString> },
+    Fvwm { name: Box<SStringArg> },
     #[syntax]
     Innl,
     #[syntax]
     Gtos { slot: Box<IntArg> },
     #[syntax(name = "hist foto")]
     HistFoto {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist mon1")]
     HistMon1 {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist mon2")]
     HistMon2 {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist name")]
-    HistName { moniker: Box<SString> },
+    HistName { moniker: Box<SStringArg> },
     #[syntax(name = "hist next")]
-    HistNext { moniker: Box<SString> },
+    HistNext { moniker: Box<SStringArg> },
     #[syntax(name = "hist prev")]
-    HistPrev { moniker: Box<SString> },
+    HistPrev { moniker: Box<SStringArg> },
     #[syntax(name = "hist utxt")]
     HistUtxt {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist wnam")]
     HistWnam {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax]
@@ -82,19 +82,19 @@ pub enum SString {
     // Resource
     #[syntax(name = "pray agts")]
     PrayAgts {
-        resource_name: Box<SString>,
-        string_tag: Box<SString>,
-        default_value: Box<SString>,
+        resource_name: Box<SStringArg>,
+        string_tag: Box<SStringArg>,
+        default_value: Box<SStringArg>,
     },
     #[syntax(name = "pray next")]
     PrayNext {
-        resource_type: Box<SString>,
-        last_known: Box<SString>,
+        resource_type: Box<SStringArg>,
+        last_known: Box<SStringArg>,
     },
     #[syntax(name = "pray prev")]
     PrayPrev {
-        resource_type: Box<SString>,
-        last_known: Box<SString>,
+        resource_type: Box<SStringArg>,
+        last_known: Box<SStringArg>,
     },
     #[syntax]
     Caos {
@@ -102,7 +102,7 @@ pub enum SString {
         state_trans: Box<IntArg>,
         p1: Box<Anything>,
         p2: Box<Anything>,
-        commands: Box<SString>,
+        commands: Box<SStringArg>,
         throws: Box<IntArg>,
         catches: Box<IntArg>,
         report: Box<Variable>,
@@ -115,25 +115,25 @@ pub enum SString {
     #[syntax]
     Rtif {
         real_time: Box<IntArg>,
-        format: Box<SString>,
+        format: Box<SStringArg>,
     },
     #[syntax]
-    Gamn { previous: Box<SString> },
+    Gamn { previous: Box<SStringArg> },
     #[syntax]
     Gnam,
     #[syntax]
     Read {
-        catalogue_tag: Box<SString>,
+        catalogue_tag: Box<SStringArg>,
         offset: Box<IntArg>,
     },
     #[syntax]
     Subs {
-        value: Box<SString>,
+        value: Box<SStringArg>,
         start: Box<IntArg>,
         count: Box<IntArg>,
     },
     #[syntax]
-    Vtos { value: Box<Decimal> },
+    Vtos { value: Box<DecimalArg> },
     // World
     #[syntax]
     Pswd { world_index: Box<IntArg> },

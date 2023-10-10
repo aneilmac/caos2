@@ -14,6 +14,27 @@ pub enum Condition {
     },
 }
 
+impl Condition {
+    pub fn join(self, other: Condition, new_join_type: JoinType) -> Self {
+        match self {
+            s @ Self::Simple { .. } => Self::Combination {
+                c_lhs: Box::new(s),
+                c_rhs: Box::new(other),
+                join_type: new_join_type,
+            },
+            Self::Combination {
+                c_lhs,
+                c_rhs,
+                join_type,
+            } => Self::Combination {
+                c_lhs,
+                c_rhs: Box::new(c_rhs.join(other, new_join_type)),
+                join_type,
+            },
+        }
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub enum JoinType {
     And,

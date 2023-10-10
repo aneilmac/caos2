@@ -1,4 +1,4 @@
-use super::{Agent, FloatArg, IntArg, SString};
+use super::{AgentArg, FloatArg, IntArg, SStringArg};
 use caos_macros::{CaosParsable, CommandList};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -23,7 +23,7 @@ pub enum Float {
     #[syntax(with_parser = "parse_literal")]
     Literal(LitF32),
     #[syntax]
-    Disq { other: Box<Agent> },
+    Disq { other: Box<AgentArg> },
     #[syntax]
     Fltx,
     #[syntax]
@@ -91,13 +91,13 @@ pub enum Float {
     Obst { direction: Box<IntArg> },
     #[syntax]
     Relx {
-        first: Box<Agent>,
-        second: Box<Agent>,
+        first: Box<AgentArg>,
+        second: Box<AgentArg>,
     },
     #[syntax]
     Rely {
-        first: Box<Agent>,
-        second: Box<Agent>,
+        first: Box<AgentArg>,
+        second: Box<AgentArg>,
     },
     #[syntax]
     Pace,
@@ -119,7 +119,7 @@ pub enum Float {
     /// Characters in the string after an initial number are quietly ignored.
     /// If there is no obvious number then zero is returned.
     #[syntax]
-    Stof { value: Box<SString> },
+    Stof { value: Box<SStringArg> },
     /// Returns tangent of theta. Theta should be in degrees.
     /// Watch out for those nasty discontinuities at 90 and 270.
     #[syntax(name = "tan_")]

@@ -16,6 +16,7 @@ pub fn parse_int(pair: Pair<Rule>) -> Result<Integer, CaosError> {
 
     match pair.as_rule() {
         Rule::literal_int => parse_int_literal(pair).map(Integer::Literal),
+        Rule::int_attr => Ok(Integer::Attr),
         _ => todo!("Implement ints"),
     }
 }
