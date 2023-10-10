@@ -18,3 +18,15 @@ impl From<Float> for Decimal {
         Self::Float(f)
     }
 }
+
+impl From<i32> for Decimal {
+    fn from(i: i32) -> Self {
+        Self::Integer(i.into())
+    }
+}
+
+impl From<f32> for Decimal {
+    fn from(f: f32) -> Self {
+        Self::Float(f.into())
+    }
+}

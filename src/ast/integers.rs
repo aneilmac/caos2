@@ -1,4 +1,4 @@
-use super::{Agent, Anything, ByteString, FloatArg, IntArg, SString, Variable};
+use super::{AgentArg, Anything, ByteString, FloatArg, IntArg, SStringArg, Variable};
 use caos_macros::{CaosParsable, CommandList};
 
 #[derive(CaosParsable, CommandList, Eq, PartialEq, Debug, Clone)]
@@ -51,8 +51,8 @@ pub enum Integer {
     },
     #[syntax]
     Seee {
-        first: Box<Agent>,
-        second: Box<Agent>,
+        first: Box<AgentArg>,
+        second: Box<AgentArg>,
     },
     #[syntax]
     Spcs,
@@ -66,8 +66,8 @@ pub enum Integer {
     },
     #[syntax]
     Touc {
-        first: Box<Agent>,
-        second: Box<Agent>,
+        first: Box<AgentArg>,
+        second: Box<AgentArg>,
     },
     #[syntax]
     Visi { check_all_cameras: Box<IntArg> },
@@ -78,11 +78,11 @@ pub enum Integer {
     #[syntax]
     Cmry,
     #[syntax]
-    Loft { filename: Box<SString> },
+    Loft { filename: Box<SStringArg> },
     #[syntax]
     Meta,
     #[syntax]
-    Snax { filename: Box<SString> },
+    Snax { filename: Box<SStringArg> },
     #[syntax]
     Wdow,
     #[syntax]
@@ -114,7 +114,7 @@ pub enum Integer {
     #[syntax]
     Cage,
     #[syntax]
-    Crea { agent: Box<Agent> },
+    Crea { agent: Box<AgentArg> },
     #[syntax]
     Dead,
     #[syntax]
@@ -166,66 +166,66 @@ pub enum Integer {
     Inok,
     #[syntax(name = "hist cage")]
     HistCage {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist coun")]
-    HistCoun { moniker: Box<SString> },
+    HistCoun { moniker: Box<SStringArg> },
     #[syntax(name = "hist cros")]
-    HistCros { moniker: Box<SString> },
+    HistCros { moniker: Box<SStringArg> },
     #[syntax(name = "hist find")]
     HistFind {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_type: Box<IntArg>,
         from_index: Box<IntArg>,
     },
     #[syntax(name = "hist finr")]
     HistFinr {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_type: Box<IntArg>,
         from_index: Box<IntArg>,
     },
     #[syntax(name = "hist gend")]
-    HistGend { moniker: Box<SString> },
+    HistGend { moniker: Box<SStringArg> },
     #[syntax(name = "hist gnus")]
-    HistGnus { moniker: Box<SString> },
+    HistGnus { moniker: Box<SStringArg> },
     #[syntax(name = "hist mute")]
-    HistMute { moniker: Box<SString> },
+    HistMute { moniker: Box<SStringArg> },
     #[syntax(name = "hist rtim")]
     #[syntax(name = "hist prev")]
-    HistPrev { moniker: Box<SString> },
+    HistPrev { moniker: Box<SStringArg> },
     HistRtim {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist tage")]
     HistTage {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist type")]
     HistType {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist vari")]
-    HistVari { moniker: Box<SString> },
+    HistVari { moniker: Box<SStringArg> },
     #[syntax(name = "hist wnam")]
     HistWnam {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     HistWtik {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax(name = "hist wuid")]
     HistWuid {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
     #[syntax]
-    Ooww { moniker: Box<SString> },
+    Ooww { moniker: Box<SStringArg> },
     #[syntax]
     Keyd { key_code: Box<IntArg> },
     #[syntax]
@@ -240,7 +240,7 @@ pub enum Integer {
         y: Box<IntArg>,
         width: Box<IntArg>,
         height: Box<IntArg>,
-        background: Box<SString>,
+        background: Box<SStringArg>,
     },
     #[syntax]
     Addr {
@@ -265,7 +265,7 @@ pub enum Integer {
     Grap { x: Box<FloatArg>, y: Box<FloatArg> },
     #[syntax]
     Grid {
-        agent: Box<Agent>,
+        agent: Box<AgentArg>,
         direction: Box<IntArg>,
     },
     #[syntax]
@@ -298,7 +298,7 @@ pub enum Integer {
     #[syntax]
     Rght,
     #[syntax]
-    Room { agent: Box<Agent> },
+    Room { agent: Box<AgentArg> },
     #[syntax]
     Rtyp { room_id: Box<IntArg> },
     #[syntax(name = "_up_")]
@@ -328,49 +328,49 @@ pub enum Integer {
     // Resources
     #[syntax(name = "pray agti")]
     PrayAgti {
-        resource_name: Box<SString>,
-        integer_tag: Box<SString>,
+        resource_name: Box<SStringArg>,
+        integer_tag: Box<SStringArg>,
         default_value: Box<IntArg>,
     },
     #[syntax(name = "pray coun")]
-    PrayCoun { resource_type: Box<SString> },
+    PrayCoun { resource_type: Box<SStringArg> },
     #[syntax(name = "pray deps")]
     PrayDeps {
-        resource_name: Box<SString>,
+        resource_name: Box<SStringArg>,
         dp_install: Box<IntArg>,
     },
     #[syntax(name = "pray expo")]
-    PrayExpo { chunk_name: Box<SString> },
+    PrayExpo { chunk_name: Box<SStringArg> },
     #[syntax(name = "pray file")]
     PrayFile {
-        resource_name: Box<SString>,
+        resource_name: Box<SStringArg>,
         resource_type: Box<IntArg>,
         do_install: Box<IntArg>,
     },
     #[syntax(name = "pray impo")]
     PrayImpo {
-        moniker: Box<SString>,
+        moniker: Box<SStringArg>,
         actually_do_it: Box<IntArg>,
         keep_file: Box<IntArg>,
     },
     #[syntax(name = "pray injt")]
     PrayInjt {
-        resource_name: Box<SString>,
+        resource_name: Box<SStringArg>,
         do_install: Box<IntArg>,
         report_var: Box<Variable>,
     },
     #[syntax(name = "pray make")]
     PrayMake {
         which_journal_spot: Box<IntArg>,
-        journal_name: Box<SString>,
+        journal_name: Box<SStringArg>,
         which_pray_spot: Box<IntArg>,
-        pray_name: Box<SString>,
+        pray_name: Box<SStringArg>,
         report_destination: Box<Variable>,
     },
     #[syntax(name = "pray size")]
-    PraySize { resource_name: Box<SString> },
+    PraySize { resource_name: Box<SStringArg> },
     #[syntax(name = "pray test")]
-    PrayTest { resource_name: Box<SString> },
+    PrayTest { resource_name: Box<SStringArg> },
     // Scripts
     #[syntax]
     Sorq {
@@ -433,7 +433,7 @@ pub enum Integer {
     // Variables
     #[syntax]
     Char {
-        string: Box<SString>,
+        string: Box<SStringArg>,
         index: Box<IntArg>,
     },
     #[syntax]
@@ -444,15 +444,15 @@ pub enum Integer {
         value2: Box<IntArg>,
     },
     #[syntax]
-    Rean { catalogue_tag: Box<SString> },
+    Rean { catalogue_tag: Box<SStringArg> },
     #[syntax]
-    Reaq { catalogue_tag: Box<SString> },
+    Reaq { catalogue_tag: Box<SStringArg> },
     #[syntax]
-    Stoi { value: Box<SString> },
+    Stoi { value: Box<SStringArg> },
     #[syntax]
-    Strl { value: Box<SString> },
+    Strl { value: Box<SStringArg> },
     #[syntax]
-    Type { sometime: Box<Anything> },
+    Type { something: Box<Anything> },
     #[syntax]
     Vmjr,
     #[syntax]
@@ -474,7 +474,7 @@ pub enum Integer {
     #[syntax]
     Nwld,
     #[syntax]
-    Wnti { world: Box<SString> },
+    Wnti { world: Box<SStringArg> },
     // Ports
     #[syntax(name = "prt: itot")]
     PrtItot,

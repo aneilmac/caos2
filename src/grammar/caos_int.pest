@@ -1,4 +1,4 @@
-int_arg = _{ int | float | variable }
+int_arg = _{ float | int | variable }
 
 int = {
     literal_int
@@ -116,7 +116,7 @@ int = {
   | int_fric
   | int_movs
   | int_tmvb
-  | int_tmvh
+  | int_tmvf
   | int_tmvt
   | int_wall
   | int_pray_agti
@@ -188,7 +188,7 @@ int_plne      = { ^"plne" }
 int_pose      = { ^"pose" }
 int_puhl      = { ^"puhl" ~ int_arg ~ int_arg }
 int_pupt      = { ^"pupt" ~ int_arg ~ int_arg }
-int_seee      = { ^"seee" ~ int_arg ~ int_arg }
+int_seee      = { ^"seee" ~ agent_arg ~ agent_arg }
 int_spcs      = { ^"spcs" }
 int_tick      = { ^"tick" }
 int_totl      = { ^"totl" ~ int_arg ~ int_arg ~ int_arg }
@@ -285,14 +285,14 @@ int_fall      = { ^"fall" }
 int_fric      = { ^"fric" }
 int_movs      = { ^"movs" }
 int_tmvb      = { ^"tmvb" ~ float_arg ~ float_arg }
-int_tmvh      = { ^"tmvh" ~ float_arg ~ float_arg }
+int_tmvf      = { ^"tmvh" ~ float_arg ~ float_arg }
 int_tmvt      = { ^"tmvt" ~ float_arg ~ float_arg }
 int_wall      = { ^"wall" }
 int_pray_agti = { ^"pray" ~ ^"agti" ~ string_arg ~ string_arg ~ int_arg }
 int_pray_coun = { ^"pray" ~ ^"coun" ~ string_arg }
 int_pray_deps = { ^"pray" ~ ^"deps" ~ string_arg ~ int_arg }
 int_pray_expo = { ^"pray" ~ ^"expo" ~ string_arg }
-int_pray_file = { ^"pray" ~ ^"file" ~ string_arg ~ string_arg ~ int_arg }
+int_pray_file = { ^"pray" ~ ^"file" ~ string_arg ~ int ~ int_arg }
 int_pray_impo = { ^"pray" ~ ^"impo" ~ string_arg ~ int_arg ~ int_arg }
 int_pray_injt = { ^"pray" ~ ^"injt" ~ string_arg ~ int_arg ~ variable }
 int_pray_make = { ^"pray" ~ ^"make" ~ int_arg ~ string_arg ~ int_arg ~ string_arg ~ variable }

@@ -1,13 +1,21 @@
 use super::{Agent, Decimal, Float, Integer, SString, Variable};
 
-pub type IntArg = CastableArg<Integer, Float>;
-
-pub type FloatArg = CastableArg<Float, Integer>;
-
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub enum AgentArg {
     Agent(Agent),
     Variable(Variable),
+}
+
+impl From<Agent> for AgentArg {
+    fn from(value: Agent) -> Self {
+        Self::Agent(value)
+    }
+}
+
+impl From<Variable> for AgentArg {
+    fn from(value: Variable) -> Self {
+        Self::Variable(value)
+    }
 }
 
 #[derive(Eq, PartialEq, Debug, Clone)]
@@ -16,51 +24,124 @@ pub enum SStringArg {
     Variable(Variable),
 }
 
+impl From<SString> for SStringArg {
+    fn from(value: SString) -> Self {
+        Self::String(value)
+    }
+}
+
+impl From<String> for SStringArg {
+    fn from(value: String) -> Self {
+        Self::String(value.into())
+    }
+}
+
+impl From<Variable> for SStringArg {
+    fn from(value: Variable) -> Self {
+        Self::Variable(value)
+    }
+}
+
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub enum DecimalArg {
     Decimal(Decimal),
     Variable(Variable),
 }
 
+impl From<Decimal> for DecimalArg {
+    fn from(value: Decimal) -> Self {
+        Self::Decimal(value)
+    }
+}
+
+impl From<Variable> for DecimalArg {
+    fn from(value: Variable) -> Self {
+        Self::Variable(value)
+    }
+}
+
+impl From<Integer> for DecimalArg {
+    fn from(value: Integer) -> Self {
+        Self::Decimal(value.into())
+    }
+}
+
+impl From<Float> for DecimalArg {
+    fn from(value: Float) -> Self {
+        Self::Decimal(value.into())
+    }
+}
+
 #[derive(Eq, PartialEq, Debug, Clone)]
-pub enum CastableArg<P, C> {
-    Primary(P),
-    Castable(C),
+pub enum IntArg {
+    Primary(Integer),
+    Castable(Float),
     Variable(Variable),
 }
 
-impl<P, C> CastableArg<P, C> {
-    pub fn from_primary(p: P) -> Self {
-        Self::Primary(p)
-    }
-
-    pub fn from_castable(c: C) -> Self {
-        Self::Castable(c)
-    }
-
-    pub fn from_variable(v: Variable) -> Self {
-        Self::Variable(v)
+impl From<Integer> for IntArg {
+    fn from(value: Integer) -> Self {
+        Self::Primary(value)
     }
 }
 
-trait Castable<T> {
-    fn cast(t: T) -> Self;
-}
-
-impl<T> Castable<T> for T {
-    fn cast(t: T) -> Self {
-        t
+impl From<i32> for IntArg {
+    fn from(value: i32) -> Self {
+        Self::Primary(value.into())
     }
 }
 
-impl Castable<f32> for i32 {
-    fn cast(f: f32) -> Self {
-        f as Self
+impl From<Float> for IntArg {
+    fn from(value: Float) -> Self {
+        Self::Castable(value)
     }
 }
 
-impl Castable<i32> for f32 {
-    fn cast(i: i32) -> Self {
-        i as Self
+impl From<f32> for IntArg {
+    fn from(value: f32) -> Self {
+        Self::Castable(value.into())
+    }
+}
+
+impl From<Variable> for IntArg {
+    fn from(value: Variable) -> Self {
+        Self::Variable(value)
+    }
+}
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+pub enum FloatArg {
+    Primary(Float),
+    Castable(Integer),
+    Variable(Variable),
+}
+
+impl From<Float> for FloatArg {
+    fn from(value: Float) -> Self {
+        Self::Primary(value)
+    }
+}
+
+impl From<f32> for FloatArg {
+    fn from(value: f32) -> Self {
+        Self::Primary(value.into())
+    }
+}
+
+impl From<Integer> for FloatArg {
+    fn from(value: Integer) -> Self {
+        Self::Castable(value)
+    }
+}
+
+impl From<i32> for FloatArg {
+    fn from(value: i32) -> Self {
+        Self::Castable(value.into())
+    }
+}
+
+impl From<Variable> for FloatArg {
+    fn from(value: Variable) -> Self {
+        Self::Variable(value)
     }
 }

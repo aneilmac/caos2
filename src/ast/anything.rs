@@ -11,8 +11,44 @@ pub enum Anything {
     Agent(Agent),
 }
 
+impl From<Variable> for Anything {
+    fn from(v: Variable) -> Self {
+        Self::Variable(v)
+    }
+}
+
+impl From<SString> for Anything {
+    fn from(v: SString) -> Self {
+        Self::String(v)
+    }
+}
+
+impl From<Decimal> for Anything {
+    fn from(v: Decimal) -> Self {
+        Self::Decimal(v)
+    }
+}
+
+impl From<ByteString> for Anything {
+    fn from(v: ByteString) -> Self {
+        Self::ByteString(v)
+    }
+}
+
+impl From<Agent> for Anything {
+    fn from(v: Agent) -> Self {
+        Self::Agent(v)
+    }
+}
+
 impl From<Integer> for Anything {
     fn from(i: Integer) -> Self {
+        Self::Decimal(i.into())
+    }
+}
+
+impl From<i32> for Anything {
+    fn from(i: i32) -> Self {
         Self::Decimal(i.into())
     }
 }
@@ -23,8 +59,8 @@ impl From<Float> for Anything {
     }
 }
 
-impl From<Variable> for Anything {
-    fn from(v: Variable) -> Self {
-        Self::Variable(v)
+impl From<f32> for Anything {
+    fn from(f: f32) -> Self {
+        Self::Decimal(f.into())
     }
 }
