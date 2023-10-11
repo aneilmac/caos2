@@ -1,5 +1,5 @@
 use super::{
-    Agent, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, SString,
+    AgentArg, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, SStringArg,
     ScriptDefinition, Variable,
 };
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
@@ -25,7 +25,7 @@ pub enum Command {
     },
     #[syntax(with_parser = "parse_econ")]
     Econ {
-        agent: Agent,
+        agent: AgentArg,
         definition: ScriptDefinition,
     },
     #[syntax(with_parser = "parse_enum")]
@@ -56,11 +56,11 @@ pub enum Command {
         species: IntArg,
         definition: ScriptDefinition,
     },
-    // Agents
+    // AgentArgs
     #[syntax]
     Anim { pose_list: ByteString },
     #[syntax]
-    Anms { anim_string: SString },
+    Anms { anim_string: SStringArg },
     #[syntax]
     Attr { attributes: IntArg },
     #[syntax]
@@ -73,18 +73,21 @@ pub enum Command {
     Gait { gait_number: IntArg },
     #[syntax]
     Gall {
-        sprite_file: SString,
+        sprite_file: SStringArg,
         first_image: IntArg,
     },
     #[syntax]
-    Hand { name_for_the_hand: SString },
+    Hand { name_for_the_hand: SStringArg },
     #[syntax]
-    Kill { agent: Agent },
+    Kill { agent: AgentArg },
     #[syntax(name = "mesg writ")]
-    MesgWrit { command: Agent, message_id: IntArg },
+    MesgWrit {
+        command: AgentArg,
+        message_id: IntArg,
+    },
     #[syntax(name = "mesg wrt+")]
     MesgWritPlus {
-        agent: Agent,
+        agent: AgentArg,
         message_id: IntArg,
         param_1: Anything,
         param_2: Anything,
@@ -97,7 +100,7 @@ pub enum Command {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         image_count: IntArg,
         first_image: IntArg,
         plane: IntArg,
@@ -195,7 +198,7 @@ pub enum Command {
     #[syntax]
     Bkgd {
         metaroom_id: IntArg,
-        background: SString,
+        background: SStringArg,
         transition: IntArg,
     },
     #[syntax]
@@ -232,12 +235,12 @@ pub enum Command {
     },
     #[syntax]
     Scam {
-        compound_agent: Agent,
+        compound_agent: AgentArg,
         part_number: IntArg,
     },
     #[syntax]
     Snap {
-        filename: SString,
+        filename: SStringArg,
         x_centre: IntArg,
         y_centre: IntArg,
         width: IntArg,
@@ -246,7 +249,7 @@ pub enum Command {
     },
     #[syntax]
     Trck {
-        agent: Agent,
+        agent: AgentArg,
         x_percent: IntArg,
         y_percent: IntArg,
         style: IntArg,
@@ -288,7 +291,7 @@ pub enum Command {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         image_count: IntArg,
         first_image: IntArg,
         plane: IntArg,
@@ -300,7 +303,7 @@ pub enum Command {
     #[syntax(name = "pat: butt")]
     PatButt {
         part_id: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         first_image: IntArg,
         image_count: IntArg,
         rel_x: Decimal,
@@ -313,7 +316,7 @@ pub enum Command {
     #[syntax(name = "pat: cmra")]
     PatCmra {
         part_id: IntArg,
-        overlay_sprinte: SString,
+        overlay_sprinte: SStringArg,
         base_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
@@ -326,7 +329,7 @@ pub enum Command {
     #[syntax(name = "pat: dull")]
     PatDull {
         part_id: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
@@ -335,17 +338,17 @@ pub enum Command {
     #[syntax(name = "pat: fixd")]
     PatFixd {
         part_id: IntArg,
-        sprinte_file: SString,
+        sprinte_file: SStringArg,
         first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
         rel_plane: IntArg,
-        font_sprite: SString,
+        font_sprite: SStringArg,
     },
     #[syntax(name = "pat: grph")]
     PatGrph {
         part_id: IntArg,
-        overlay_sprite: SString,
+        overlay_sprite: SStringArg,
         base_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
@@ -357,16 +360,16 @@ pub enum Command {
     #[syntax(name = "pat: text")]
     PatText {
         part_id: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         first_image: IntArg,
         rel_x: Decimal,
         rel_y: Decimal,
         rel_plane: IntArg,
         message_id: IntArg,
-        font_sprite: SString,
+        font_sprite: SStringArg,
     },
     #[syntax]
-    Ptxt { text: SString },
+    Ptxt { text: SStringArg },
     // Creates
     #[syntax]
     Ages { times: IntArg },
@@ -396,13 +399,15 @@ pub enum Command {
     #[syntax]
     Face { set_number: IntArg },
     #[syntax]
-    Forf { creature_to_learn_about: Agent },
+    Forf { creature_to_learn_about: AgentArg },
     #[syntax]
     Hair { stage: IntArg },
     #[syntax]
     Injr { organ: IntArg, amount: IntArg },
     #[syntax]
-    Like { creature_state_opinion_about: Agent },
+    Like {
+        creature_state_opinion_about: AgentArg,
+    },
     #[syntax]
     Loci {
         r#type: IntArg,
@@ -424,7 +429,7 @@ pub enum Command {
     #[syntax(name = "new: crea")]
     NewCrea {
         family: IntArg,
-        gene_agent: Agent,
+        gene_agent: AgentArg,
         gene_slot: IntArg,
         sex: IntArg,
         variant: IntArg,
@@ -432,26 +437,29 @@ pub enum Command {
     #[syntax]
     Newc {
         family: IntArg,
-        gene_agent: Agent,
+        gene_agent: AgentArg,
         gene_slot: IntArg,
         sex: IntArg,
         variant: IntArg,
     },
     #[syntax]
-    Norn { creature: Agent },
+    Norn { creature: AgentArg },
     #[syntax]
     Nude,
     #[syntax(name = "ordr shou")]
-    OrdrShou { speech: SString },
+    OrdrShou { speech: SStringArg },
     #[syntax(name = "ordr sign")]
-    OrdrSign { speech: SString },
+    OrdrSign { speech: SStringArg },
     #[syntax(name = "ordr writ")]
-    OrdrWrit { crature: Agent, speech: SString },
+    OrdrWrit {
+        crature: AgentArg,
+        speech: SStringArg,
+    },
     #[syntax]
     Sayn,
     #[syntax]
     Spnl {
-        lobe_monkier: SString,
+        lobe_monkier: SStringArg,
         neuron_id: IntArg,
         value: FloatArg,
     },
@@ -472,7 +480,7 @@ pub enum Command {
     },
     #[syntax(name = "stim writ")]
     StimWrit {
-        creature: Agent,
+        creature: AgentArg,
         stimulus: IntArg,
         strength: FloatArg,
     },
@@ -511,7 +519,7 @@ pub enum Command {
     },
     #[syntax(name = "sway writ")]
     SwayWrit {
-        creature: Agent,
+        creature: AgentArg,
         drive1: IntArg,
         adjust1: FloatArg,
         drive2: IntArg,
@@ -545,7 +553,7 @@ pub enum Command {
     },
     #[syntax(name = "urge writ")]
     UrgeWrit {
-        creature: Agent,
+        creature: AgentArg,
         noun_id: IntArg,
         noun_stim: FloatArg,
         verb_id: IntArg,
@@ -565,7 +573,7 @@ pub enum Command {
     Zomb { zombie: IntArg },
     // Debug
     #[syntax]
-    Apro { search_text: SString },
+    Apro { search_text: SStringArg },
     #[syntax(name = "dbg: asrt")]
     DbgAsrt { condition: Condition },
     #[syntax(name = "dbg: cpro")]
@@ -575,7 +583,7 @@ pub enum Command {
     #[syntax(name = "dbg: html")]
     DbgHtml { sort_order: IntArg },
     #[syntax(name = "dbg: outs")]
-    DbgOuts { value: SString },
+    DbgOuts { value: SStringArg },
     #[syntax(name = "dbg: outv")]
     DbgOutv { value: Decimal },
     #[syntax(name = "dbg: paws")]
@@ -587,7 +595,7 @@ pub enum Command {
     #[syntax(name = "dbg: prof")]
     DbgProf,
     #[syntax(name = "dbg: tack")]
-    DbgTack { follow: Agent },
+    DbgTack { follow: AgentArg },
     #[syntax(name = "dbg: tock")]
     DbTock,
     #[syntax(name = "dbg: wtik")]
@@ -595,26 +603,26 @@ pub enum Command {
     #[syntax]
     Help,
     #[syntax]
-    Mann { command: SString },
+    Mann { command: SStringArg },
     #[syntax]
     Memx,
     // Files
     #[syntax(name = "file glob")]
     FileGlob {
         directory: IntArg,
-        file_spec: SString,
+        file_spec: SStringArg,
     },
     #[syntax(name = "file iclo")]
     FileIclo,
     #[syntax(name = "file iope")]
     FileIope {
         directory: IntArg,
-        filename: SString,
+        filename: SStringArg,
     },
     #[syntax(name = "file jdel")]
     FileJdel {
         directory: IntArg,
-        filename: SString,
+        filename: SStringArg,
     },
     #[syntax(name = "file oclo")]
     FileOclo,
@@ -623,15 +631,15 @@ pub enum Command {
     #[syntax(name = "file oope")]
     FileOope {
         directory: IntArg,
-        filename: SString,
+        filename: SStringArg,
         append: IntArg,
     },
     #[syntax]
-    Outs { text: SString },
+    Outs { text: SStringArg },
     #[syntax]
     Outv { value: Decimal },
     #[syntax]
-    Outx { text: SString },
+    Outx { text: SStringArg },
     #[syntax]
     Ever,
     #[syntax]
@@ -645,18 +653,18 @@ pub enum Command {
     // Genetics
     #[syntax(name = "gene clon")]
     GeneClon {
-        dest_agent: Agent,
+        dest_agent: AgentArg,
         dest_slot: IntArg,
-        source_agent: Agent,
+        source_agent: AgentArg,
         source_slot: IntArg,
     },
     #[syntax(name = "gene cros")]
     GeneCros {
-        child_agent: Agent,
+        child_agent: AgentArg,
         child_slot: IntArg,
-        mum_agent: Agent,
+        mum_agent: AgentArg,
         mum_slot: IntArg,
-        dad_agent: Agent,
+        dad_agent: AgentArg,
         dad_slot: IntArg,
         mum_chance_of_mutation: IntArg,
         mum_degree_of_mutation: IntArg,
@@ -664,44 +672,47 @@ pub enum Command {
         dad_degree_of_mutation: IntArg,
     },
     #[syntax(name = "gene kill")]
-    GeneKill { agent: Agent, slot: IntArg },
+    GeneKill { agent: AgentArg, slot: IntArg },
     #[syntax(name = "gene load")]
     GeneLoad {
-        agent: Agent,
+        agent: AgentArg,
         slot: IntArg,
-        gene_file: SString,
+        gene_file: SStringArg,
     },
     #[syntax(name = "gene move")]
     GeneMove {
-        dest_agent: Agent,
+        dest_agent: AgentArg,
         dest_slot: IntArg,
-        source_agent: Agent,
+        source_agent: AgentArg,
         source_slot: IntArg,
     },
     // History
     #[syntax(name = "hist evnt")]
     HistEvnt {
-        moniker: SString,
+        moniker: SStringArg,
         event_type: IntArg,
-        related_moniker_1: SString,
-        related_moniker_2: SString,
+        related_moniker_1: SStringArg,
+        related_moniker_2: SStringArg,
     },
     #[syntax(name = "hist foto")]
     HistFoto {
-        moniker: SString,
+        moniker: SStringArg,
         event_no: IntArg,
-        new_value: SString,
+        new_value: SStringArg,
     },
     #[syntax(name = "hist name")]
-    HistName { moniker: SString, new_name: SString },
+    HistName {
+        moniker: SStringArg,
+        new_name: SStringArg,
+    },
     #[syntax(name = "hist utxt")]
     HistUtxt {
-        moniker: SString,
+        moniker: SStringArg,
         event_no: IntArg,
-        new_value: SString,
+        new_value: SStringArg,
     },
     #[syntax(name = "hist wipe")]
-    HistWipe { moniker: SString },
+    HistWipe { moniker: SStringArg },
     #[syntax]
     Clac { message: IntArg },
     #[syntax]
@@ -725,7 +736,7 @@ pub enum Command {
     #[syntax]
     Addb {
         metaroom_id: IntArg,
-        background_file: SString,
+        background_file: SStringArg,
     },
     #[syntax]
     Altr {
@@ -797,7 +808,7 @@ pub enum Command {
         screen_y: FloatArg,
     },
     #[syntax]
-    Frel { relative: Agent },
+    Frel { relative: AgentArg },
     #[syntax]
     Fric { friction: IntArg },
     #[syntax]
@@ -820,8 +831,8 @@ pub enum Command {
     #[syntax(name = "prt: inew")]
     PrtInew {
         id: IntArg,
-        name: SString,
-        description: SString,
+        name: SStringArg,
+        description: SStringArg,
         x: IntArg,
         y: IntArg,
         message_num: IntArg,
@@ -830,28 +841,28 @@ pub enum Command {
     PrtIzap { id: IntArg },
     #[syntax(name = "prt: join")]
     PrtJoin {
-        source_agent: Agent,
+        source_agent: AgentArg,
         output_id: IntArg,
         dest_agent: IntArg,
         input_id: IntArg,
     },
     #[syntax(name = "prt: krak")]
     PrtKrak {
-        agent: Agent,
+        agent: AgentArg,
         in_or_out: IntArg,
         port_index: IntArg,
     },
     #[syntax(name = "prt: name")]
     PrtName {
-        agent: Agent,
+        agent: AgentArg,
         in_or_out: IntArg,
         port_index: IntArg,
     },
     #[syntax(name = "prt: onew")]
     PrtOnew {
         id: IntArg,
-        name: SString,
-        description: SString,
+        name: SStringArg,
+        description: SStringArg,
         x: IntArg,
         y: IntArg,
     },
@@ -913,12 +924,12 @@ pub enum Command {
     #[syntax]
     Mclr { x: IntArg, y: IntArg },
     #[syntax]
-    Midi { midi_file: SString },
+    Midi { midi_file: SStringArg },
     #[syntax]
     Mmsc {
         x: IntArg,
         y: IntArg,
-        track_name: SString,
+        track_name: SStringArg,
     },
     #[syntax]
     Rclr { x: IntArg, y: IntArg },
@@ -926,22 +937,25 @@ pub enum Command {
     Rmsc {
         x: IntArg,
         y: IntArg,
-        track_name: SString,
+        track_name: SStringArg,
     },
     #[syntax]
-    Sezz { text: SString },
+    Sezz { text: SStringArg },
     #[syntax]
-    Sndc { sound_file: SString },
+    Sndc { sound_file: SStringArg },
     #[syntax]
-    Snde { sound_file: SString },
+    Snde { sound_file: SStringArg },
     #[syntax]
-    Sndl { sound_file: SString },
+    Sndl { sound_file: SStringArg },
     #[syntax]
-    Sndq { sound_file: SString, delay: IntArg },
+    Sndq {
+        sound_file: SStringArg,
+        delay: IntArg,
+    },
     #[syntax]
     Stpc,
     #[syntax]
-    Strk { latency: IntArg, track: SString },
+    Strk { latency: IntArg, track: SStringArg },
     #[syntax]
     Voic {
         genus: IntArg,
@@ -949,7 +963,7 @@ pub enum Command {
         age: IntArg,
     },
     #[syntax]
-    Vois { voice_name: SString },
+    Vois { voice_name: SStringArg },
     #[syntax]
     Volm { volume: IntArg },
     // Date
@@ -959,7 +973,7 @@ pub enum Command {
     #[syntax]
     Absv { var: Variable },
     #[syntax]
-    Adds { var: Variable, append: SString },
+    Adds { var: Variable, append: SStringArg },
     #[syntax]
     Addv { var: Variable, sum: Decimal },
     #[syntax]
@@ -971,7 +985,7 @@ pub enum Command {
         character: IntArg,
     },
     #[syntax]
-    Delg { variable_name: SString },
+    Delg { variable_name: SStringArg },
     #[syntax]
     Divv { var: Variable, div: Decimal },
     #[syntax]
@@ -985,15 +999,15 @@ pub enum Command {
     #[syntax]
     Reaf,
     #[syntax]
-    Seta { var: Variable, value: Agent },
+    Seta { var: Variable, value: AgentArg },
     #[syntax]
-    Sets { var: Variable, value: SString },
+    Sets { var: Variable, value: SStringArg },
     #[syntax]
     Setv { var: Variable, value: Decimal },
     #[syntax]
     Subv { var: Variable, sub: Decimal },
     #[syntax]
-    Targ { agent: Agent },
+    Targ { agent: AgentArg },
     // Vehicles
     #[syntax]
     Cabn {
@@ -1026,25 +1040,28 @@ pub enum Command {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
-        sprite_file: SString,
+        sprite_file: SStringArg,
         image_count: IntArg,
         first_image: IntArg,
         plane: IntArg,
     },
     #[syntax]
-    Rpas { vehicle: Agent, passenger: Agent },
+    Rpas {
+        vehicle: AgentArg,
+        passenger: AgentArg,
+    },
     #[syntax]
     Spas {
-        vehicle: Agent,
-        new_passanger: Agent,
+        vehicle: AgentArg,
+        new_passanger: AgentArg,
     },
     // World
     #[syntax]
-    Delw { world_name: SString },
+    Delw { world_name: SStringArg },
     #[syntax]
-    Load { world_name: SString },
+    Load { world_name: SStringArg },
     #[syntax]
-    Pswd { world_name: SString },
+    Pswd { world_name: SStringArg },
     #[syntax]
     Quit,
     #[syntax]
@@ -1054,7 +1071,7 @@ pub enum Command {
     #[syntax]
     Tntw { index: IntArg },
     #[syntax]
-    Wrld { world_name: SString },
+    Wrld { world_name: SStringArg },
     #[syntax]
     Wtnt {
         index: IntArg,
