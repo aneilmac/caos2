@@ -3426,13 +3426,13 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 .next()
                 .ok_or(CaosError::new_parse_error(pair.clone()))
                 .and_then(parse_agent_arg)?;
-            let new_passanger = it
+            let new_passenger = it
                 .next()
                 .ok_or(CaosError::new_parse_error(pair.clone()))
                 .and_then(parse_agent_arg)?;
             Ok(Command::Spas {
                 vehicle,
-                new_passanger,
+                new_passenger,
             })
         }
         Rule::command_delw => {

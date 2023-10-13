@@ -1042,7 +1042,7 @@ pub enum Command {
     #[syntax]
     Spas {
         vehicle: AgentArg,
-        new_passanger: AgentArg,
+        new_passenger: AgentArg,
     },
     // World
     #[syntax]
