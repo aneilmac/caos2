@@ -270,9 +270,10 @@ command = {
 }
 
 command_doif = {
-    ^"doif" ~ condition ~ script_contents ~ command_elif* ~ command_else{0, 1} ~ ^"endi"
+    ^"doif" ~ condition ~ script_contents ~ command_elif_parts ~ command_else{0, 1} ~ ^"endi"
 }
 command_elif = { ^"elif" ~ condition ~ script_contents }
+command_elif_parts = { command_elif* }
 command_else = { ^"else" ~ script_contents }
 
 command_subr = {

@@ -11,6 +11,7 @@ pub enum Command {
     Doif {
         condition: Condition,
         definition: ScriptDefinition,
+        elif_definitions: Vec<(Condition, ScriptDefinition)>,
         else_definition: Option<ScriptDefinition>,
     },
     #[syntax(with_parser = "parse_subr")]
@@ -22,6 +23,13 @@ pub enum Command {
     Reps {
         count: IntArg,
         definition: ScriptDefinition,
+    },
+    #[syntax]
+    LoopEver { definition: ScriptDefinition },
+    #[syntax]
+    LoopUntl {
+        definition: ScriptDefinition,
+        condition: Condition,
     },
     #[syntax(with_parser = "parse_econ")]
     Econ {
@@ -638,15 +646,9 @@ pub enum Command {
     #[syntax]
     Outx { text: SStringArg },
     #[syntax]
-    Ever,
-    #[syntax]
     Goto { destination: Label },
     #[syntax]
     Gsub { destination: Label },
-    #[syntax]
-    Loop,
-    #[syntax]
-    Untl { condition: Condition },
     // Genetics
     #[syntax(name = "gene clon")]
     GeneClon {
