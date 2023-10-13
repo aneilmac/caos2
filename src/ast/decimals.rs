@@ -1,7 +1,6 @@
 use super::{Float, Integer, Variable};
-use caos_macros::CaosParsable;
 
-#[derive(CaosParsable, Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Decimal {
     Integer(Integer),
     Float(Float),

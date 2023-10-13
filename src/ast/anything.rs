@@ -1,7 +1,6 @@
 use super::{Agent, ByteString, Decimal, Float, Integer, SString, Variable};
-use caos_macros::CaosParsable;
 
-#[derive(Eq, PartialEq, Debug, Clone, CaosParsable)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 
 pub enum Anything {
     Variable(Variable),

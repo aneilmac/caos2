@@ -1,8 +1,6 @@
-use crate::ast::{EventScriptDefinition, Script};
+use crate::ast::Script;
 
-use caos_macros::CaosParsable;
-
-#[derive(CaosParsable, Debug, Eq, PartialEq, Default)]
+#[derive(Debug, Eq, PartialEq, Default)]
 pub struct CosFile {
     pub scripts: Vec<Script>,
 }

@@ -9,7 +9,6 @@ edition = "2021"
 pest = "^2.7"
 pest_derive = "^2.7"
 lazy_static = "^1.4"
-caos-macros = { path = "caos-macros" }
 
 [dev-dependencies]
 walkdir = "^2.4"

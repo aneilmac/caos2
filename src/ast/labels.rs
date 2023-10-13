@@ -1,6 +1,6 @@
-use caos_macros::CaosParsable;
 
-#[derive(Eq, CaosParsable, PartialEq, Debug, Clone)]
+
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
 
 impl From<String> for Label {
