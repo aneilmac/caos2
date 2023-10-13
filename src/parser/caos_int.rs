@@ -1181,6 +1181,7 @@ pub fn parse_int(pair: Pair<Rule>) -> Result<Integer, CaosError> {
                 .map(Box::new)?;
             Ok(Integer::PrtFrom { input_port })
         }
+        Rule::int_prt_otot => Ok(Integer::PrtOtot),
         _ => Err(CaosError::new_parse_error(pair)),
     }
 }

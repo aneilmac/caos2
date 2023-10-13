@@ -43,6 +43,7 @@ string = {
   | string_wnam
   | string_wrld
   | string_wuid
+  | string_prt_name
 }
 
 string_catx      = { ^"catx" ~ int_arg }
@@ -86,3 +87,4 @@ string_pswd      = { ^"pswd" ~ int_arg }
 string_wnam      = { ^"wnam" }
 string_wrld      = { ^"wrld" ~ int_arg }
 string_wuid      = { ^"wuid" }
+string_prt_name   = { ^"prt:" ~ ^"name" ~ agent_arg ~ int_arg ~ int_arg }

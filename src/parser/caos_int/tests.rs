@@ -1607,3 +1607,10 @@ fn test_int_prt_from() {
         );
     }
 }
+
+#[test]
+fn test_int_prt_otot() {
+    for p in CaosParser::parse(Rule::int, "PRT: OTOT").expect("Parsed") {
+        assert_eq!(parse_int(p).expect("Parsed variable"), Integer::PrtOtot);
+    }
+}

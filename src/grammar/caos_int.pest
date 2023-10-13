@@ -169,6 +169,7 @@ int = {
   | int_wnti
   | int_prt_itot
   | int_prt_from
+  | int_prt_otot
 }
 
 int_attr      = { ^"attr" }
@@ -338,3 +339,4 @@ int_nwld      = { ^"nwld" }
 int_wnti      = { ^"wnti" ~ string_arg }
 int_prt_itot  = { ^"prt:" ~ ^"itot" }
 int_prt_from  = { ^"prt:" ~ ^"from" ~ int_arg }
+int_prt_otot  = { ^"prt:" ~ ^"otot" }

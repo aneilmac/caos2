@@ -1,5 +1,5 @@
 use crate::{
-    ast::{Anything, Decimal, DecimalArg, IntArg, Integer, SString, Variable},
+    ast::{Agent, Anything, Decimal, DecimalArg, IntArg, Integer, SString, Variable},
     parser::CaosParser,
 };
 use pest::Parser;
@@ -504,5 +504,19 @@ fn test_string_wrld() {
 fn test_string_wuid() {
     for p in CaosParser::parse(Rule::string, "WUID").expect("Parsed") {
         assert_eq!(parse_string(p).expect("Parsed variable"), SString::Wuid);
+    }
+}
+
+#[test]
+fn test_prt_name() {
+    for p in CaosParser::parse(Rule::string, "PRT: NAME NULL  0 1").expect("Parsed") {
+        assert_eq!(
+            parse_string(p).expect("Parsed variable"),
+            SString::PrtName {
+                agent: Box::new(Agent::Null.into()),
+                in_or_out: Box::new(0.into()),
+                port_index: Box::new(1.into())
+            }
+        );
     }
 }

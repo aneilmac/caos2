@@ -1,5 +1,5 @@
 use super::{
-    AgentArg, Anything, ByteString, Condition, Decimal, FloatArg, IntArg, Label, SStringArg,
+    AgentArg, Anything, ByteString, Condition, DecimalArg, FloatArg, IntArg, Label, SStringArg,
     ScriptDefinition, Variable,
 };
 use caos_macros::{CaosParsable, CommandList, EvaluateCommand};
@@ -306,8 +306,8 @@ pub enum Command {
         sprite_file: SStringArg,
         first_image: IntArg,
         image_count: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
         rel_plane: IntArg,
         anim_hover: ByteString,
         message_id: IntArg,
@@ -316,10 +316,10 @@ pub enum Command {
     #[syntax(name = "pat: cmra")]
     PatCmra {
         part_id: IntArg,
-        overlay_sprinte: SStringArg,
+        overlay_sprite: SStringArg,
         base_image: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
         rel_plane: IntArg,
         view_width: IntArg,
         view_height: IntArg,
@@ -331,17 +331,17 @@ pub enum Command {
         part_id: IntArg,
         sprite_file: SStringArg,
         first_image: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
         rel_plane: IntArg,
     },
     #[syntax(name = "pat: fixd")]
     PatFixd {
         part_id: IntArg,
-        sprinte_file: SStringArg,
+        sprite_file: SStringArg,
         first_image: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
         rel_plane: IntArg,
         font_sprite: SStringArg,
     },
@@ -350,9 +350,9 @@ pub enum Command {
         part_id: IntArg,
         overlay_sprite: SStringArg,
         base_image: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
-        rel_plane: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
+        rel_plane: IntArg,
         num_values: IntArg,
     },
     #[syntax(name = "pat: kill")]
@@ -362,8 +362,8 @@ pub enum Command {
         part_id: IntArg,
         sprite_file: SStringArg,
         first_image: IntArg,
-        rel_x: Decimal,
-        rel_y: Decimal,
+        rel_x: DecimalArg,
+        rel_y: DecimalArg,
         rel_plane: IntArg,
         message_id: IntArg,
         font_sprite: SStringArg,
@@ -452,7 +452,7 @@ pub enum Command {
     OrdrSign { speech: SStringArg },
     #[syntax(name = "ordr writ")]
     OrdrWrit {
-        crature: AgentArg,
+        creature: AgentArg,
         speech: SStringArg,
     },
     #[syntax]
@@ -585,7 +585,7 @@ pub enum Command {
     #[syntax(name = "dbg: outs")]
     DbgOuts { value: SStringArg },
     #[syntax(name = "dbg: outv")]
-    DbgOutv { value: Decimal },
+    DbgOutv { value: DecimalArg },
     #[syntax(name = "dbg: paws")]
     DbgPaws,
     #[syntax(name = "dbg: play")]
@@ -597,7 +597,7 @@ pub enum Command {
     #[syntax(name = "dbg: tack")]
     DbgTack { follow: AgentArg },
     #[syntax(name = "dbg: tock")]
-    DbTock,
+    DbgTock,
     #[syntax(name = "dbg: wtik")]
     DbgWtik { new_world_tick: IntArg },
     #[syntax]
@@ -637,7 +637,7 @@ pub enum Command {
     #[syntax]
     Outs { text: SStringArg },
     #[syntax]
-    Outv { value: Decimal },
+    Outv { value: DecimalArg },
     #[syntax]
     Outx { text: SStringArg },
     #[syntax]
@@ -843,17 +843,11 @@ pub enum Command {
     PrtJoin {
         source_agent: AgentArg,
         output_id: IntArg,
-        dest_agent: IntArg,
+        dest_agent: AgentArg,
         input_id: IntArg,
     },
     #[syntax(name = "prt: krak")]
     PrtKrak {
-        agent: AgentArg,
-        in_or_out: IntArg,
-        port_index: IntArg,
-    },
-    #[syntax(name = "prt: name")]
-    PrtName {
         agent: AgentArg,
         in_or_out: IntArg,
         port_index: IntArg,
@@ -866,15 +860,13 @@ pub enum Command {
         x: IntArg,
         y: IntArg,
     },
-    #[syntax(name = "prt: otot")]
-    PrtOtot,
     #[syntax(name = "prt: ozap")]
     PrtOzap { id: IntArg },
     #[syntax(name = "prt: send")]
     PrtSend { id: IntArg, data: Anything },
     // Resources
     #[syntax(name = "pray grab")]
-    PrayGrab { force: IntArg },
+    PrayGarb { force: IntArg },
     #[syntax(name = "pray refr")]
     PrayRefr,
     // Scripts
@@ -975,7 +967,7 @@ pub enum Command {
     #[syntax]
     Adds { var: Variable, append: SStringArg },
     #[syntax]
-    Addv { var: Variable, sum: Decimal },
+    Addv { var: Variable, sum: DecimalArg },
     #[syntax]
     Andv { var: Variable, value: IntArg },
     #[syntax]
@@ -987,11 +979,11 @@ pub enum Command {
     #[syntax]
     Delg { variable_name: SStringArg },
     #[syntax]
-    Divv { var: Variable, div: Decimal },
+    Divv { var: Variable, div: DecimalArg },
     #[syntax]
     Modv { var: Variable, r#mod: IntArg },
     #[syntax]
-    Mulv { var: Variable, mul: Decimal },
+    Mulv { var: Variable, mul: DecimalArg },
     #[syntax]
     Negv { var: Variable },
     #[syntax]
@@ -1003,9 +995,9 @@ pub enum Command {
     #[syntax]
     Sets { var: Variable, value: SStringArg },
     #[syntax]
-    Setv { var: Variable, value: Decimal },
+    Setv { var: Variable, value: DecimalArg },
     #[syntax]
-    Subv { var: Variable, sub: Decimal },
+    Subv { var: Variable, sub: DecimalArg },
     #[syntax]
     Targ { agent: AgentArg },
     // Vehicles

@@ -2,7 +2,8 @@
 mod tests;
 
 use super::{
-    parse_anything, parse_decimal_arg, parse_int_arg, parse_string_literal, parse_variable,
+    parse_agent_arg, parse_anything, parse_decimal_arg, parse_int_arg, parse_string_literal,
+    parse_variable,
 };
 use crate::{ast::SString, ast::SStringArg, CaosError, Rule};
 use pest::iterators::Pair;
@@ -482,6 +483,29 @@ pub fn parse_string(pair: Pair<Rule>) -> Result<SString, CaosError> {
             Ok(SString::Wrld { world_index })
         }
         Rule::string_wuid => Ok(SString::Wuid),
+        Rule::string_prt_name => {
+            let mut it = pair.clone().into_inner();
+            let agent = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_agent_arg)
+                .map(Box::new)?;
+            let in_or_out = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)
+                .map(Box::new)?;
+            let port_index = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)
+                .map(Box::new)?;
+            Ok(SString::PrtName {
+                agent,
+                in_or_out,
+                port_index,
+            })
+        }
         _ => Err(CaosError::new_parse_error(pair)),
     }
 }

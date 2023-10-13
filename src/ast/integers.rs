@@ -480,6 +480,8 @@ pub enum Integer {
     PrtItot,
     #[syntax(name = "prt: from")]
     PrtFrom { input_port: Box<IntArg> },
+    #[syntax(name = "prt: otot")]
+    PrtOtot,
 }
 
 impl From<i32> for Integer {

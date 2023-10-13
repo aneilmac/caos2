@@ -75,7 +75,7 @@ command = {
   | command_pat_text
   | command_ptxt
   | command_ages
-  | command_apptr
+  | command_appr
   | command_aslp
   | command_body
   | command_born
@@ -96,13 +96,13 @@ command = {
   | command_mvft
   | command_new_crea
   | command_newc
-  | command_norm
-  | commmand_nude
-  | commmand_ordr_shou
-  | commmand_ordr_sign
-  | commmand_ordr_writ
-  | commmand_sayn
-  | commmand_spnl
+  | command_norn
+  | command_nude
+  | command_ordr_shou
+  | command_ordr_sign
+  | command_ordr_writ
+  | command_sayn
+  | command_spnl
   | command_stim_shou
   | command_stim_sign
   | command_stim_tact
@@ -197,12 +197,10 @@ command = {
   | command_prt_izap
   | command_prt_join
   | command_prt_krak
-  | command_prt_name
   | command_prt_onew
-  | command_prt_otot
   | command_prt_ozap
   | command_prt_send
-  | command_pray_grab
+  | command_pray_garb
   | command_pray_refr
   | command_gids_fmly
   | command_gids_gnus
@@ -378,7 +376,7 @@ command_pat_kill   = { ^"pat:" ~ ^"kill" ~ int_arg }
 command_pat_text   = { ^"pat:" ~ ^"text" ~ int_arg ~ string_arg ~ int_arg ~ decimal_arg ~ decimal_arg ~ int_arg ~ int_arg ~ string_arg }
 command_ptxt       = { ^"ptxt" ~ string_arg }
 command_ages       = { ^"ages" ~ int_arg }
-command_apptr      = { "^appr" }
+command_appr      = { "^appr" }
 command_aslp       = { ^"aslp" ~ int_arg }
 command_body       = { ^"body" ~ int_arg ~ int_arg }
 command_born       = { ^"born" }
@@ -399,13 +397,13 @@ command_mate       = { ^"mate" }
 command_mvft       = { ^"mvft" ~ float_arg ~ float_arg }
 command_new_crea   = { ^"new:" ~ ^"crea" ~ int_arg ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
 command_newc       = { ^"newc" ~ int_arg ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
-command_norm       = { ^"norn" ~ agent_arg }
-commmand_nude      = { ^"nude" }
-commmand_ordr_shou = { ^"ordr" ~ ^"shou" ~ string_arg }
-commmand_ordr_sign = { ^"ordr" ~ ^"sign" ~ string_arg }
-commmand_ordr_writ = { ^"ordr" ~ ^"writ" ~ agent_arg ~ string_arg }
-commmand_sayn      = { ^"sayn" }
-commmand_spnl      = { ^"spnl" ~ string_arg ~ int_arg ~ float_arg }
+command_norn       = { ^"norn" ~ agent_arg }
+command_nude      = { ^"nude" }
+command_ordr_shou = { ^"ordr" ~ ^"shou" ~ string_arg }
+command_ordr_sign = { ^"ordr" ~ ^"sign" ~ string_arg }
+command_ordr_writ = { ^"ordr" ~ ^"writ" ~ agent_arg ~ string_arg }
+command_sayn      = { ^"sayn" }
+command_spnl      = { ^"spnl" ~ string_arg ~ int_arg ~ float_arg }
 command_stim_shou  = { ^"stim" ~ ^"shou" ~ int_arg ~ float_arg }
 command_stim_sign  = { ^"stim" ~ ^"sign" ~ int_arg ~ float_arg }
 command_stim_tact  = { ^"stim" ~ ^"tact" ~ int_arg ~ float_arg }
@@ -500,12 +498,10 @@ command_prt_inew   = { ^"prt:" ~ ^"inew" ~ int_arg ~ string_arg ~ string_arg ~ i
 command_prt_izap   = { ^"prt:" ~ ^"izap" ~ int_arg }
 command_prt_join   = { ^"prt:" ~ ^"join" ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
 command_prt_krak   = { ^"prt:" ~ ^"krak" ~ agent_arg ~ int_arg ~ int_arg }
-command_prt_name   = { ^"prt:" ~ ^"name" ~ agent_arg ~ int_arg ~ int_arg }
 command_prt_onew   = { ^"prt:" ~ ^"onew" ~ int_arg ~ string_arg ~ string_arg ~ int_arg ~ int_arg }
-command_prt_otot   = { ^"prt:" ~ ^"otot" }
 command_prt_ozap   = { ^"prt:" ~ ^"ozap" ~ int_arg }
 command_prt_send   = { ^"prt:" ~ ^"send" ~ int_arg ~ anything }
-command_pray_grab  = { ^"pray" ~ ^"grab" ~ int_arg }
+command_pray_garb  = { ^"pray" ~ ^"garb" ~ int_arg }
 command_pray_refr  = { ^"pray" ~ ^"refr" }
 command_gids_fmly  = { ^"gids" ~ ^"fmly" ~ int_arg }
 command_gids_gnus  = { ^"gids" ~ ^"gnus" ~ int_arg ~ int_arg }
@@ -526,7 +522,7 @@ command_midi       = { ^"midi" ~ string_arg }
 command_mmsc       = { ^"mmsc" ~ int_arg ~ int_arg ~ string_arg }
 command_rclr       = { ^"rclr" ~ int_arg ~ int_arg }
 command_rmsc       = { ^"rmsc" ~ int_arg ~ int_arg ~ string_arg }
-command_sezz       = { ^"sezz" }
+command_sezz       = { ^"sezz" ~ string_arg }
 command_sndc       = { ^"sndc" ~ string_arg }
 command_snde       = { ^"snde" ~ string_arg }
 command_sndl       = { ^"sndl" ~ string_arg }

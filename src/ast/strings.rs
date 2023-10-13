@@ -1,4 +1,4 @@
-use super::{Anything, DecimalArg, IntArg, SStringArg, Variable};
+use super::{AgentArg, Anything, DecimalArg, IntArg, SStringArg, Variable};
 use caos_macros::CaosParsable;
 
 #[derive(CaosParsable, Eq, PartialEq, Debug, Clone)]
@@ -143,6 +143,12 @@ pub enum SString {
     Wrld { world_index: Box<IntArg> },
     #[syntax]
     Wuid,
+    #[syntax(name = "prt: name")]
+    PrtName {
+        agent: Box<AgentArg>,
+        in_or_out: Box<IntArg>,
+        port_index: Box<IntArg>,
+    },
 }
 
 impl From<String> for SString {
