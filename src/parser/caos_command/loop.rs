@@ -66,7 +66,7 @@ pub fn parse_command_loop_untl(pair: Pair<Rule>) -> Result<Command, CaosError> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        ast::{ConditionType, ScriptDefinition},
+        ast::{Condition, ConditionType, ScriptDefinition},
         parser::{caos_command::parse_command, CaosParser},
     };
     use pest::Parser;
@@ -100,6 +100,78 @@ mod tests {
                     count: 0.into(),
                     definition: ScriptDefinition {
                         commands: vec![Command::BrnDmpb]
+                    }
+                },
+            );
+        }
+    }
+
+    #[test]
+    fn test_command_loop_error_parse() {
+        CaosParser::parse(Rule::command, "LOOP BRN: DMPB").expect_err("No UNTL or Ever");
+    }
+
+    #[test]
+    fn test_command_loop_ever_empty() {
+        for p in CaosParser::parse(Rule::command, "LOOP EVER").expect("Parsed") {
+            assert_eq!(
+                parse_command(p).expect("Parsed command"),
+                Command::LoopEver {
+                    definition: ScriptDefinition { commands: vec![] }
+                },
+            );
+        }
+    }
+
+    #[test]
+    fn test_command_loop_ever() {
+        for p in CaosParser::parse(Rule::command, "LOOP BRN: DMPB EVER").expect("Parsed") {
+            assert_eq!(
+                parse_command(p).expect("Parsed command"),
+                Command::LoopEver {
+                    definition: ScriptDefinition {
+                        commands: vec![Command::BrnDmpb]
+                    }
+                },
+            );
+        }
+    }
+
+    #[test]
+    fn test_command_loop_untl_error_parse() {
+        CaosParser::parse(Rule::command, "LOOP BRN: DMPB UNTL").expect_err("No Condition");
+    }
+
+    #[test]
+    fn test_command_loop_untl_empty() {
+        for p in CaosParser::parse(Rule::command, "LOOP UNTL 1 <> 2").expect("Parsed") {
+            assert_eq!(
+                parse_command(p).expect("Parsed command"),
+                Command::LoopUntl {
+                    definition: ScriptDefinition { commands: vec![] },
+                    condition: Condition::Simple {
+                        cond_type: ConditionType::Ne,
+                        lhs: 1.into(),
+                        rhs: 2.into()
+                    }
+                },
+            );
+        }
+    }
+
+    #[test]
+    fn test_command_loop_untl() {
+        for p in CaosParser::parse(Rule::command, "LOOP BRN: DMPB UNTL 1 <> 2").expect("Parsed") {
+            assert_eq!(
+                parse_command(p).expect("Parsed command"),
+                Command::LoopUntl {
+                    definition: ScriptDefinition {
+                        commands: vec![Command::BrnDmpb]
+                    },
+                    condition: Condition::Simple {
+                        cond_type: ConditionType::Ne,
+                        lhs: 1.into(),
+                        rhs: 2.into()
                     }
                 },
             );

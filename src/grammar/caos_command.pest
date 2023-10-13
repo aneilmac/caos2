@@ -6,7 +6,7 @@ command = {
   | command_enum
   | command_etch
   | command_esee
-  | command_epass
+  | command_epas
   | command_loop_untl
   | command_loop_ever
   | command_anim
@@ -280,10 +280,6 @@ command_subr = {
     ^"subr" ~ label ~ script_contents ~ ^"retn"
 }
 
-command_reps = {
-    ^"reps" ~ int_arg ~ script_contents ~ ^"repe"
-}
-
 command_econ = {
     ^"econ" ~ agent_arg ~ script_contents ~ ^"next"
 }
@@ -300,8 +296,12 @@ command_esee = {
     ^"esee" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
 }
 
-command_epass = {
-    ^"epass" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+command_epas = {
+    ^"epas" ~ int_arg ~ int_arg ~ int_arg ~ script_contents ~ ^"next"
+}
+
+command_reps = {
+    ^"reps" ~ int_arg ~ script_contents ~ ^"repe"
 }
 
 command_loop_untl = {
