@@ -66,8 +66,20 @@ impl From<Integer> for DecimalArg {
     }
 }
 
+impl From<i32> for DecimalArg {
+    fn from(value: i32) -> Self {
+        Self::Decimal(value.into())
+    }
+}
+
 impl From<Float> for DecimalArg {
     fn from(value: Float) -> Self {
+        Self::Decimal(value.into())
+    }
+}
+
+impl From<f32> for DecimalArg {
+    fn from(value: f32) -> Self {
         Self::Decimal(value.into())
     }
 }

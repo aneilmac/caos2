@@ -2,6 +2,8 @@ mod doif;
 mod r#enum;
 mod r#loop;
 mod subr;
+#[cfg(test)]
+mod tests;
 
 use super::{
     parse_agent_arg, parse_anything, parse_bytestring_literal, parse_condition, parse_decimal_arg,
@@ -125,7 +127,7 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
         }
         Rule::command_mesg_writ => {
             let mut it = pair.clone().into_inner();
-            let command = it
+            let agent = it
                 .next()
                 .ok_or(CaosError::new_parse_error(pair.clone()))
                 .and_then(parse_agent_arg)?;
@@ -133,10 +135,7 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 .next()
                 .ok_or(CaosError::new_parse_error(pair.clone()))
                 .and_then(parse_int_arg)?;
-            Ok(Command::MesgWrit {
-                command,
-                message_id,
-            })
+            Ok(Command::MesgWrit { agent, message_id })
         }
         Rule::command_mesg_wrt => {
             let mut it = pair.clone().into_inner();
@@ -168,7 +167,7 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 delay,
             })
         }
-        Rule::int_mira => {
+        Rule::command_mira => {
             let mut it = pair.clone().into_inner();
             let on_off = it
                 .next()
@@ -310,6 +309,14 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 .and_then(parse_int_arg)?;
             Ok(Command::Show { visibility })
         }
+        Rule::command_tick => {
+            let mut it = pair.clone().into_inner();
+            let tick_rate = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            Ok(Command::Tick { tick_rate })
+        }
         Rule::command_star => {
             let mut it = pair.clone().into_inner();
             let family = it
@@ -330,7 +337,7 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 species,
             })
         }
-        Rule::command_tick => {
+        Rule::command_tint => {
             let mut it = pair.clone().into_inner();
             let red_tint = it
                 .next()
@@ -466,7 +473,7 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 .next()
                 .ok_or(CaosError::new_parse_error(pair.clone()))
                 .and_then(parse_float_arg)?;
-            Ok(Command::BrntSetl {
+            Ok(Command::BrnSetl {
                 lobe_number,
                 line_number,
                 new_value,
@@ -1729,6 +1736,105 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
                 adjust3,
                 drive4,
                 adjust4,
+            })
+        }
+        Rule::command_touc => Ok(Command::Touc),
+        Rule::command_uncs => {
+            let mut it = pair.clone().into_inner();
+            let unconscious = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            Ok(Command::Uncs { unconscious })
+        }
+        Rule::command_urge_shou => {
+            let mut it = pair.clone().into_inner();
+            let noun_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            let verb_id = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            let verb_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            Ok(Command::UrgeShou {
+                noun_stim,
+                verb_id,
+                verb_stim,
+            })
+        }
+        Rule::command_urge_sign => {
+            let mut it = pair.clone().into_inner();
+            let noun_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            let verb_id = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            let verb_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            Ok(Command::UrgeSign {
+                noun_stim,
+                verb_id,
+                verb_stim,
+            })
+        }
+        Rule::command_urge_tact => {
+            let mut it = pair.clone().into_inner();
+            let noun_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            let verb_id = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            let verb_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            Ok(Command::UrgeTact {
+                noun_stim,
+                verb_id,
+                verb_stim,
+            })
+        }
+        Rule::command_urge_writ => {
+            let mut it = pair.clone().into_inner();
+            let creature = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_agent_arg)?;
+            let noun_id = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            let noun_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            let verb_id = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_int_arg)?;
+            let verb_stim = it
+                .next()
+                .ok_or(CaosError::new_parse_error(pair.clone()))
+                .and_then(parse_float_arg)?;
+            Ok(Command::UrgeWrit {
+                creature,
+                noun_id,
+                noun_stim,
+                verb_id,
+                verb_stim,
             })
         }
         Rule::command_vocb => Ok(Command::Vocb),

@@ -81,10 +81,7 @@ pub enum Command {
     #[syntax]
     Kill { agent: AgentArg },
     #[syntax(name = "mesg writ")]
-    MesgWrit {
-        command: AgentArg,
-        message_id: IntArg,
-    },
+    MesgWrit { agent: AgentArg, message_id: IntArg },
     #[syntax(name = "mesg wrt+")]
     MesgWritPlus {
         agent: AgentArg,
@@ -176,7 +173,7 @@ pub enum Command {
         new_value: FloatArg,
     },
     #[syntax(name = "brn: setl")]
-    BrntSetl {
+    BrnSetl {
         lobe_number: IntArg,
         line_number: IntArg,
         new_value: FloatArg,
