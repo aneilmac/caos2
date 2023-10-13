@@ -9,7 +9,7 @@ use super::{
     parse_agent_arg, parse_anything, parse_bytestring_literal, parse_condition, parse_decimal_arg,
     parse_float_arg, parse_int_arg, parse_label, parse_string_arg, parse_variable,
 };
-use crate::{ast::Command, CaosError, ErrorType, Rule};
+use crate::{ast::Command, CaosError, Rule};
 use doif::*;
 use pest::iterators::Pair;
 use r#enum::*;

@@ -4,4 +4,6 @@
 // The install script start tag may be implicitly defined at the start of a file.
 // Likewise both the install script and removal script end tags may be implicitly defined.
 // Event scripts are always well defined.
-program = _{ SOI ~ (install_script | remove_script | event_script)* }
+program = { SOI ~ implicit_install_script ~ scripts }
+implicit_install_script = { script_contents ~ install_script_end_tag }
+scripts = { (install_script | remove_script | event_script)* }
