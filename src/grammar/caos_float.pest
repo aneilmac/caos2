@@ -1,8 +1,5 @@
-float_arg = _{ float | int | variable }
-
-float = {
-    literal_float
-  | float_disq
+float = _{
+    float_disq
   | float_fltx
   | float_flty
   | float_mthx
@@ -44,7 +41,7 @@ float = {
   | float_tan
 }
 
-float_disq = { ^"disq" ~ agent_arg }
+float_disq = { ^"disq" }
 float_fltx = { ^"fltx" }
 float_flty = { ^"flty" }
 float_mthx = { ^"mthx" }
@@ -56,31 +53,31 @@ float_post = { ^"post" }
 float_posx = { ^"posx" }
 float_posy = { ^"posy" }
 float_rnge = { ^"rnge" }
-float_chem = { ^"chem" ~ int_arg }
+float_chem = { ^"chem" }
 float_dftx = { ^"dftx" }
 float_dfty = { ^"dfty" }
-float_driv = { ^"driv" ~ int_arg }
-float_loci = { ^"loci" ~ int_arg ~ int_arg ~ int_arg ~ int_arg }
-float_orgf = { ^"orgf" ~ int_arg ~ int_arg }
+float_driv = { ^"driv" }
+float_loci = { ^"loci" }
+float_orgf = { ^"orgf" }
 float_uftx = { ^"uftx" }
 float_ufty = { ^"ufty" }
 float_innf = { ^"innf" }
 float_movx = { ^"movx" }
 float_movy = { ^"movy" }
-float_prop = { ^"prop" ~ int_arg ~ int_arg }
-float_torx = { ^"torx" ~ int_arg }
-float_tory = { ^"tory" ~ int_arg }
+float_prop = { ^"prop" }
+float_torx = { ^"torx" }
+float_tory = { ^"tory" }
 float_accg = { ^"accg" }
-float_obst = { ^"obst" ~ int_arg }
-float_relx = { ^"relx" ~ agent_arg ~ agent_arg }
-float_rely = { ^"rely" ~ agent_arg ~ agent_arg }
+float_obst = { ^"obst" }
+float_relx = { ^"relx" }
+float_rely = { ^"rely" }
 float_pace = { ^"pace" }
-float_acos = { ^"acos" ~ float_arg }
-float_asin = { ^"asin" ~ float_arg }
-float_atan = { ^"atan" ~ float_arg }
-float_cos  = { ^"cos_" ~ float_arg }
-float_itof = { ^"itof" ~ int_arg }
-float_sin  = { ^"sin_" ~ float_arg }
-float_sqrt = { ^"sqrt" ~ float_arg }
-float_stof = { ^"stof" ~ string_arg }
-float_tan  = { ^"tan_" ~ float_arg }
+float_acos = { ^"acos" }
+float_asin = { ^"asin" }
+float_atan = { ^"atan" }
+float_cos  = { ^"cos_" }
+float_itof = { ^"itof" }
+float_sin  = { ^"sin_" }
+float_sqrt = { ^"sqrt" }
+float_stof = { ^"stof" }
+float_tan  = { ^"tan_" }

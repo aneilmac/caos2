@@ -1,6 +1,4 @@
-agent_arg = _{ agent | variable }
-
-agent = {
+agent = _{
     agent_carr
   | agent_from
   | agent_held
@@ -28,20 +26,20 @@ agent_carr     = { ^"carr" }
 agent_from     = { ^"from" }
 agent_held     = { ^"held" }
 agent_iitt     = { ^"iitt" }
-agent_ncls     = { ^"ncls" ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
+agent_ncls     = { ^"ncls" }
 agent_null     = { ^"null" }
 agent_ownr     = { ^"ownr" }
-agent_pcls     = { ^"pcls" ~ agent_arg ~ int_arg ~ int_arg ~ int_arg }
+agent_pcls     = { ^"pcls" }
 agent_pntr     = { ^"pntr" }
 agent_targ     = { ^"targ" }
-agent_twin     = { ^"twin" ~ agent_arg ~ int_arg }
+agent_twin     = { ^"twin" }
 agent_it       = { ^"_it_" }
 agent_trck     = { ^"trck" }
 agent_hhld     = { ^"hhld" }
 agent_norn     = { ^"norn" }
-agent_agnt     = { ^"agnt" ~ int_arg }
+agent_agnt     = { ^"agnt" }
 agent_tack     = { ^"tack" }
-agent_mtoa     = { ^"mtoa" ~ string_arg }
-agent_mtoc     = { ^"mtoc" ~ string_arg }
+agent_mtoa     = { ^"mtoa" }
+agent_mtoc     = { ^"mtoc"}
 agent_hots     = { ^"hots" }
-agent_prt_frma = { ^"prt:" ~ ^"frma" ~ int_arg }
+agent_prt_frma = { ^"prt:" ~ ^"frma" }

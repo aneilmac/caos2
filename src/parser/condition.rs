@@ -12,7 +12,6 @@ pub fn parse_anything(pair: Pair<Rule>) -> Result<Anything, CaosError> {
     match pair.as_rule() {
         Rule::variable => parse_variable(pair).map(Anything::Variable),
         Rule::string => parse_string(pair).map(Anything::String),
-        Rule::decimal => parse_decimal(pair).map(Anything::Decimal),
         Rule::literal_byte_string => parse_bytestring_literal(pair).map(Anything::ByteString),
         Rule::agent => parse_agent(pair).map(Anything::Agent),
         _ => Err(CaosError::new_parse_error(pair)),
@@ -20,63 +19,66 @@ pub fn parse_anything(pair: Pair<Rule>) -> Result<Anything, CaosError> {
 }
 
 pub fn parse_condition(pair: Pair<Rule>) -> Result<Condition, CaosError> {
-    if pair.as_rule() != Rule::condition {
-        return Err(CaosError::new_parse_error(pair));
-    }
+    todo!()
+    // if pair.as_rule() != Rule::condition {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
 
-    let mut it = pair.clone().into_inner();
+    // let mut it = pair.clone().into_inner();
 
-    let mut current: Condition = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_simple_condition)?;
+    // let mut current: Condition = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_simple_condition)?;
 
-    for p in it {
-        let (j, c) = parse_condition_join_part(p)?;
-        current = current.join(c, j);
-    }
+    // for p in it {
+    //     let (j, c) = parse_condition_join_part(p)?;
+    //     current = current.join(c, j);
+    // }
 
-    Ok(current)
+    // Ok(current)
 }
 
 fn parse_simple_condition(pair: Pair<Rule>) -> Result<Condition, CaosError> {
-    if pair.as_rule() != Rule::simple_condition {
-        return Err(CaosError::new_parse_error(pair));
-    }
-    let mut it = pair.clone().into_inner();
-    let lhs = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_anything)?;
-    let cond_type = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_condition_operator)?;
-    let rhs = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_anything)?;
-    Ok(Condition::Simple {
-        cond_type,
-        lhs,
-        rhs,
-    })
+    todo!()
+    // if pair.as_rule() != Rule::simple_condition {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
+    // let mut it = pair.clone().into_inner();
+    // let lhs = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_anything)?;
+    // let cond_type = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_condition_operator)?;
+    // let rhs = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_anything)?;
+    // Ok(Condition::Simple {
+    //     cond_type,
+    //     lhs,
+    //     rhs,
+    // })
 }
 
 fn parse_condition_join_part(pair: Pair<Rule>) -> Result<(JoinType, Condition), CaosError> {
-    if pair.as_rule() != Rule::condition_join_part {
-        return Err(CaosError::new_parse_error(pair));
-    }
-    let mut it = pair.clone().into_inner();
-    let join_type = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_condition_join)?;
-    let condition = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_simple_condition)?;
-    Ok((join_type, condition))
+    todo!()
+    // if pair.as_rule() != Rule::condition_join_part {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
+    // let mut it = pair.clone().into_inner();
+    // let join_type = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_condition_join)?;
+    // let condition = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_simple_condition)?;
+    // Ok((join_type, condition))
 }
 
 fn parse_condition_operator(pair: Pair<Rule>) -> Result<ConditionType, CaosError> {

@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceRoot}/target/debug/examples/scan_file.exe",
-            "args": ["D:/projects/creatures-docs/C3_Bootstrap_V2"],
+            "args": ["D:/projects/creatures-docs/C3_Bootstrap_V2/agent help.cos"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],

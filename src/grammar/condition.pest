@@ -1,8 +1,3 @@
-condition           =   { simple_condition ~ condition_join_part* }
-condition_join_part =   { condition_join ~ simple_condition }
-simple_condition    =   { anything ~ condition_operator ~ anything }
-anything            =  _{ variable | string | decimal | literal_byte_string | agent }
-
 condition_eq       =  { "=" | ^"eq" }
 condition_ge       =  { ">=" | ^"ge" }
 condition_gt       =  { ">" | ^"gt" }

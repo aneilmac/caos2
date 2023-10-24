@@ -9,6 +9,7 @@ mod caos_string;
 mod caos_variable;
 mod condition;
 mod script;
+mod token_parser;
 
 use base::*;
 use caos_agent::*;
@@ -21,19 +22,16 @@ use caos_string::*;
 use caos_variable::*;
 use condition::*;
 use script::*;
+pub(crate) use token_parser::*;
 
-use crate::{
-    ast::{CosFile, Label},
-    CaosError, ErrorType,
-};
-use pest::{error::Error, iterators::Pair, pratt_parser::PrattParser, Parser};
+use crate::{ast::CosFile, CaosError, ErrorType};
+use pest::{pratt_parser::PrattParser, Parser};
 use pest_derive::Parser;
 
 #[derive(Parser)]
 #[grammar = "grammar/base.pest"]
 #[grammar = "grammar/caos_agent.pest"]
 #[grammar = "grammar/caos_command.pest"]
-#[grammar = "grammar/caos_decimal.pest"]
 #[grammar = "grammar/caos_float.pest"]
 #[grammar = "grammar/caos_int.pest"]
 #[grammar = "grammar/caos_program.pest"]
@@ -45,8 +43,8 @@ struct CaosParser;
 
 lazy_static::lazy_static! {
     static ref PRATT_PARSER: PrattParser<Rule> = {
-        use pest::pratt_parser::{Assoc::*, Op};
-        use Rule::*;
+
+
 
         PrattParser::new()
     };
@@ -677,7 +675,7 @@ pub fn parse_cos(cos_content: &str) -> Result<CosFile, CaosError> {
         .map_err(|e| CaosError::new_from_error(Box::new(e)))?
         .next()
         .ok_or(CaosError::new(
-            ErrorType::ParseError { line: 0, col: 0 },
+            ErrorType::ParseError { line_col: (0, 0) },
             String::from("Unknown parsing error"),
         ))?;
     parse_program(res)

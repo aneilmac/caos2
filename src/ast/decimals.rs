@@ -1,4 +1,4 @@
-use super::{Float, Integer, Variable};
+use super::{Float, Integer};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Decimal {

@@ -1,5 +1,3 @@
-
-
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Label(String);
 

@@ -1,5 +1,5 @@
 use crate::{
-    ast::{Agent, Anything, Condition, Decimal, Integer, Label, SString, Variable},
+    ast::{Agent, Condition, SString, Variable},
     parser::CaosParser,
 };
 use pest::Parser;

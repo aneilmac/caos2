@@ -2,7 +2,22 @@ install_script = { install_script_start_tag ~ script_contents ~ install_script_e
 remove_script  = { remove_script_start_tag ~ script_contents ~ remove_script_end_tag }
 event_script   = { event_script_header ~ script_contents ~ end_script_tag }
 
-script_contents = { command* }
+script_contents = { token* }
+
+expression = _{
+    literal_byte_string 
+    | literal_float
+    | literal_int
+    | literal_string
+    | variable
+    | float
+    | int 
+    | agent
+    | condition_operator
+    | condition_join
+}
+
+token = _{ command ~ expression* }
 
 install_script_start_tag = _{ ^"iscr" }
 remove_script_start_tag = _{ ^"rscr" }

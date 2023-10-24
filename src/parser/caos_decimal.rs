@@ -1,31 +1,33 @@
 use super::{parse_float, parse_int, parse_variable};
-use crate::{ast::Decimal, ast::DecimalArg, CaosError, ErrorType, Rule};
+use crate::{ast::Decimal, ast::DecimalArg, CaosError, Rule};
 use pest::iterators::Pair;
 
 pub fn parse_decimal(pair: Pair<Rule>) -> Result<Decimal, CaosError> {
-    if pair.as_rule() != Rule::decimal {
-        return Err(CaosError::new_parse_error(pair));
-    }
+    todo!()
+    // if pair.as_rule() != Rule::decimal {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
 
-    let pair = pair
-        .clone()
-        .into_inner()
-        .next()
-        .ok_or(CaosError::new_parse_error(pair))?;
+    // let pair = pair
+    //     .clone()
+    //     .into_inner()
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair))?;
 
-    match pair.as_rule() {
-        Rule::float => parse_float(pair).map(Decimal::Float),
-        Rule::int => parse_int(pair).map(Decimal::Integer),
-        _ => Err(CaosError::new_parse_error(pair)),
-    }
+    // match pair.as_rule() {
+    //     Rule::float => parse_float(pair).map(Decimal::Float),
+    //     Rule::int => parse_int(pair).map(Decimal::Integer),
+    //     _ => Err(CaosError::new_parse_error(pair)),
+    // }
 }
 
 pub fn parse_decimal_arg(pair: Pair<Rule>) -> Result<DecimalArg, CaosError> {
-    match pair.as_rule() {
-        Rule::decimal => parse_decimal(pair).map(DecimalArg::Decimal),
-        Rule::variable => parse_variable(pair).map(DecimalArg::Variable),
-        _ => Err(CaosError::new_parse_error(pair)),
-    }
+    todo!()
+    // match pair.as_rule() {
+    //     Rule::decimal => parse_decimal(pair).map(DecimalArg::Decimal),
+    //     Rule::variable => parse_variable(pair).map(DecimalArg::Variable),
+    //     _ => Err(CaosError::new_parse_error(pair)),
+    // }
 }
 
 #[cfg(test)]

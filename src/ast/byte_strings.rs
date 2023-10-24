@@ -1,5 +1,3 @@
-
-
 #[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct ByteString(Vec<u8>);
 

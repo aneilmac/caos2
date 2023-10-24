@@ -26,41 +26,43 @@ pub fn parse_command_reps(pair: Pair<Rule>) -> Result<Command, CaosError> {
 }
 
 pub fn parse_command_loop_ever(pair: Pair<Rule>) -> Result<Command, CaosError> {
-    if pair.as_rule() != Rule::command_loop_ever {
-        return Err(CaosError::new_parse_error(pair));
-    }
+    todo!()
+    // if pair.as_rule() != Rule::command_loop_ever {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
 
-    let mut it = pair.clone().into_inner();
+    // let mut it = pair.clone().into_inner();
 
-    let definition = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_script_contents)?;
+    // let definition = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_script_contents)?;
 
-    Ok(Command::LoopEver { definition })
+    // Ok(Command::LoopEver { definition })
 }
 
 pub fn parse_command_loop_untl(pair: Pair<Rule>) -> Result<Command, CaosError> {
-    if pair.as_rule() != Rule::command_loop_untl {
-        return Err(CaosError::new_parse_error(pair));
-    }
+    todo!()
+    // if pair.as_rule() != Rule::command_loop_untl {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
 
-    let mut it = pair.clone().into_inner();
+    // let mut it = pair.clone().into_inner();
 
-    let definition = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_script_contents)?;
+    // let definition = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_script_contents)?;
 
-    let condition = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(parse_condition)?;
+    // let condition = it
+    //     .next()
+    //     .ok_or(CaosError::new_parse_error(pair.clone()))
+    //     .and_then(parse_condition)?;
 
-    Ok(Command::LoopUntl {
-        definition,
-        condition,
-    })
+    // Ok(Command::LoopUntl {
+    //     definition,
+    //     condition,
+    // })
 }
 
 #[cfg(test)]

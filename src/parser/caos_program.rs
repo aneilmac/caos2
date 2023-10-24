@@ -1,6 +1,6 @@
 use crate::{
     ast::{CosFile, Script},
-    CaosError, ErrorType, Rule,
+    CaosError, Rule,
 };
 use pest::iterators::Pair;
 

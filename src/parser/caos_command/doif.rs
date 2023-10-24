@@ -54,10 +54,11 @@ fn parse_else_part(pair: Pair<Rule>) -> Result<ScriptDefinition, CaosError> {
 }
 
 fn parse_elif_parts(pair: Pair<Rule>) -> Result<Vec<(Condition, ScriptDefinition)>, CaosError> {
-    if pair.as_rule() != Rule::command_elif_parts {
-        return Err(CaosError::new_parse_error(pair));
-    }
-    pair.into_inner().map(parse_elif).collect()
+    todo!()
+    // if pair.as_rule() != Rule::command_elif_parts {
+    //     return Err(CaosError::new_parse_error(pair));
+    // }
+    // pair.into_inner().map(parse_elif).collect()
 }
 
 fn parse_elif(pair: Pair<Rule>) -> Result<(Condition, ScriptDefinition), CaosError> {

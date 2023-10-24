@@ -19,7 +19,9 @@ pub enum Command {
         count: IntArg,
         definition: ScriptDefinition,
     },
-    LoopEver { definition: ScriptDefinition },
+    LoopEver {
+        definition: ScriptDefinition,
+    },
     LoopUntl {
         definition: ScriptDefinition,
         condition: Condition,
@@ -53,20 +55,41 @@ pub enum Command {
         definition: ScriptDefinition,
     },
     // AgentArgs
-    Anim { pose_list: ByteString },
-    Anms { anim_string: SStringArg },
-    Attr { attributes: IntArg },
-    Base { index: IntArg },
-    Bhvr { permissions: IntArg },
-    Frat { framerate: IntArg },
-    Gait { gait_number: IntArg },
+    Anim {
+        pose_list: ByteString,
+    },
+    Anms {
+        anim_string: SStringArg,
+    },
+    Attr {
+        attributes: IntArg,
+    },
+    Base {
+        index: IntArg,
+    },
+    Bhvr {
+        permissions: IntArg,
+    },
+    Frat {
+        framerate: IntArg,
+    },
+    Gait {
+        gait_number: IntArg,
+    },
     Gall {
         sprite_file: SStringArg,
         first_image: IntArg,
     },
-    Hand { name_for_the_hand: SStringArg },
-    Kill { agent: AgentArg },
-    MesgWrit { agent: AgentArg, message_id: IntArg },
+    Hand {
+        name_for_the_hand: SStringArg,
+    },
+    Kill {
+        agent: AgentArg,
+    },
+    MesgWrit {
+        agent: AgentArg,
+        message_id: IntArg,
+    },
     MesgWritPlus {
         agent: AgentArg,
         message_id: IntArg,
@@ -74,7 +97,9 @@ pub enum Command {
         param_2: Anything,
         delay: IntArg,
     },
-    Mira { on_off: IntArg },
+    Mira {
+        on_off: IntArg,
+    },
     NewSimp {
         family: IntArg,
         genus: IntArg,
@@ -86,24 +111,44 @@ pub enum Command {
     },
     Nohh,
     Over,
-    Paus { paused: IntArg },
-    Plne { plane: IntArg },
-    Pose { pose: IntArg },
-    Puhl { pose: IntArg, x: IntArg, y: IntArg },
-    Pupt { pose: IntArg, x: IntArg, y: IntArg },
-    Rnge { distance: FloatArg },
+    Paus {
+        paused: IntArg,
+    },
+    Plne {
+        plane: IntArg,
+    },
+    Pose {
+        pose: IntArg,
+    },
+    Puhl {
+        pose: IntArg,
+        x: IntArg,
+        y: IntArg,
+    },
+    Pupt {
+        pose: IntArg,
+        x: IntArg,
+        y: IntArg,
+    },
+    Rnge {
+        distance: FloatArg,
+    },
     Rtar {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
     },
-    Show { visibility: IntArg },
+    Show {
+        visibility: IntArg,
+    },
     Star {
         family: IntArg,
         genus: IntArg,
         species: IntArg,
     },
-    Tick { tick_rate: IntArg },
+    Tick {
+        tick_rate: IntArg,
+    },
     Tint {
         red_tint: IntArg,
         green_tint: IntArg,
@@ -117,18 +162,21 @@ pub enum Command {
         species: IntArg,
     },
     // Brain
-    
     BrnDmpb,
     BrnDmpd {
         tract_number: IntArg,
         dendrite_number: IntArg,
     },
-    BrnDmpl { lobe_number: IntArg },
+    BrnDmpl {
+        lobe_number: IntArg,
+    },
     BrnDmpn {
         lobe_number: IntArg,
         neuron_number: IntArg,
     },
-    BrnDmpt { tract_number: IntArg },
+    BrnDmpt {
+        tract_number: IntArg,
+    },
     BrnSetd {
         tract_number: IntArg,
         dendrite_number: IntArg,
@@ -152,7 +200,6 @@ pub enum Command {
         new_value: FloatArg,
     },
     // Camera
-    
     Bkgd {
         metaroom_id: IntArg,
         background: SStringArg,
@@ -162,9 +209,19 @@ pub enum Command {
         mearoom_base: IntArg,
         room_base: IntArg,
     },
-    Cmra { x: IntArg, y: IntArg, pan: IntArg },
-    Cmrp { x: IntArg, y: IntArg, pan: IntArg },
-    Cmrt { pan: IntArg },
+    Cmra {
+        x: IntArg,
+        y: IntArg,
+        pan: IntArg,
+    },
+    Cmrp {
+        x: IntArg,
+        y: IntArg,
+        pan: IntArg,
+    },
+    Cmrt {
+        pan: IntArg,
+    },
     Frsh,
     Line {
         x1: IntArg,
@@ -209,7 +266,6 @@ pub enum Command {
         y: IntArg,
     },
     // Compounds
-    
     Fcus,
     Frmt {
         left_margin: IntArg,
@@ -227,7 +283,10 @@ pub enum Command {
         min_y: FloatArg,
         max_y: FloatArg,
     },
-    Grpv { line_index: IntArg, value: FloatArg },
+    Grpv {
+        line_index: IntArg,
+        value: FloatArg,
+    },
     NewComp {
         family: IntArg,
         genus: IntArg,
@@ -237,8 +296,12 @@ pub enum Command {
         first_image: IntArg,
         plane: IntArg,
     },
-    Page { page: IntArg },
-    Part { part_id: IntArg },
+    Page {
+        page: IntArg,
+    },
+    Part {
+        part_id: IntArg,
+    },
     PatButt {
         part_id: IntArg,
         sprite_file: SStringArg,
@@ -289,7 +352,9 @@ pub enum Command {
         rel_plane: IntArg,
         num_values: IntArg,
     },
-    PatKill { part_id: IntArg },
+    PatKill {
+        part_id: IntArg,
+    },
     PatText {
         part_id: IntArg,
         sprite_file: SStringArg,
@@ -300,27 +365,51 @@ pub enum Command {
         message_id: IntArg,
         font_sprite: SStringArg,
     },
-    Ptxt { text: SStringArg },
+    Ptxt {
+        text: SStringArg,
+    },
     // Creates
-    
-    Ages { times: IntArg },
+    Ages {
+        times: IntArg,
+    },
     Appr,
-    Aslp { asleep: IntArg },
-    Body { set_number: IntArg, layer: IntArg },
+    Aslp {
+        asleep: IntArg,
+    },
+    Body {
+        set_number: IntArg,
+        layer: IntArg,
+    },
     Born,
     Chem {
         chemical: IntArg,
         adjustment: FloatArg,
     },
     Dead,
-    Dirn { direction: IntArg },
+    Dirn {
+        direction: IntArg,
+    },
     Done,
-    Drea { dream: IntArg },
-    Driv { drive: IntArg, adjustment: FloatArg },
-    Face { set_number: IntArg },
-    Forf { creature_to_learn_about: AgentArg },
-    Hair { stage: IntArg },
-    Injr { organ: IntArg, amount: IntArg },
+    Drea {
+        dream: IntArg,
+    },
+    Driv {
+        drive: IntArg,
+        adjustment: FloatArg,
+    },
+    Face {
+        set_number: IntArg,
+    },
+    Forf {
+        creature_to_learn_about: AgentArg,
+    },
+    Hair {
+        stage: IntArg,
+    },
+    Injr {
+        organ: IntArg,
+        amount: IntArg,
+    },
     Like {
         creature_state_opinion_about: AgentArg,
     },
@@ -337,7 +426,10 @@ pub enum Command {
         max: IntArg,
     },
     Mate,
-    Mvft { x: FloatArg, y: FloatArg },
+    Mvft {
+        x: FloatArg,
+        y: FloatArg,
+    },
     NewCrea {
         family: IntArg,
         gene_agent: AgentArg,
@@ -352,10 +444,16 @@ pub enum Command {
         sex: IntArg,
         variant: IntArg,
     },
-    Norn { creature: AgentArg },
+    Norn {
+        creature: AgentArg,
+    },
     Nude,
-    OrdrShou { speech: SStringArg },
-    OrdrSign { speech: SStringArg },
+    OrdrShou {
+        speech: SStringArg,
+    },
+    OrdrSign {
+        speech: SStringArg,
+    },
     OrdrWrit {
         creature: AgentArg,
         speech: SStringArg,
@@ -425,7 +523,9 @@ pub enum Command {
         adjust4: FloatArg,
     },
     Touc,
-    Uncs { unconscious: IntArg },
+    Uncs {
+        unconscious: IntArg,
+    },
     UrgeShou {
         noun_stim: FloatArg,
         verb_id: IntArg,
@@ -455,28 +555,44 @@ pub enum Command {
         set_number: IntArg,
         layer: IntArg,
     },
-    Zomb { zombie: IntArg },
+    Zomb {
+        zombie: IntArg,
+    },
     // Debug
-    
-    Apro { search_text: SStringArg },
-    DbgAsrt { condition: Condition },
+    Apro {
+        search_text: SStringArg,
+    },
+    DbgAsrt {
+        condition: Condition,
+    },
     DbgCpro,
     DbgFlsh,
-    DbgHtml { sort_order: IntArg },
-    DbgOuts { value: SStringArg },
-    DbgOutv { value: DecimalArg },
+    DbgHtml {
+        sort_order: IntArg,
+    },
+    DbgOuts {
+        value: SStringArg,
+    },
+    DbgOutv {
+        value: DecimalArg,
+    },
     DbgPaws,
     DbgPlay,
     DbgPoll,
     DbgProf,
-    DbgTack { follow: AgentArg },
+    DbgTack {
+        follow: AgentArg,
+    },
     DbgTock,
-    DbgWtik { new_world_tick: IntArg },
+    DbgWtik {
+        new_world_tick: IntArg,
+    },
     Help,
-    Mann { command: SStringArg },
+    Mann {
+        command: SStringArg,
+    },
     Memx,
     // Files
-    
     FileGlob {
         directory: IntArg,
         file_spec: SStringArg,
@@ -497,13 +613,22 @@ pub enum Command {
         filename: SStringArg,
         append: IntArg,
     },
-    Outs { text: SStringArg },
-    Outv { value: DecimalArg },
-    Outx { text: SStringArg },
-    Goto { destination: Label },
-    Gsub { destination: Label },
+    Outs {
+        text: SStringArg,
+    },
+    Outv {
+        value: DecimalArg,
+    },
+    Outx {
+        text: SStringArg,
+    },
+    Goto {
+        destination: Label,
+    },
+    Gsub {
+        destination: Label,
+    },
     // Genetics
-    
     GeneClon {
         dest_agent: AgentArg,
         dest_slot: IntArg,
@@ -522,7 +647,10 @@ pub enum Command {
         dad_chance_of_mutation: IntArg,
         dad_degree_of_mutation: IntArg,
     },
-    GeneKill { agent: AgentArg, slot: IntArg },
+    GeneKill {
+        agent: AgentArg,
+        slot: IntArg,
+    },
     GeneLoad {
         agent: AgentArg,
         slot: IntArg,
@@ -535,7 +663,6 @@ pub enum Command {
         source_slot: IntArg,
     },
     // History
-    
     HistEvnt {
         moniker: SStringArg,
         event_type: IntArg,
@@ -556,22 +683,31 @@ pub enum Command {
         event_no: IntArg,
         new_value: SStringArg,
     },
-    HistWipe { moniker: SStringArg },
-    Clac { message: IntArg },
+    HistWipe {
+        moniker: SStringArg,
+    },
+    Clac {
+        message: IntArg,
+    },
     Clik {
         message_1: IntArg,
         message_2: IntArg,
         message_3: IntArg,
     },
-    Imsk { mask: IntArg },
-    Mous { behaviour: IntArg },
-    Pure { value: IntArg },
+    Imsk {
+        mask: IntArg,
+    },
+    Mous {
+        behaviour: IntArg,
+    },
+    Pure {
+        value: IntArg,
+    },
     Tran {
         transparency: IntArg,
         part_no: IntArg,
     },
     // Map
-    
     Addb {
         metaroom_id: IntArg,
         background_file: SStringArg,
@@ -587,24 +723,40 @@ pub enum Command {
         species: IntArg,
         ca_index: IntArg,
     },
-    Delm { metaroom_id: IntArg },
-    Delr { room_id: IntArg },
-    Dmap { debug_map: IntArg },
-    Doca { no_of_updates: IntArg },
+    Delm {
+        metaroom_id: IntArg,
+    },
+    Delr {
+        room_id: IntArg,
+    },
+    Dmap {
+        debug_map: IntArg,
+    },
+    Doca {
+        no_of_updates: IntArg,
+    },
     Door {
         room_id1: IntArg,
         room_id2: IntArg,
         permiability: IntArg,
     },
-    Emit { ca_index: IntArg, amount: FloatArg },
+    Emit {
+        ca_index: IntArg,
+        amount: FloatArg,
+    },
     Link {
         room1: IntArg,
         room2: IntArg,
         permiability: IntArg,
     },
-    Mapd { width: IntArg, height: IntArg },
+    Mapd {
+        width: IntArg,
+        height: IntArg,
+    },
     Mapk,
-    Perm { permiability: IntArg },
+    Perm {
+        permiability: IntArg,
+    },
     Prop {
         room_id: IntArg,
         ca_index: IntArg,
@@ -617,31 +769,50 @@ pub enum Command {
         loss: FloatArg,
         diffusion: FloatArg,
     },
-    Rtyp { room_id: IntArg, room_type: IntArg },
+    Rtyp {
+        room_id: IntArg,
+        room_type: IntArg,
+    },
     // Motion
-    
-    Accg { acceleration: FloatArg },
-    Aero { aerodynamics: IntArg },
-    Elas { elasticity: IntArg },
+    Accg {
+        acceleration: FloatArg,
+    },
+    Aero {
+        aerodynamics: IntArg,
+    },
+    Elas {
+        elasticity: IntArg,
+    },
     Flto {
         screen_x: FloatArg,
         screen_y: FloatArg,
     },
-    Frel { relative: AgentArg },
-    Fric { friction: IntArg },
+    Frel {
+        relative: AgentArg,
+    },
+    Fric {
+        friction: IntArg,
+    },
     Mvby {
         delta_x: FloatArg,
         delta_y: FloatArg,
     },
-    Mvsf { x: FloatArg, y: FloatArg },
-    Mvto { x: FloatArg, y: FloatArg },
+    Mvsf {
+        x: FloatArg,
+        y: FloatArg,
+    },
+    Mvto {
+        x: FloatArg,
+        y: FloatArg,
+    },
     Velo {
         x_velocity: FloatArg,
         y_velocity: FloatArg,
     },
     // Ports
-    
-    PrtBang { bang_strength: IntArg },
+    PrtBang {
+        bang_strength: IntArg,
+    },
     PrtInew {
         id: IntArg,
         name: SStringArg,
@@ -650,7 +821,9 @@ pub enum Command {
         y: IntArg,
         message_num: IntArg,
     },
-    PrtIzap { id: IntArg },
+    PrtIzap {
+        id: IntArg,
+    },
     PrtJoin {
         source_agent: AgentArg,
         output_id: IntArg,
@@ -669,16 +842,26 @@ pub enum Command {
         x: IntArg,
         y: IntArg,
     },
-    PrtOzap { id: IntArg },
-    PrtSend { id: IntArg, data: Anything },
+    PrtOzap {
+        id: IntArg,
+    },
+    PrtSend {
+        id: IntArg,
+        data: Anything,
+    },
     // Resources
-    
-    PrayGarb { force: IntArg },
+    PrayGarb {
+        force: IntArg,
+    },
     PrayRefr,
     // Scripts
-    
-    GidsFmly { family: IntArg },
-    GidsGnus { family: IntArg, genus: IntArg },
+    GidsFmly {
+        family: IntArg,
+    },
+    GidsGnus {
+        family: IntArg,
+        genus: IntArg,
+    },
     GidsRoot,
     GidsSpcs {
         family: IntArg,
@@ -703,77 +886,147 @@ pub enum Command {
     Stop,
     Stpt,
     Unlk,
-    Wait { ticks: IntArg },
+    Wait {
+        ticks: IntArg,
+    },
     // Sounds
-    
     Fade,
-    Mclr { x: IntArg, y: IntArg },
-    Midi { midi_file: SStringArg },
+    Mclr {
+        x: IntArg,
+        y: IntArg,
+    },
+    Midi {
+        midi_file: SStringArg,
+    },
     Mmsc {
         x: IntArg,
         y: IntArg,
         track_name: SStringArg,
     },
-    Rclr { x: IntArg, y: IntArg },
+    Rclr {
+        x: IntArg,
+        y: IntArg,
+    },
     Rmsc {
         x: IntArg,
         y: IntArg,
         track_name: SStringArg,
     },
-    Sezz { text: SStringArg },
-    Sndc { sound_file: SStringArg },
-    Snde { sound_file: SStringArg },
-    Sndl { sound_file: SStringArg },
+    Sezz {
+        text: SStringArg,
+    },
+    Sndc {
+        sound_file: SStringArg,
+    },
+    Snde {
+        sound_file: SStringArg,
+    },
+    Sndl {
+        sound_file: SStringArg,
+    },
     Sndq {
         sound_file: SStringArg,
         delay: IntArg,
     },
     Stpc,
-    Strk { latency: IntArg, track: SStringArg },
+    Strk {
+        latency: IntArg,
+        track: SStringArg,
+    },
     Voic {
         genus: IntArg,
         gender: IntArg,
         age: IntArg,
     },
-    Vois { voice_name: SStringArg },
-    Volm { volume: IntArg },
+    Vois {
+        voice_name: SStringArg,
+    },
+    Volm {
+        volume: IntArg,
+    },
     // Date
-    
-    Wpau { paused: IntArg },
+    Wpau {
+        paused: IntArg,
+    },
     // Variables
-    
-    Absv { var: Variable },
-    Adds { var: Variable, append: SStringArg },
-    Addv { var: Variable, sum: DecimalArg },
-    Andv { var: Variable, value: IntArg },
+    Absv {
+        var: Variable,
+    },
+    Adds {
+        var: Variable,
+        append: SStringArg,
+    },
+    Addv {
+        var: Variable,
+        sum: DecimalArg,
+    },
+    Andv {
+        var: Variable,
+        value: IntArg,
+    },
     Char {
         string: Variable,
         index: IntArg,
         character: IntArg,
     },
-    Delg { variable_name: SStringArg },
-    Divv { var: Variable, div: DecimalArg },
-    Modv { var: Variable, r#mod: IntArg },
-    Mulv { var: Variable, mul: DecimalArg },
-    Negv { var: Variable },
-    Orrv { var: Variable, value: IntArg },
+    Delg {
+        variable_name: SStringArg,
+    },
+    Divv {
+        var: Variable,
+        div: DecimalArg,
+    },
+    Modv {
+        var: Variable,
+        r#mod: IntArg,
+    },
+    Mulv {
+        var: Variable,
+        mul: DecimalArg,
+    },
+    Negv {
+        var: Variable,
+    },
+    Orrv {
+        var: Variable,
+        value: IntArg,
+    },
     Reaf,
-    Seta { var: Variable, value: AgentArg },
-    Sets { var: Variable, value: SStringArg },
-    Setv { var: Variable, value: DecimalArg },
-    Subv { var: Variable, sub: DecimalArg },
-    Targ { agent: AgentArg },
+    Seta {
+        var: Variable,
+        value: AgentArg,
+    },
+    Sets {
+        var: Variable,
+        value: SStringArg,
+    },
+    Setv {
+        var: Variable,
+        value: DecimalArg,
+    },
+    Subv {
+        var: Variable,
+        sub: DecimalArg,
+    },
+    Targ {
+        agent: AgentArg,
+    },
     // Vehicles
-    
     Cabn {
         left: IntArg,
         top: IntArg,
         right: IntArg,
         bottom: IntArg,
     },
-    Cabp { plane: IntArg },
-    Cabv { cabin_room_id: IntArg },
-    Cabw { cabin_capacity: IntArg },
+    Cabp {
+        plane: IntArg,
+    },
+    Cabv {
+        cabin_room_id: IntArg,
+    },
+    Cabw {
+        cabin_capacity: IntArg,
+    },
     Dpas {
         family: IntArg,
         genus: IntArg,
@@ -803,15 +1056,24 @@ pub enum Command {
         new_passenger: AgentArg,
     },
     // World
-    
-    Delw { world_name: SStringArg },
-    Load { world_name: SStringArg },
-    Pswd { world_name: SStringArg },
+    Delw {
+        world_name: SStringArg,
+    },
+    Load {
+        world_name: SStringArg,
+    },
+    Pswd {
+        world_name: SStringArg,
+    },
     Quit,
     Rgam,
     Save,
-    Tntw { index: IntArg },
-    Wrld { world_name: SStringArg },
+    Tntw {
+        index: IntArg,
+    },
+    Wrld {
+        world_name: SStringArg,
+    },
     Wtnt {
         index: IntArg,
         red_tint: IntArg,

@@ -1,7 +1,7 @@
 use super::{base::parse_int_literal, parse_command};
 use crate::{
     ast::{Command, EventScriptDefinition, Script, ScriptDefinition},
-    CaosError, ErrorType, Rule,
+    CaosError, Rule,
 };
 use pest::iterators::Pair;
 
