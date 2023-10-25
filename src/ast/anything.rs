@@ -275,3 +275,74 @@ impl TryFrom<Anything> for FloatArg {
         })
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_anything_int() {
+        let a: IntArg = Anything::from(1i32).try_into().unwrap();
+        assert_eq!(a, 1.into());
+
+        let a: IntArg = Anything::from(1.1f32).try_into().unwrap();
+        assert_eq!(a, 1.1f32.into());
+
+        let a: IntArg = Anything::from(Variable::P1).try_into().unwrap();
+        assert_eq!(a, Variable::P1.into());
+
+        let a: IntArg = Anything::from(SString::Face).try_into().unwrap();
+        assert_eq!(a, Integer::Face.into());
+    }
+
+    #[test]
+    fn test_anything_float() {
+        let a: FloatArg = Anything::from(1i32).try_into().unwrap();
+        assert_eq!(a, 1.into());
+
+        let a: FloatArg = Anything::from(1.1f32).try_into().unwrap();
+        assert_eq!(a, 1.1f32.into());
+
+        let a: FloatArg = Anything::from(Variable::P1).try_into().unwrap();
+        assert_eq!(a, Variable::P1.into());
+
+        let a: FloatArg = Anything::from(SString::Face).try_into().unwrap();
+        assert_eq!(a, Integer::Face.into());
+    }
+
+    #[test]
+    fn test_anything_decimal() {
+        let a: DecimalArg = Anything::from(1i32).try_into().unwrap();
+        assert_eq!(a, 1.into());
+
+        let a: DecimalArg = Anything::from(1.1f32).try_into().unwrap();
+        assert_eq!(a, 1.1f32.into());
+
+        let a: DecimalArg = Anything::from(Variable::P1).try_into().unwrap();
+        assert_eq!(a, Variable::P1.into());
+
+        let a: DecimalArg = Anything::from(SString::Face).try_into().unwrap();
+        assert_eq!(a, Integer::Face.into());
+    }
+
+    #[test]
+    fn test_anything_string() {
+        let a: SStringArg = Anything::from(SString::Hand).try_into().unwrap();
+        assert_eq!(a, SString::Hand.into());
+
+        let a: SStringArg = Anything::from(Variable::P1).try_into().unwrap();
+        assert_eq!(a, Variable::P1.into());
+
+        let a: SStringArg = Anything::from(Integer::Face).try_into().unwrap();
+        assert_eq!(a, SString::Face.into());
+    }
+
+    #[test]
+    fn test_anything_agent() {
+        let a: AgentArg = Anything::from(Agent::From).try_into().unwrap();
+        assert_eq!(a, Agent::From.into());
+
+        let a: AgentArg = Anything::from(Variable::P1).try_into().unwrap();
+        assert_eq!(a, Variable::P1.into());
+    }
+}

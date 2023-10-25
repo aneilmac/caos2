@@ -14,7 +14,7 @@ use crate::{
 use pest::Parser;
 
 fn parse_exprs(content: &str) -> Vec<Anything> {
-    let p = CaosParser::parse(Rule::expressions, content).expect("Parsed");
+    let p = CaosParser::parse(Rule::expressions0, content).expect("Parsed");
     parse_expressions(p).expect("Parsed")
 }
 

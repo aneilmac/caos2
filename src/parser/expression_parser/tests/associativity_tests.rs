@@ -10,13 +10,13 @@ use crate::{
 
 #[test]
 fn test_partial_fail() {
-    let p = CaosParser::parse(Rule::expressions, "MUTE 1").expect("Parsed");
+    let p = CaosParser::parse(Rule::expressions0, "MUTE 1").expect("Parsed");
     parse_expressions(p).expect_err("Expected to fail with too few arguments");
 }
 
 #[test]
 fn test_good_then_partial_fail() {
-    let p = CaosParser::parse(Rule::expressions, "MTHX MUTE 1").expect("Parsed");
+    let p = CaosParser::parse(Rule::expressions0, "MTHX MUTE 1").expect("Parsed");
     parse_expressions(p).expect_err("Expected to fail with too few arguments");
 }
 

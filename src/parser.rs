@@ -7,8 +7,8 @@ mod base;
 //mod caos_program;
 //mod caos_string;
 //mod caos_variable;
-//mod condition;
 //mod script;
+mod condition_parser;
 mod expression_parser;
 
 use base::*;
