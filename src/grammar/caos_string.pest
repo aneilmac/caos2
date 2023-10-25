@@ -1,4 +1,4 @@
-string = {
+string = _{
     string_catx
   | string_hand
   | string_wild

@@ -39,6 +39,9 @@ impl Anything {
         match self {
             Anything::Variable(v) => Ok(SStringArg::Variable(v)),
             Anything::String(s) => Ok(SStringArg::String(s)),
+            Anything::Decimal(Decimal::Integer(Integer::Face)) => {
+                Ok(SStringArg::String(SString::Face))
+            }
             _ => Err(err()),
         }
     }
@@ -54,6 +57,9 @@ impl Anything {
         match self {
             Anything::Variable(v) => Ok(DecimalArg::Variable(v)),
             Anything::Decimal(d) => Ok(DecimalArg::Decimal(d)),
+            Anything::String(SString::Face) => {
+                Ok(DecimalArg::Decimal(Decimal::Integer(Integer::Face)))
+            }
             _ => Err(err()),
         }
     }
@@ -70,6 +76,7 @@ impl Anything {
             Anything::Variable(v) => Ok(IntArg::Variable(v)),
             Anything::Decimal(Decimal::Integer(i)) => Ok(IntArg::Primary(i)),
             Anything::Decimal(Decimal::Float(f)) => Ok(IntArg::Castable(f)),
+            Anything::String(SString::Face) => Ok(IntArg::Primary(Integer::Face)),
             _ => Err(err()),
         }
     }
@@ -86,6 +93,7 @@ impl Anything {
             Anything::Variable(v) => Ok(FloatArg::Variable(v)),
             Anything::Decimal(Decimal::Integer(i)) => Ok(FloatArg::Castable(i)),
             Anything::Decimal(Decimal::Float(f)) => Ok(FloatArg::Primary(f)),
+            Anything::String(SString::Face) => Ok(FloatArg::Castable(Integer::Face)),
             _ => Err(err()),
         }
     }

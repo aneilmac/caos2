@@ -192,8 +192,6 @@ pub enum Integer {
     HistGnus { moniker: Box<SStringArg> },
     #[parse(rule=Rule::int_hist_mute)]
     HistMute { moniker: Box<SStringArg> },
-    #[parse(rule=Rule::int_hist_prev)]
-    HistPrev { moniker: Box<SStringArg> },
     #[parse(rule=Rule::int_hist_rtim)]
     HistRtim {
         moniker: Box<SStringArg>,
@@ -211,11 +209,6 @@ pub enum Integer {
     },
     #[parse(rule=Rule::int_hist_vari)]
     HistVari { moniker: Box<SStringArg> },
-    #[parse(rule=Rule::int_hist_wnam)]
-    HistWnam {
-        moniker: Box<SStringArg>,
-        event_no: Box<IntArg>,
-    },
     #[parse(rule=Rule::int_hist_wtik)]
     HistWtik {
         moniker: Box<SStringArg>,

@@ -75,12 +75,10 @@ int = _{
   | int_hist_gend
   | int_hist_gnus
   | int_hist_mute
-  | int_hist_prev
   | int_hist_rtim
   | int_hist_tage
   | int_hist_type
   | int_hist_vari
-  | int_hist_wnam
   | int_hist_wtik
   | int_hist_wuid
   | int_ooww
@@ -245,12 +243,10 @@ int_hist_finr = { ^"hist" ~ ^"finr" }
 int_hist_gend = { ^"hist" ~ ^"gend" }
 int_hist_gnus = { ^"hist" ~ ^"gnus" }
 int_hist_mute = { ^"hist" ~ ^"mute" }
-int_hist_prev = { ^"hist" ~ ^"prev" }
 int_hist_rtim = { ^"hist" ~ ^"rtim" }
 int_hist_tage = { ^"hist" ~ ^"tage" }
 int_hist_type = { ^"hist" ~ ^"type" }
 int_hist_vari = { ^"hist" ~ ^"vari" }
-int_hist_wnam = { ^"hist" ~ ^"wnam" }
 int_hist_wtik = { ^"hist" ~ ^"wtik" }
 int_hist_wuid = { ^"hist" ~ ^"wuid" }
 int_ooww      = { ^"ooww" }
