@@ -135,7 +135,7 @@ impl TryFrom<Anything> for Variable {
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.variable_or_else(|| {
             CaosError::new(
-                ErrorType::CastError  { line_col: None },
+                ErrorType::CastError { line_col: None },
                 String::from("Could not cast to Variable"),
             )
         })
@@ -177,7 +177,7 @@ impl TryFrom<Anything> for DecimalArg {
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.decimal_arg_or_else(|| {
             CaosError::new(
-                ErrorType::CastError  { line_col: None },
+                ErrorType::CastError { line_col: None },
                 String::from("Could not cast to decimal"),
             )
         })
@@ -195,7 +195,7 @@ impl TryFrom<Anything> for ByteString {
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.bytestring_or_else(|| {
             CaosError::new(
-                ErrorType::CastError  { line_col: None },
+                ErrorType::CastError { line_col: None },
                 String::from("Could not cast to decimal"),
             )
         })
@@ -213,7 +213,7 @@ impl TryFrom<Anything> for AgentArg {
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.agent_arg_or_else(|| {
             CaosError::new(
-                ErrorType::CastError  { line_col: None },
+                ErrorType::CastError { line_col: None },
                 String::from("Could not cast to agent"),
             )
         })
@@ -236,7 +236,10 @@ impl TryFrom<Anything> for IntArg {
     type Error = CaosError;
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.int_arg_or_else(|| {
-            CaosError::new(ErrorType::CastError  { line_col: None }, String::from("Could not cast to int"))
+            CaosError::new(
+                ErrorType::CastError { line_col: None },
+                String::from("Could not cast to int"),
+            )
         })
     }
 }
@@ -258,7 +261,7 @@ impl TryFrom<Anything> for FloatArg {
     fn try_from(value: Anything) -> Result<Self, Self::Error> {
         value.float_arg_or_else(|| {
             CaosError::new(
-                ErrorType::CastError  { line_col: None },
+                ErrorType::CastError { line_col: None },
                 String::from("Could not cast to float"),
             )
         })

@@ -46,7 +46,7 @@ pub fn expression_parser(input: TokenStream) -> TokenStream {
                             )
                         });
                         quote_spanned!(name.span()=>
-                            #rule => Some(crate::parser::ExpressionThunk::Partial {
+                            #rule => Some(crate::parser::ExpressionThunk::Partial(crate::parser::Partial {
                                 origin: pair,
                                 arg_parts: Vec::<crate::ast::Anything>::with_capacity(#field_count),
                                 target_args: #field_count,
@@ -58,7 +58,7 @@ pub fn expression_parser(input: TokenStream) -> TokenStream {
                                         Err(crate::CaosError::new_arg_count_error(#field_count, args.len(), pair.line_col()))
                                     }
                                 })
-                        }))
+                        })))
                     }
             }),
             }

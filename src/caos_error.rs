@@ -6,14 +6,17 @@ type LineCol = (usize, usize);
 
 #[derive(Debug)]
 pub enum ErrorType {
-    BlownStack,
-    BadRegister,
-    ParseError { line_col: LineCol },
-    CastError { line_col: Option<LineCol> },
-    ArgErr {expected: usize, actual: usize, line_col: LineCol  },
-    TypeMismatch,
-    TooManyInstallScripts,
-    TooManyRemovalScripts,
+    ParseError {
+        line_col: LineCol,
+    },
+    CastError {
+        line_col: Option<LineCol>,
+    },
+    ArgErr {
+        expected: usize,
+        actual: usize,
+        line_col: LineCol,
+    },
     SubError(Box<dyn Error>),
 }
 
@@ -37,7 +40,11 @@ impl CaosError {
 
     pub fn new_arg_count_error(expected: usize, actual: usize, line_col: LineCol) -> Self {
         CaosError::new(
-            ErrorType::ArgErr { expected, actual, line_col },
+            ErrorType::ArgErr {
+                expected,
+                actual,
+                line_col,
+            },
             format!(
                 "Arg count error at line {} col: {}. Expected: {}, actual: {}.",
                 line_col.0, line_col.1, expected, actual
@@ -46,7 +53,7 @@ impl CaosError {
     }
 
     pub(crate) fn new_parse_error(p: pest::iterators::Pair<crate::Rule>) -> Self {
-        let line_col@(line, col) = p.line_col();
+        let line_col @ (line, col) = p.line_col();
         let error_type = ErrorType::ParseError { line_col };
         let message = format!(
             "Parse error at line: {} col: {}, reading {}. Got `{:?}` token.",
