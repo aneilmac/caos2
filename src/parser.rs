@@ -9,7 +9,7 @@ mod base;
 //mod caos_variable;
 //mod condition;
 //mod script;
-mod token_parser;
+mod expression_parser;
 
 use base::*;
 // use caos_agent::*;
@@ -22,7 +22,7 @@ use base::*;
 // use caos_variable::*;
 // use condition::*;
 // use script::*;
-pub(crate) use token_parser::*;
+pub(crate) use expression_parser::*;
 
 use crate::{ast::CosFile, CaosError, ErrorType};
 use pest::{pratt_parser::PrattParser, Parser};

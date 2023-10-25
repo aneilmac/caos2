@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests;
 
-mod expression_parser;
+mod expression_parser_trait;
 mod expression_stack;
 mod expression_thunk;
 
@@ -16,7 +16,7 @@ use expression_stack::ExpressionStack;
 use pest::iterators::{Pair, Pairs};
 use std::vec::Vec;
 
-pub(crate) use expression_parser::ExpressionParser;
+pub(crate) use expression_parser_trait::ExpressionParser;
 pub(crate) use expression_thunk::{ExpressionThunk, Partial};
 
 pub fn parse_expressions<'i>(mut pairs: Pairs<'i, Rule>) -> Result<Vec<Anything>, CaosError> {
