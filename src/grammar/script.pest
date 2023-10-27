@@ -1,35 +1,35 @@
-token = _{ 
-literal_byte_string 
-| literal_float
-| literal_int
-| literal_string
-| variable
-| float
-| int 
-| agent
-| string
-| command
-| overloaded
-| condition_operator
-| condition_join
-| label
+token = _{
+    literal_byte_string
+  | literal_float
+  | literal_int
+  | literal_string
+  | variable
+  | float
+  | int
+  | agent
+  | string
+  | command
+  | overloaded
+  | condition_operator
+  | condition_join
+  | label
 }
 
-tokens = _ { token* }
-script_contents = { tokens }
+tokens          = _{ token* }
+script_contents =  { tokens }
 
 install_script = { install_script_start_tag ~ script_contents ~ install_script_end_tag }
 remove_script  = { remove_script_start_tag ~ script_contents ~ remove_script_end_tag }
 event_script   = { event_script_header ~ script_contents ~ end_script_tag }
 
 install_script_start_tag = _{ ^"iscr" }
-remove_script_start_tag = _{ ^"rscr" }
+remove_script_start_tag  = _{ ^"rscr" }
 
-event_script_start_tag  = _{ ^"scrp" }
-event_script_header = {
+event_script_start_tag = _{ ^"scrp" }
+event_script_header    =  {
     event_script_start_tag ~ literal_int ~ literal_int ~ literal_int ~ literal_int
 }
 
-end_script_tag = _{ ^"endm" }
-install_script_end_tag   = _{ end_script_tag | &install_script_start_tag | &remove_script_start_tag | &event_script_start_tag | EOI }
-remove_script_end_tag   = _{ end_script_tag | &install_script_start_tag | &remove_script_start_tag | &event_script_start_tag | EOI }
+end_script_tag         = _{ ^"endm" }
+install_script_end_tag = _{ end_script_tag | &install_script_start_tag | &remove_script_start_tag | &event_script_start_tag | EOI }
+remove_script_end_tag  = _{ end_script_tag | &install_script_start_tag | &remove_script_start_tag | &event_script_start_tag | EOI }

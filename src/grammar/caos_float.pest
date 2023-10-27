@@ -12,7 +12,6 @@ float = _{
   | float_posy
   | float_dftx
   | float_dfty
-  | float_loci
   | float_orgf
   | float_uftx
   | float_ufty
@@ -49,7 +48,6 @@ float_posx = { ^"posx" }
 float_posy = { ^"posy" }
 float_dftx = { ^"dftx" }
 float_dfty = { ^"dfty" }
-float_loci = { ^"loci" }
 float_orgf = { ^"orgf" }
 float_uftx = { ^"uftx" }
 float_ufty = { ^"ufty" }

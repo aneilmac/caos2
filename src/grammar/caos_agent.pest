@@ -34,6 +34,6 @@ agent_hhld     = { ^"hhld" }
 agent_agnt     = { ^"agnt" }
 agent_tack     = { ^"tack" }
 agent_mtoa     = { ^"mtoa" }
-agent_mtoc     = { ^"mtoc"}
+agent_mtoc     = { ^"mtoc" }
 agent_hots     = { ^"hots" }
 agent_prt_frma = { ^"prt:" ~ ^"frma" }
