@@ -7,31 +7,31 @@ use pest::iterators::Pair;
 /// unwrapped into an [Anything], or the [ExpressionThunk::Partial] state, where the expression
 /// requires further arguments to complete.
 pub(crate) enum ExpressionThunk<'i> {
-    CompletedExpression(Pair<'i, Rule>, Anything),
-    PartialExpression(Partial<'i, Anything>),
+    Completed(Pair<'i, Rule>, Anything),
+    Partial(Partial<'i, Anything>),
 }
 
 impl<'i> ExpressionThunk<'i> {
     /// Returns `true` if the thunk can be completed/unwrapped.
     pub fn is_ready(&self) -> bool {
         match self {
-            Self::CompletedExpression(..) => true,
-            Self::PartialExpression(p) => p.is_ready(),
+            Self::Completed(..) => true,
+            Self::Partial(p) => p.is_ready(),
         }
     }
 
     /// Attempts to complete/unwrap the thunk, producing an [Anything].
     pub fn complete(self) -> Result<Anything, CaosError> {
         match self {
-            Self::CompletedExpression(_, a) => Ok(a),
-            Self::PartialExpression(p) => p.complete(),
+            Self::Completed(_, a) => Ok(a),
+            Self::Partial(p) => p.complete(),
         }
     }
 
     pub fn to_pair(self) -> Pair<'i, Rule> {
         match self {
-            Self::CompletedExpression(p, _) => p,
-            Self::PartialExpression(p) => p.origin,
+            Self::Completed(p, _) => p,
+            Self::Partial(p) => p.origin,
         }
     }
 }

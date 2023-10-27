@@ -1,1085 +1,1358 @@
+use caos_macros::CommandParser;
+
 use super::{
     AgentArg, Anything, ByteString, Condition, DecimalArg, FloatArg, IntArg, Label, SStringArg,
     ScriptDefinition, Variable,
 };
-#[derive(Eq, PartialEq, Clone, Debug)]
+use crate::Rule;
+
+#[derive(Eq, PartialEq, Clone, Debug, CommandParser)]
 pub enum Command {
-    // Flow -- keep this near the top to keep stack size reduced in debug builds.
+    #[parse(ignore)]
+    Gsub {
+        destination: Label,
+    },
+    #[parse(ignore)]
+    DbgAsrt {
+        condition: Condition,
+    },
+    #[parse(ignore)]
+    Goto {
+        destination: Label,
+    },
+    #[parse(ignore)]
     Doif {
         condition: Condition,
         definition: ScriptDefinition,
         elif_definitions: Vec<(Condition, ScriptDefinition)>,
         else_definition: Option<ScriptDefinition>,
     },
+    #[parse(ignore)]
     Subr {
         label: Label,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     Reps {
-        count: IntArg,
+        count: Box<IntArg>,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     LoopEver {
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     LoopUntl {
         definition: ScriptDefinition,
         condition: Condition,
     },
+    #[parse(ignore)]
     Econ {
-        agent: AgentArg,
+        agent: Box<AgentArg>,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     Enum {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     Etch {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     Esee {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
         definition: ScriptDefinition,
     },
+    #[parse(ignore)]
     Epas {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
         definition: ScriptDefinition,
     },
-    // AgentArgs
+    // Box<AgentArg>s
+    #[parse(rule=Rule::command_anim)]
     Anim {
-        pose_list: ByteString,
+        pose_list: Box<ByteString>,
     },
+    #[parse(rule=Rule::command_anms)]
     Anms {
-        anim_string: SStringArg,
+        anim_string: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_attr)]
     Attr {
-        attributes: IntArg,
+        attributes: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_base)]
     Base {
-        index: IntArg,
+        index: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_bhvr)]
     Bhvr {
-        permissions: IntArg,
+        permissions: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_frat)]
     Frat {
-        framerate: IntArg,
+        framerate: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gait)]
     Gait {
-        gait_number: IntArg,
+        gait_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gall)]
     Gall {
-        sprite_file: SStringArg,
-        first_image: IntArg,
+        sprite_file: Box<SStringArg>,
+        first_image: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_hand)]
     Hand {
-        name_for_the_hand: SStringArg,
+        name_for_the_hand: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_kill)]
     Kill {
-        agent: AgentArg,
+        agent: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_mesg_writ)]
     MesgWrit {
-        agent: AgentArg,
-        message_id: IntArg,
+        agent: Box<AgentArg>,
+        message_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mesg_wrt)]
     MesgWritPlus {
-        agent: AgentArg,
-        message_id: IntArg,
-        param_1: Anything,
-        param_2: Anything,
-        delay: IntArg,
+        agent: Box<AgentArg>,
+        message_id: Box<IntArg>,
+        param_1: Box<Anything>,
+        param_2: Box<Anything>,
+        delay: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mira)]
     Mira {
-        on_off: IntArg,
+        on_off: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_new_simp)]
     NewSimp {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        sprite_file: SStringArg,
-        image_count: IntArg,
-        first_image: IntArg,
-        plane: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        image_count: Box<IntArg>,
+        first_image: Box<IntArg>,
+        plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_nohh)]
     Nohh,
+    #[parse(rule=Rule::command_over)]
     Over,
+    #[parse(rule=Rule::command_paus)]
     Paus {
-        paused: IntArg,
+        paused: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_plne)]
     Plne {
-        plane: IntArg,
+        plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pose)]
     Pose {
-        pose: IntArg,
+        pose: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_puhl)]
     Puhl {
-        pose: IntArg,
-        x: IntArg,
-        y: IntArg,
+        pose: Box<IntArg>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pupt)]
     Pupt {
-        pose: IntArg,
-        x: IntArg,
-        y: IntArg,
+        pose: Box<IntArg>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_rnge)]
     Rnge {
-        distance: FloatArg,
+        distance: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_rtar)]
     Rtar {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_show)]
     Show {
-        visibility: IntArg,
+        visibility: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_star)]
     Star {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_tick)]
     Tick {
-        tick_rate: IntArg,
+        tick_rate: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_tint)]
     Tint {
-        red_tint: IntArg,
-        green_tint: IntArg,
-        blue_tint: IntArg,
-        rotation: IntArg,
-        swap: IntArg,
+        red_tint: Box<IntArg>,
+        green_tint: Box<IntArg>,
+        blue_tint: Box<IntArg>,
+        rotation: Box<IntArg>,
+        swap: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_ttar)]
     Ttar {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
     // Brain
+    #[parse(rule=Rule::command_brn_dmpb)]
     BrnDmpb,
+    #[parse(rule=Rule::command_brn_dmpd)]
     BrnDmpd {
-        tract_number: IntArg,
-        dendrite_number: IntArg,
+        tract_number: Box<IntArg>,
+        dendrite_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_brn_dmpl)]
     BrnDmpl {
-        lobe_number: IntArg,
+        lobe_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_brn_dmpn)]
     BrnDmpn {
-        lobe_number: IntArg,
-        neuron_number: IntArg,
+        lobe_number: Box<IntArg>,
+        neuron_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_brn_dmpt)]
     BrnDmpt {
-        tract_number: IntArg,
+        tract_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_brn_setd)]
     BrnSetd {
-        tract_number: IntArg,
-        dendrite_number: IntArg,
-        weight_number: IntArg,
-        new_value: FloatArg,
+        tract_number: Box<IntArg>,
+        dendrite_number: Box<IntArg>,
+        weight_number: Box<IntArg>,
+        new_value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_brn_setl)]
     BrnSetl {
-        lobe_number: IntArg,
-        line_number: IntArg,
-        new_value: FloatArg,
+        lobe_number: Box<IntArg>,
+        line_number: Box<IntArg>,
+        new_value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_brn_setn)]
     BrnSetn {
-        lobe_number: IntArg,
-        neuron_number: IntArg,
-        state_number: IntArg,
-        new_value: FloatArg,
+        lobe_number: Box<IntArg>,
+        neuron_number: Box<IntArg>,
+        state_number: Box<IntArg>,
+        new_value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_brn_sett)]
     BrnSett {
-        tract_number: IntArg,
-        line_number: IntArg,
-        new_value: FloatArg,
+        tract_number: Box<IntArg>,
+        line_number: Box<IntArg>,
+        new_value: Box<FloatArg>,
     },
     // Camera
+    #[parse(rule=Rule::command_bkgd)]
     Bkgd {
-        metaroom_id: IntArg,
-        background: SStringArg,
-        transition: IntArg,
+        metaroom_id: Box<IntArg>,
+        background: Box<SStringArg>,
+        transition: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_brmi)]
     Brmi {
-        mearoom_base: IntArg,
-        room_base: IntArg,
+        mearoom_base: Box<IntArg>,
+        room_base: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cmra)]
     Cmra {
-        x: IntArg,
-        y: IntArg,
-        pan: IntArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        pan: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cmrp)]
     Cmrp {
-        x: IntArg,
-        y: IntArg,
-        pan: IntArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        pan: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cmrt)]
     Cmrt {
-        pan: IntArg,
+        pan: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_frsh)]
     Frsh,
+    #[parse(rule=Rule::command_line)]
     Line {
-        x1: IntArg,
-        y1: IntArg,
-        x2: IntArg,
-        y2: IntArg,
-        r: IntArg,
-        g: IntArg,
-        b: IntArg,
-        stipple_on: IntArg,
-        stipple_off: IntArg,
+        x1: Box<IntArg>,
+        y1: Box<IntArg>,
+        x2: Box<IntArg>,
+        y2: Box<IntArg>,
+        r: Box<IntArg>,
+        g: Box<IntArg>,
+        b: Box<IntArg>,
+        stipple_on: Box<IntArg>,
+        stipple_off: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_meta)]
     Meta {
-        metaroom_id: IntArg,
-        camera_x: IntArg,
-        camera_y: IntArg,
-        transition: IntArg,
+        metaroom_id: Box<IntArg>,
+        camera_x: Box<IntArg>,
+        camera_y: Box<IntArg>,
+        transition: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_scam)]
     Scam {
-        compound_agent: AgentArg,
-        part_number: IntArg,
+        compound_agent: Box<AgentArg>,
+        part_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_snap)]
     Snap {
-        filename: SStringArg,
-        x_centre: IntArg,
-        y_centre: IntArg,
-        width: IntArg,
-        height: IntArg,
-        zoom_factor: IntArg,
+        filename: Box<SStringArg>,
+        x_centre: Box<IntArg>,
+        y_centre: Box<IntArg>,
+        width: Box<IntArg>,
+        height: Box<IntArg>,
+        zoom_factor: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_trck)]
     Trck {
-        agent: AgentArg,
-        x_percent: IntArg,
-        y_percent: IntArg,
-        style: IntArg,
-        transition: IntArg,
+        agent: Box<AgentArg>,
+        x_percent: Box<IntArg>,
+        y_percent: Box<IntArg>,
+        style: Box<IntArg>,
+        transition: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_wdow)]
     Wdow,
+    #[parse(rule=Rule::command_zoom)]
     Zoom {
-        pixels: IntArg,
-        x: IntArg,
-        y: IntArg,
+        pixels: Box<IntArg>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
     // Compounds
+    #[parse(rule=Rule::command_fcus)]
     Fcus,
+    #[parse(rule=Rule::command_frmt)]
     Frmt {
-        left_margin: IntArg,
-        top_margin: IntArg,
-        right_margin: IntArg,
-        bottom_margin: IntArg,
-        line_spacing: IntArg,
-        character_spacing: IntArg,
-        justification: IntArg,
+        left_margin: Box<IntArg>,
+        top_margin: Box<IntArg>,
+        right_margin: Box<IntArg>,
+        bottom_margin: Box<IntArg>,
+        line_spacing: Box<IntArg>,
+        character_spacing: Box<IntArg>,
+        justification: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_grpl)]
     Grpl {
-        red: IntArg,
-        green: IntArg,
-        blue: IntArg,
-        min_y: FloatArg,
-        max_y: FloatArg,
+        red: Box<IntArg>,
+        green: Box<IntArg>,
+        blue: Box<IntArg>,
+        min_y: Box<FloatArg>,
+        max_y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_grpv)]
     Grpv {
-        line_index: IntArg,
-        value: FloatArg,
+        line_index: Box<IntArg>,
+        value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_new_comp)]
     NewComp {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        sprite_file: SStringArg,
-        image_count: IntArg,
-        first_image: IntArg,
-        plane: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        image_count: Box<IntArg>,
+        first_image: Box<IntArg>,
+        plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_page)]
     Page {
-        page: IntArg,
+        page: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_part)]
     Part {
-        part_id: IntArg,
+        part_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_butt)]
     PatButt {
-        part_id: IntArg,
-        sprite_file: SStringArg,
-        first_image: IntArg,
-        image_count: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
-        anim_hover: ByteString,
-        message_id: IntArg,
-        option: IntArg,
+        part_id: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        first_image: Box<IntArg>,
+        image_count: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
+        anim_hover: Box<ByteString>,
+        message_id: Box<IntArg>,
+        option: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_cmra)]
     PatCmra {
-        part_id: IntArg,
-        overlay_sprite: SStringArg,
-        base_image: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
-        view_width: IntArg,
-        view_height: IntArg,
-        camera_width: IntArg,
-        camera_height: IntArg,
+        part_id: Box<IntArg>,
+        overlay_sprite: Box<SStringArg>,
+        base_image: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
+        view_width: Box<IntArg>,
+        view_height: Box<IntArg>,
+        camera_width: Box<IntArg>,
+        camera_height: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_dull)]
     PatDull {
-        part_id: IntArg,
-        sprite_file: SStringArg,
-        first_image: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
+        part_id: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        first_image: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_fixd)]
     PatFixd {
-        part_id: IntArg,
-        sprite_file: SStringArg,
-        first_image: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
-        font_sprite: SStringArg,
+        part_id: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        first_image: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
+        font_sprite: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_pat_grph)]
     PatGrph {
-        part_id: IntArg,
-        overlay_sprite: SStringArg,
-        base_image: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
-        num_values: IntArg,
+        part_id: Box<IntArg>,
+        overlay_sprite: Box<SStringArg>,
+        base_image: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
+        num_values: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_kill)]
     PatKill {
-        part_id: IntArg,
+        part_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pat_text)]
     PatText {
-        part_id: IntArg,
-        sprite_file: SStringArg,
-        first_image: IntArg,
-        rel_x: DecimalArg,
-        rel_y: DecimalArg,
-        rel_plane: IntArg,
-        message_id: IntArg,
-        font_sprite: SStringArg,
+        part_id: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        first_image: Box<IntArg>,
+        rel_x: Box<DecimalArg>,
+        rel_y: Box<DecimalArg>,
+        rel_plane: Box<IntArg>,
+        message_id: Box<IntArg>,
+        font_sprite: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_ptxt)]
     Ptxt {
-        text: SStringArg,
+        text: Box<SStringArg>,
     },
     // Creates
+    #[parse(rule=Rule::command_ages)]
     Ages {
-        times: IntArg,
+        times: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_appr)]
     Appr,
+    #[parse(rule=Rule::command_aslp)]
     Aslp {
-        asleep: IntArg,
+        asleep: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_body)]
     Body {
-        set_number: IntArg,
-        layer: IntArg,
+        set_number: Box<IntArg>,
+        layer: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_born)]
     Born,
+    #[parse(rule=Rule::command_chem)]
     Chem {
-        chemical: IntArg,
-        adjustment: FloatArg,
+        chemical: Box<IntArg>,
+        adjustment: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_dead)]
     Dead,
+    #[parse(rule=Rule::command_dirn)]
     Dirn {
-        direction: IntArg,
+        direction: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_done)]
     Done,
+    #[parse(rule=Rule::command_drea)]
     Drea {
-        dream: IntArg,
+        dream: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_driv)]
     Driv {
-        drive: IntArg,
-        adjustment: FloatArg,
+        drive: Box<IntArg>,
+        adjustment: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_face)]
     Face {
-        set_number: IntArg,
+        set_number: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_forf)]
     Forf {
-        creature_to_learn_about: AgentArg,
+        creature_to_learn_about: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_hair)]
     Hair {
-        stage: IntArg,
+        stage: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_injr)]
     Injr {
-        organ: IntArg,
-        amount: IntArg,
+        organ: Box<IntArg>,
+        amount: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_like)]
     Like {
-        creature_state_opinion_about: AgentArg,
+        creature_state_opinion_about: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_loci)]
     Loci {
-        r#type: IntArg,
-        organ: IntArg,
-        tissue: IntArg,
-        id: IntArg,
-        new_value: FloatArg,
+        r#type: Box<IntArg>,
+        organ: Box<IntArg>,
+        tissue: Box<IntArg>,
+        id: Box<IntArg>,
+        new_value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_ltcy)]
     Ltcy {
-        action: IntArg,
-        min: IntArg,
-        max: IntArg,
+        action: Box<IntArg>,
+        min: Box<IntArg>,
+        max: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mate)]
     Mate,
+    #[parse(rule=Rule::command_mvft)]
     Mvft {
-        x: FloatArg,
-        y: FloatArg,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_new_crea)]
     NewCrea {
-        family: IntArg,
-        gene_agent: AgentArg,
-        gene_slot: IntArg,
-        sex: IntArg,
-        variant: IntArg,
+        family: Box<IntArg>,
+        gene_agent: Box<AgentArg>,
+        gene_slot: Box<IntArg>,
+        sex: Box<IntArg>,
+        variant: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_newc)]
     Newc {
-        family: IntArg,
-        gene_agent: AgentArg,
-        gene_slot: IntArg,
-        sex: IntArg,
-        variant: IntArg,
+        family: Box<IntArg>,
+        gene_agent: Box<AgentArg>,
+        gene_slot: Box<IntArg>,
+        sex: Box<IntArg>,
+        variant: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_norn)]
     Norn {
-        creature: AgentArg,
+        creature: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_nude)]
     Nude,
+    #[parse(rule=Rule::command_ordr_shou)]
     OrdrShou {
-        speech: SStringArg,
+        speech: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_ordr_sign)]
     OrdrSign {
-        speech: SStringArg,
+        speech: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_ordr_writ)]
     OrdrWrit {
-        creature: AgentArg,
-        speech: SStringArg,
+        creature: Box<AgentArg>,
+        speech: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_sayn)]
     Sayn,
+    #[parse(rule=Rule::command_spnl)]
     Spnl {
-        lobe_monkier: SStringArg,
-        neuron_id: IntArg,
-        value: FloatArg,
+        lobe_monkier: Box<SStringArg>,
+        neuron_id: Box<IntArg>,
+        value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_stim_shou)]
     StimShou {
-        stimulus: IntArg,
-        strength: FloatArg,
+        stimulus: Box<IntArg>,
+        strength: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_stim_sign)]
     StimSign {
-        stimulus: IntArg,
-        strength: FloatArg,
+        stimulus: Box<IntArg>,
+        strength: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_stim_tact)]
     StimTact {
-        stimulus: IntArg,
-        strength: FloatArg,
+        stimulus: Box<IntArg>,
+        strength: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_stim_writ)]
     StimWrit {
-        creature: AgentArg,
-        stimulus: IntArg,
-        strength: FloatArg,
+        creature: Box<AgentArg>,
+        stimulus: Box<IntArg>,
+        strength: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_sway_shou)]
     SwayShou {
-        drive1: IntArg,
-        adjust1: FloatArg,
-        drive2: IntArg,
-        adjust2: FloatArg,
-        drive3: IntArg,
-        adjust3: FloatArg,
-        drive4: IntArg,
-        adjust4: FloatArg,
+        drive1: Box<IntArg>,
+        adjust1: Box<FloatArg>,
+        drive2: Box<IntArg>,
+        adjust2: Box<FloatArg>,
+        drive3: Box<IntArg>,
+        adjust3: Box<FloatArg>,
+        drive4: Box<IntArg>,
+        adjust4: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_sway_sign)]
     SwaySign {
-        drive1: IntArg,
-        adjust1: FloatArg,
-        drive2: IntArg,
-        adjust2: FloatArg,
-        drive3: IntArg,
-        adjust3: FloatArg,
-        drive4: IntArg,
-        adjust4: FloatArg,
+        drive1: Box<IntArg>,
+        adjust1: Box<FloatArg>,
+        drive2: Box<IntArg>,
+        adjust2: Box<FloatArg>,
+        drive3: Box<IntArg>,
+        adjust3: Box<FloatArg>,
+        drive4: Box<IntArg>,
+        adjust4: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_sway_tact)]
     SwayTact {
-        drive1: IntArg,
-        adjust1: FloatArg,
-        drive2: IntArg,
-        adjust2: FloatArg,
-        drive3: IntArg,
-        adjust3: FloatArg,
-        drive4: IntArg,
-        adjust4: FloatArg,
+        drive1: Box<IntArg>,
+        adjust1: Box<FloatArg>,
+        drive2: Box<IntArg>,
+        adjust2: Box<FloatArg>,
+        drive3: Box<IntArg>,
+        adjust3: Box<FloatArg>,
+        drive4: Box<IntArg>,
+        adjust4: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_sway_writ)]
     SwayWrit {
-        creature: AgentArg,
-        drive1: IntArg,
-        adjust1: FloatArg,
-        drive2: IntArg,
-        adjust2: FloatArg,
-        drive3: IntArg,
-        adjust3: FloatArg,
-        drive4: IntArg,
-        adjust4: FloatArg,
+        creature: Box<AgentArg>,
+        drive1: Box<IntArg>,
+        adjust1: Box<FloatArg>,
+        drive2: Box<IntArg>,
+        adjust2: Box<FloatArg>,
+        drive3: Box<IntArg>,
+        adjust3: Box<FloatArg>,
+        drive4: Box<IntArg>,
+        adjust4: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_touc)]
     Touc,
+    #[parse(rule=Rule::command_uncs)]
     Uncs {
-        unconscious: IntArg,
+        unconscious: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_urge_shou)]
     UrgeShou {
-        noun_stim: FloatArg,
-        verb_id: IntArg,
-        verb_stim: FloatArg,
+        noun_stim: Box<FloatArg>,
+        verb_id: Box<IntArg>,
+        verb_stim: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_urge_sign)]
     UrgeSign {
-        noun_stim: FloatArg,
-        verb_id: IntArg,
-        verb_stim: FloatArg,
+        noun_stim: Box<FloatArg>,
+        verb_id: Box<IntArg>,
+        verb_stim: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_urge_tact)]
     UrgeTact {
-        noun_stim: FloatArg,
-        verb_id: IntArg,
-        verb_stim: FloatArg,
+        noun_stim: Box<FloatArg>,
+        verb_id: Box<IntArg>,
+        verb_stim: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_urge_writ)]
     UrgeWrit {
-        creature: AgentArg,
-        noun_id: IntArg,
-        noun_stim: FloatArg,
-        verb_id: IntArg,
-        verb_stim: FloatArg,
+        creature: Box<AgentArg>,
+        noun_id: Box<IntArg>,
+        noun_stim: Box<FloatArg>,
+        verb_id: Box<IntArg>,
+        verb_stim: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_vocb)]
     Vocb,
+    #[parse(rule=Rule::command_walk)]
     Walk,
+    #[parse(rule=Rule::command_wear)]
     Wear {
-        body_id: IntArg,
-        set_number: IntArg,
-        layer: IntArg,
+        body_id: Box<IntArg>,
+        set_number: Box<IntArg>,
+        layer: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_zomb)]
     Zomb {
-        zombie: IntArg,
+        zombie: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_apro)]
     // Debug
     Apro {
-        search_text: SStringArg,
+        search_text: Box<SStringArg>,
     },
-    DbgAsrt {
-        condition: Condition,
-    },
+    #[parse(rule=Rule::command_dbg_cpro)]
     DbgCpro,
+    #[parse(rule=Rule::command_dbg_flsh)]
     DbgFlsh,
+    #[parse(rule=Rule::command_dbg_html)]
     DbgHtml {
-        sort_order: IntArg,
+        sort_order: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_dbg_outs)]
     DbgOuts {
-        value: SStringArg,
+        value: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_dbg_outv)]
     DbgOutv {
-        value: DecimalArg,
+        value: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_dbg_paws)]
     DbgPaws,
+    #[parse(rule=Rule::command_dbg_play)]
     DbgPlay,
+    #[parse(rule=Rule::command_dbg_poll)]
     DbgPoll,
+    #[parse(rule=Rule::command_dbg_prof)]
     DbgProf,
+    #[parse(rule=Rule::command_dbg_tack)]
     DbgTack {
-        follow: AgentArg,
+        follow: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_dbg_tock)]
     DbgTock,
+    #[parse(rule=Rule::command_dbg_wtik)]
     DbgWtik {
-        new_world_tick: IntArg,
+        new_world_tick: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_help)]
     Help,
+    #[parse(rule=Rule::command_mann)]
     Mann {
-        command: SStringArg,
+        command: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_memx)]
     Memx,
     // Files
+    #[parse(rule=Rule::command_file_glob)]
     FileGlob {
-        directory: IntArg,
-        file_spec: SStringArg,
+        directory: Box<IntArg>,
+        file_spec: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_file_iclo)]
     FileIclo,
+    #[parse(rule=Rule::command_file_iope)]
     FileIope {
-        directory: IntArg,
-        filename: SStringArg,
+        directory: Box<IntArg>,
+        filename: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_file_jdel)]
     FileJdel {
-        directory: IntArg,
-        filename: SStringArg,
+        directory: Box<IntArg>,
+        filename: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_file_oclo)]
     FileOclo,
+    #[parse(rule=Rule::command_file_oflu)]
     FileOflu,
+    #[parse(rule=Rule::command_file_oope)]
     FileOope {
-        directory: IntArg,
-        filename: SStringArg,
-        append: IntArg,
+        directory: Box<IntArg>,
+        filename: Box<SStringArg>,
+        append: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_outs)]
     Outs {
-        text: SStringArg,
+        text: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_outv)]
     Outv {
-        value: DecimalArg,
+        value: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_outx)]
     Outx {
-        text: SStringArg,
-    },
-    Goto {
-        destination: Label,
-    },
-    Gsub {
-        destination: Label,
+        text: Box<SStringArg>,
     },
     // Genetics
+    #[parse(rule=Rule::command_gene_clon)]
     GeneClon {
-        dest_agent: AgentArg,
-        dest_slot: IntArg,
-        source_agent: AgentArg,
-        source_slot: IntArg,
+        dest_agent: Box<AgentArg>,
+        dest_slot: Box<IntArg>,
+        source_agent: Box<AgentArg>,
+        source_slot: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gene_cros)]
     GeneCros {
-        child_agent: AgentArg,
-        child_slot: IntArg,
-        mum_agent: AgentArg,
-        mum_slot: IntArg,
-        dad_agent: AgentArg,
-        dad_slot: IntArg,
-        mum_chance_of_mutation: IntArg,
-        mum_degree_of_mutation: IntArg,
-        dad_chance_of_mutation: IntArg,
-        dad_degree_of_mutation: IntArg,
+        child_agent: Box<AgentArg>,
+        child_slot: Box<IntArg>,
+        mum_agent: Box<AgentArg>,
+        mum_slot: Box<IntArg>,
+        dad_agent: Box<AgentArg>,
+        dad_slot: Box<IntArg>,
+        mum_chance_of_mutation: Box<IntArg>,
+        mum_degree_of_mutation: Box<IntArg>,
+        dad_chance_of_mutation: Box<IntArg>,
+        dad_degree_of_mutation: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gene_kill)]
     GeneKill {
-        agent: AgentArg,
-        slot: IntArg,
+        agent: Box<AgentArg>,
+        slot: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gene_load)]
     GeneLoad {
-        agent: AgentArg,
-        slot: IntArg,
-        gene_file: SStringArg,
+        agent: Box<AgentArg>,
+        slot: Box<IntArg>,
+        gene_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_gene_move)]
     GeneMove {
-        dest_agent: AgentArg,
-        dest_slot: IntArg,
-        source_agent: AgentArg,
-        source_slot: IntArg,
+        dest_agent: Box<AgentArg>,
+        dest_slot: Box<IntArg>,
+        source_agent: Box<AgentArg>,
+        source_slot: Box<IntArg>,
     },
     // History
+    #[parse(rule=Rule::command_hist_evnt)]
     HistEvnt {
-        moniker: SStringArg,
-        event_type: IntArg,
-        related_moniker_1: SStringArg,
-        related_moniker_2: SStringArg,
+        moniker: Box<SStringArg>,
+        event_type: Box<IntArg>,
+        related_moniker_1: Box<SStringArg>,
+        related_moniker_2: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_hist_foto)]
     HistFoto {
-        moniker: SStringArg,
-        event_no: IntArg,
-        new_value: SStringArg,
+        moniker: Box<SStringArg>,
+        event_no: Box<IntArg>,
+        new_value: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_hist_name)]
     HistName {
-        moniker: SStringArg,
-        new_name: SStringArg,
+        moniker: Box<SStringArg>,
+        new_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_hist_utxt)]
     HistUtxt {
-        moniker: SStringArg,
-        event_no: IntArg,
-        new_value: SStringArg,
+        moniker: Box<SStringArg>,
+        event_no: Box<IntArg>,
+        new_value: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_hist_wipe)]
     HistWipe {
-        moniker: SStringArg,
+        moniker: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_clac)]
     Clac {
-        message: IntArg,
+        message: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_clik)]
     Clik {
-        message_1: IntArg,
-        message_2: IntArg,
-        message_3: IntArg,
+        message_1: Box<IntArg>,
+        message_2: Box<IntArg>,
+        message_3: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_imsk)]
     Imsk {
-        mask: IntArg,
+        mask: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mous)]
     Mous {
-        behaviour: IntArg,
+        behaviour: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pure)]
     Pure {
-        value: IntArg,
+        value: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_tran)]
     Tran {
-        transparency: IntArg,
-        part_no: IntArg,
+        transparency: Box<IntArg>,
+        part_no: Box<IntArg>,
     },
     // Map
+    #[parse(rule=Rule::command_addb)]
     Addb {
-        metaroom_id: IntArg,
-        background_file: SStringArg,
+        metaroom_id: Box<IntArg>,
+        background_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_altr)]
     Altr {
-        room_id: IntArg,
-        ca_index: IntArg,
-        ca_delta: FloatArg,
+        room_id: Box<IntArg>,
+        ca_index: Box<IntArg>,
+        ca_delta: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_cacl)]
     Cacl {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        ca_index: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        ca_index: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_calc)]
+    Calc,
+    #[parse(rule=Rule::command_delm)]
     Delm {
-        metaroom_id: IntArg,
+        metaroom_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_delr)]
     Delr {
-        room_id: IntArg,
+        room_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_dmap)]
     Dmap {
-        debug_map: IntArg,
+        debug_map: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_doca)]
     Doca {
-        no_of_updates: IntArg,
+        no_of_updates: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_door)]
     Door {
-        room_id1: IntArg,
-        room_id2: IntArg,
-        permiability: IntArg,
+        room_id1: Box<IntArg>,
+        room_id2: Box<IntArg>,
+        permiability: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_emit)]
     Emit {
-        ca_index: IntArg,
-        amount: FloatArg,
+        ca_index: Box<IntArg>,
+        amount: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_link)]
     Link {
-        room1: IntArg,
-        room2: IntArg,
-        permiability: IntArg,
+        room1: Box<IntArg>,
+        room2: Box<IntArg>,
+        permiability: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mapd)]
     Mapd {
-        width: IntArg,
-        height: IntArg,
+        width: Box<IntArg>,
+        height: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mapk)]
     Mapk,
+    #[parse(rule=Rule::command_perm)]
     Perm {
-        permiability: IntArg,
+        permiability: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prop)]
     Prop {
-        room_id: IntArg,
-        ca_index: IntArg,
-        ca_value: FloatArg,
+        room_id: Box<IntArg>,
+        ca_index: Box<IntArg>,
+        ca_value: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_rate)]
     Rate {
-        room_type: IntArg,
-        ca_index: IntArg,
-        gain: FloatArg,
-        loss: FloatArg,
-        diffusion: FloatArg,
+        room_type: Box<IntArg>,
+        ca_index: Box<IntArg>,
+        gain: Box<FloatArg>,
+        loss: Box<FloatArg>,
+        diffusion: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_rtyp)]
     Rtyp {
-        room_id: IntArg,
-        room_type: IntArg,
+        room_id: Box<IntArg>,
+        room_type: Box<IntArg>,
     },
     // Motion
+    #[parse(rule=Rule::command_accg)]
     Accg {
-        acceleration: FloatArg,
+        acceleration: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_aero)]
     Aero {
-        aerodynamics: IntArg,
+        aerodynamics: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_elas)]
     Elas {
-        elasticity: IntArg,
+        elasticity: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_flto)]
     Flto {
-        screen_x: FloatArg,
-        screen_y: FloatArg,
+        screen_x: Box<FloatArg>,
+        screen_y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_frel)]
     Frel {
-        relative: AgentArg,
+        relative: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_fric)]
     Fric {
-        friction: IntArg,
+        friction: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mvby)]
     Mvby {
-        delta_x: FloatArg,
-        delta_y: FloatArg,
+        delta_x: Box<FloatArg>,
+        delta_y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_mvsf)]
     Mvsf {
-        x: FloatArg,
-        y: FloatArg,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_mvto)]
     Mvto {
-        x: FloatArg,
-        y: FloatArg,
+        x: Box<FloatArg>,
+        y: Box<FloatArg>,
     },
+    #[parse(rule=Rule::command_velo)]
     Velo {
-        x_velocity: FloatArg,
-        y_velocity: FloatArg,
+        x_velocity: Box<FloatArg>,
+        y_velocity: Box<FloatArg>,
     },
     // Ports
+    #[parse(rule=Rule::command_prt_bang)]
     PrtBang {
-        bang_strength: IntArg,
+        bang_strength: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_inew)]
     PrtInew {
-        id: IntArg,
-        name: SStringArg,
-        description: SStringArg,
-        x: IntArg,
-        y: IntArg,
-        message_num: IntArg,
+        id: Box<IntArg>,
+        name: Box<SStringArg>,
+        description: Box<SStringArg>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        message_num: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_izap)]
     PrtIzap {
-        id: IntArg,
+        id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_join)]
     PrtJoin {
-        source_agent: AgentArg,
-        output_id: IntArg,
-        dest_agent: AgentArg,
-        input_id: IntArg,
+        source_agent: Box<AgentArg>,
+        output_id: Box<IntArg>,
+        dest_agent: Box<AgentArg>,
+        input_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_krak)]
     PrtKrak {
-        agent: AgentArg,
-        in_or_out: IntArg,
-        port_index: IntArg,
+        agent: Box<AgentArg>,
+        in_or_out: Box<IntArg>,
+        port_index: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_onew)]
     PrtOnew {
-        id: IntArg,
-        name: SStringArg,
-        description: SStringArg,
-        x: IntArg,
-        y: IntArg,
+        id: Box<IntArg>,
+        name: Box<SStringArg>,
+        description: Box<SStringArg>,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_ozap)]
     PrtOzap {
-        id: IntArg,
+        id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_prt_send)]
     PrtSend {
-        id: IntArg,
-        data: Anything,
+        id: Box<IntArg>,
+        data: Box<Anything>,
     },
     // Resources
+    #[parse(rule=Rule::command_pray_garb)]
     PrayGarb {
-        force: IntArg,
+        force: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_pray_refr)]
     PrayRefr,
     // Scripts
+    #[parse(rule=Rule::command_gids_fmly)]
     GidsFmly {
-        family: IntArg,
+        family: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gids_gnus)]
     GidsGnus {
-        family: IntArg,
-        genus: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gids_root)]
     GidsRoot,
+    #[parse(rule=Rule::command_gids_spcs)]
     GidsSpcs {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_inst)]
     Inst,
+    #[parse(rule=Rule::command_lock)]
     Lock,
+    #[parse(rule=Rule::command_scrx)]
     Scrx {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        event: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        event: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_slow)]
     Slow,
+    #[parse(rule=Rule::command_sorc)]
     Sorc {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        event: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        event: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_stop)]
     Stop,
+    #[parse(rule=Rule::command_stpt)]
     Stpt,
+    #[parse(rule=Rule::command_unlk)]
     Unlk,
+    #[parse(rule=Rule::command_wait)]
     Wait {
-        ticks: IntArg,
+        ticks: Box<IntArg>,
     },
     // Sounds
+    #[parse(rule=Rule::command_fade)]
     Fade,
+    #[parse(rule=Rule::command_mclr)]
     Mclr {
-        x: IntArg,
-        y: IntArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_midi)]
     Midi {
-        midi_file: SStringArg,
+        midi_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_mmsc)]
     Mmsc {
-        x: IntArg,
-        y: IntArg,
-        track_name: SStringArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        track_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_rclr)]
     Rclr {
-        x: IntArg,
-        y: IntArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_rmsc)]
     Rmsc {
-        x: IntArg,
-        y: IntArg,
-        track_name: SStringArg,
+        x: Box<IntArg>,
+        y: Box<IntArg>,
+        track_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_sezz)]
     Sezz {
-        text: SStringArg,
+        text: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_sndc)]
     Sndc {
-        sound_file: SStringArg,
+        sound_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_snde)]
     Snde {
-        sound_file: SStringArg,
+        sound_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_sndl)]
     Sndl {
-        sound_file: SStringArg,
+        sound_file: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_sndq)]
     Sndq {
-        sound_file: SStringArg,
-        delay: IntArg,
+        sound_file: Box<SStringArg>,
+        delay: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_stpc)]
     Stpc,
+    #[parse(rule=Rule::command_strk)]
     Strk {
-        latency: IntArg,
-        track: SStringArg,
+        latency: Box<IntArg>,
+        track: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_voic)]
     Voic {
-        genus: IntArg,
-        gender: IntArg,
-        age: IntArg,
+        genus: Box<IntArg>,
+        gender: Box<IntArg>,
+        age: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_vois)]
     Vois {
-        voice_name: SStringArg,
+        voice_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_volm)]
     Volm {
-        volume: IntArg,
+        volume: Box<IntArg>,
     },
     // Date
+    #[parse(rule=Rule::command_wpau)]
     Wpau {
-        paused: IntArg,
+        paused: Box<IntArg>,
     },
-    // Variables
+    // Box<Variable>s
+    #[parse(rule=Rule::command_absv)]
     Absv {
-        var: Variable,
+        var: Box<Variable>,
     },
+    #[parse(rule=Rule::command_adds)]
     Adds {
-        var: Variable,
-        append: SStringArg,
+        var: Box<Variable>,
+        append: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_addv)]
     Addv {
-        var: Variable,
-        sum: DecimalArg,
+        var: Box<Variable>,
+        sum: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_andv)]
     Andv {
-        var: Variable,
-        value: IntArg,
+        var: Box<Variable>,
+        value: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_char)]
     Char {
-        string: Variable,
-        index: IntArg,
-        character: IntArg,
+        string: Box<Variable>,
+        index: Box<IntArg>,
+        character: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_delg)]
     Delg {
-        variable_name: SStringArg,
+        variable_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_divv)]
     Divv {
-        var: Variable,
-        div: DecimalArg,
+        var: Box<Variable>,
+        div: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_modv)]
     Modv {
-        var: Variable,
-        r#mod: IntArg,
+        var: Box<Variable>,
+        r#mod: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_mulv)]
     Mulv {
-        var: Variable,
-        mul: DecimalArg,
+        var: Box<Variable>,
+        mul: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_negv)]
     Negv {
-        var: Variable,
+        var: Box<Variable>,
     },
+    #[parse(rule=Rule::command_orrv)]
     Orrv {
-        var: Variable,
-        value: IntArg,
+        var: Box<Variable>,
+        value: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_reaf)]
     Reaf,
+    #[parse(rule=Rule::command_seta)]
     Seta {
-        var: Variable,
-        value: AgentArg,
+        var: Box<Variable>,
+        value: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_sets)]
     Sets {
-        var: Variable,
-        value: SStringArg,
+        var: Box<Variable>,
+        value: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_setv)]
     Setv {
-        var: Variable,
-        value: DecimalArg,
+        var: Box<Variable>,
+        value: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_subv)]
     Subv {
-        var: Variable,
-        sub: DecimalArg,
+        var: Box<Variable>,
+        sub: Box<DecimalArg>,
     },
+    #[parse(rule=Rule::command_targ)]
     Targ {
-        agent: AgentArg,
+        agent: Box<AgentArg>,
     },
     // Vehicles
+    #[parse(rule=Rule::command_cabn)]
     Cabn {
-        left: IntArg,
-        top: IntArg,
-        right: IntArg,
-        bottom: IntArg,
+        left: Box<IntArg>,
+        top: Box<IntArg>,
+        right: Box<IntArg>,
+        bottom: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cabp)]
     Cabp {
-        plane: IntArg,
+        plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cabv)]
     Cabv {
-        cabin_room_id: IntArg,
+        cabin_room_id: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_cabw)]
     Cabw {
-        cabin_capacity: IntArg,
+        cabin_capacity: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_dpas)]
     Dpas {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_gpas)]
     Gpas {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        rect_to_use: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        rect_to_use: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_new_vhcl)]
     NewVhcl {
-        family: IntArg,
-        genus: IntArg,
-        species: IntArg,
-        sprite_file: SStringArg,
-        image_count: IntArg,
-        first_image: IntArg,
-        plane: IntArg,
+        family: Box<IntArg>,
+        genus: Box<IntArg>,
+        species: Box<IntArg>,
+        sprite_file: Box<SStringArg>,
+        image_count: Box<IntArg>,
+        first_image: Box<IntArg>,
+        plane: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_rpas)]
     Rpas {
-        vehicle: AgentArg,
-        passenger: AgentArg,
+        vehicle: Box<AgentArg>,
+        passenger: Box<AgentArg>,
     },
+    #[parse(rule=Rule::command_spas)]
     Spas {
-        vehicle: AgentArg,
-        new_passenger: AgentArg,
+        vehicle: Box<AgentArg>,
+        new_passenger: Box<AgentArg>,
     },
     // World
+    #[parse(rule=Rule::command_delw)]
     Delw {
-        world_name: SStringArg,
+        world_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_load)]
     Load {
-        world_name: SStringArg,
+        world_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_pswd)]
     Pswd {
-        world_name: SStringArg,
+        world_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_quit)]
     Quit,
+    #[parse(rule=Rule::command_rgam)]
     Rgam,
+    #[parse(rule=Rule::command_save)]
     Save,
+    #[parse(rule=Rule::command_tntw)]
     Tntw {
-        index: IntArg,
+        index: Box<IntArg>,
     },
+    #[parse(rule=Rule::command_wrld)]
     Wrld {
-        world_name: SStringArg,
+        world_name: Box<SStringArg>,
     },
+    #[parse(rule=Rule::command_wtnt)]
     Wtnt {
-        index: IntArg,
-        red_tint: IntArg,
-        green_tint: IntArg,
-        blue_tint: IntArg,
-        rotation: IntArg,
-        swap: IntArg,
+        index: Box<IntArg>,
+        red_tint: Box<IntArg>,
+        green_tint: Box<IntArg>,
+        blue_tint: Box<IntArg>,
+        rotation: Box<IntArg>,
+        swap: Box<IntArg>,
     },
 }

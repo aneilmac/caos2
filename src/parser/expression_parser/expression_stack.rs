@@ -44,7 +44,7 @@ impl<'i> ExpressionStack<'i> {
     pub fn push(&mut self, thunk: ExpressionThunk<'i>) -> Result<Option<Anything>, CaosError> {
         match thunk {
             // If pushed expression is ready then add to chain or immediately return it.
-            ExpressionThunk::CompletedExpression(_, a) => {
+            ExpressionThunk::Completed(_, a) => {
                 let res = self.try_push_partial(a);
                 if res.is_some() {
                     return Ok(res);
@@ -52,7 +52,7 @@ impl<'i> ExpressionStack<'i> {
             }
             // If pushed expression is partial we may complete it or push it into the chain
             // as a partial thunk.
-            ExpressionThunk::PartialExpression(p) => {
+            ExpressionThunk::Partial(p) => {
                 if p.is_ready() {
                     let a = p.complete()?;
                     let res = self.try_push_partial(a);

@@ -176,6 +176,7 @@ command = _{
   | command_addb
   | command_altr
   | command_calc
+  | command_cacl
   | command_delm
   | command_delr
   | command_dmap
@@ -212,7 +213,7 @@ command = _{
   | command_gids_fmly
   | command_gids_gnus
   | command_gids_root
-  | command_gids_spec
+  | command_gids_spcs
   | command_inst
   | command_lock
   | command_scrx
@@ -453,6 +454,7 @@ command_tran       = { ^"tran" }
 command_addb       = { ^"addb" }
 command_altr       = { ^"altr" }
 command_calc       = { ^"calc" }
+command_cacl       = { ^"cacl" }
 command_delm       = { ^"delm" }
 command_delr       = { ^"delr" }
 command_dmap       = { ^"dmap" }
@@ -489,7 +491,7 @@ command_pray_refr  = { ^"pray" ~ ^"refr" }
 command_gids_fmly  = { ^"gids" ~ ^"fmly" }
 command_gids_gnus  = { ^"gids" ~ ^"gnus" }
 command_gids_root  = { ^"gids" ~ ^"root" }
-command_gids_spec  = { ^"gids" ~ ^"spec" }
+command_gids_spcs  = { ^"gids" ~ ^"spcs" }
 command_inst       = { ^"inst" }
 command_lock       = { ^"lock" }
 command_scrx       = { ^"scrx" }

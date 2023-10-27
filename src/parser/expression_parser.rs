@@ -25,7 +25,7 @@ pub(crate) use expression_parser_trait::ExpressionParser;
 pub(crate) use expression_thunk::ExpressionThunk;
 pub(crate) use partial::Partial;
 
-pub fn parse_commands<'i>(mut pairs: Pairs<'i, Rule>) -> Result<Vec<Command>, CaosError> {
+pub fn parse_commands<'i>(pairs: &mut Pairs<'i, Rule>) -> Result<Vec<Command>, CaosError> {
     let mut commands = Vec::<Command>::new();
 
     while let Some(pair) = pairs.next() {
@@ -39,9 +39,9 @@ pub fn parse_commands<'i>(mut pairs: Pairs<'i, Rule>) -> Result<Vec<Command>, Ca
                 break;
             } else {
                 match thunk {
-                    CommandThunk::CompletedCommand(..) => unreachable!(),
-                    CommandThunk::PartialCommand(ref mut p) => {
-                        let arg = parse_expression(&mut pairs)?;
+                    CommandThunk::Completed(..) => unreachable!(),
+                    CommandThunk::Partial(ref mut p) => {
+                        let arg = parse_expression(pairs)?;
                         p.arg_parts.push(arg);
                     }
                 }
@@ -77,22 +77,22 @@ fn find_expression_match(pair: Pair<Rule>) -> Result<ExpressionThunk, CaosError>
         Rule::literal_string => Some(
             parse_string_literal(pair.clone())
                 .map(Anything::from)
-                .map(|v| ExpressionThunk::CompletedExpression(pair.clone(), v))?,
+                .map(|v| ExpressionThunk::Completed(pair.clone(), v))?,
         ),
         Rule::literal_byte_string => Some(
             parse_bytestring_literal(pair.clone())
                 .map(Anything::from)
-                .map(|v| ExpressionThunk::CompletedExpression(pair.clone(), v))?,
+                .map(|v| ExpressionThunk::Completed(pair.clone(), v))?,
         ),
         Rule::literal_int => Some(
             parse_int_literal(pair.clone())
                 .map(Anything::from)
-                .map(|v| ExpressionThunk::CompletedExpression(pair.clone(), v))?,
+                .map(|v| ExpressionThunk::Completed(pair.clone(), v))?,
         ),
         Rule::literal_float => Some(
             parse_float_literal(pair.clone())
                 .map(Anything::from)
-                .map(|v| ExpressionThunk::CompletedExpression(pair.clone(), v))?,
+                .map(|v| ExpressionThunk::Completed(pair.clone(), v))?,
         ),
         Rule::variable_mvxx => Some(parse_variable(pair.clone(), Variable::Mvxx)?),
         Rule::variable_ovxx => Some(parse_variable(pair.clone(), Variable::Ovxx)?),
@@ -119,7 +119,7 @@ where
         .and_then(parse_variable_digit)
         .map(f)
         .map(Anything::from)?;
-    Ok(ExpressionThunk::CompletedExpression(pair, v))
+    Ok(ExpressionThunk::Completed(pair, v))
 }
 
 fn parse_variable_digit(pair: Pair<Rule>) -> Result<u8, CaosError> {
