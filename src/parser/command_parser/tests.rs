@@ -1,8 +1,12 @@
+mod doif_tests;
+mod enum_tests;
+mod loop_tests;
+mod simple_command_tests;
+mod subr_tests;
+
 use pest::Parser;
 
 use crate::{ast::Command, parser::parse_commands, parser::CaosParser, Rule};
-
-mod simple_command_tests;
 
 fn parse_cmnd(content: &str) -> Command {
     let mut p = CaosParser::parse(Rule::tokens, content).expect("Successful pest parse");

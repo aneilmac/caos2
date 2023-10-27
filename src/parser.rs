@@ -1,12 +1,5 @@
 mod base;
-//mod caos_agent;
-//mod caos_command;
-//mod caos_decimal;
-//mod caos_float;
-//mod caos_int;
-//mod caos_program;
-//mod caos_string;
-//mod caos_variable;
+
 //mod script;
 mod command_parser;
 mod condition_parser;
@@ -14,7 +7,6 @@ mod expression_parser;
 mod partial;
 
 use base::*;
-// use caos_command::*;
 // use caos_program::*;
 // use script::*;
 pub(crate) use command_parser::*;
