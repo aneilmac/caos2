@@ -9,6 +9,7 @@ literal_byte_string
 | agent
 | string
 | command
+| overloaded
 | condition_operator
 | condition_join
 | label

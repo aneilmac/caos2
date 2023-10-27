@@ -1,9 +1,5 @@
-use super::Partial;
-use crate::{
-    ast::Command,
-    CaosError,
-    Rule
-};
+use crate::parser::Partial;
+use crate::{ast::Command, CaosError, Rule};
 use pest::iterators::Pair;
 
 /// A thunk for a partial-parse of some expression.

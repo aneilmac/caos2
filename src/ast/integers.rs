@@ -6,11 +6,11 @@ use caos_macros::ExpressionParser;
 pub enum Integer {
     #[parse(ignore)]
     Literal(i32),
-    #[parse(rule=Rule::int_attr)]
+    #[parse(rule=Rule::overloaded_attr)]
     Attr,
-    #[parse(rule=Rule::int_base)]
+    #[parse(rule=Rule::overloaded_base)]
     Base,
-    #[parse(rule=Rule::int_bhvr)]
+    #[parse(rule=Rule::overloaded_bhvr)]
     Bhvr,
     #[parse(rule=Rule::int_cati)]
     Cati {
@@ -18,9 +18,9 @@ pub enum Integer {
         genus: Box<IntArg>,
         species: Box<IntArg>,
     },
-    #[parse(rule=Rule::int_clac)]
+    #[parse(rule=Rule::overloaded_clac)]
     Clac,
-    #[parse(rule=Rule::int_clik)]
+    #[parse(rule=Rule::overloaded_clik)]
     Clik { which_value: Box<IntArg> },
     #[parse(rule=Rule::int_fmly)]
     Fmly,
@@ -28,24 +28,24 @@ pub enum Integer {
     Gnus,
     #[parse(rule=Rule::int_hght)]
     Hght,
-    #[parse(rule=Rule::int_imsk)]
+    #[parse(rule=Rule::overloaded_imsk)]
     Imsk,
-    #[parse(rule=Rule::int_mira)]
+    #[parse(rule=Rule::overloaded_mira)]
     Mira,
     #[parse(rule=Rule::int_mows)]
     Mows,
-    #[parse(rule=Rule::int_paus)]
+    #[parse(rule=Rule::overloaded_paus)]
     Paus,
-    #[parse(rule=Rule::int_plne)]
+    #[parse(rule=Rule::overloaded_plne)]
     Plne,
-    #[parse(rule=Rule::int_pose)]
+    #[parse(rule=Rule::overloaded_pose)]
     Pose,
-    #[parse(rule=Rule::int_puhl)]
+    #[parse(rule=Rule::overloaded_puhl)]
     Puhl {
         pose: Box<IntArg>,
         x_or_y: Box<IntArg>,
     },
-    #[parse(rule=Rule::int_pupt)]
+    #[parse(rule=Rule::overloaded_pupt)]
     Pupt {
         pose: Box<IntArg>,
         x_or_y: Box<IntArg>,
@@ -57,7 +57,7 @@ pub enum Integer {
     },
     #[parse(rule=Rule::int_spcs)]
     Spcs,
-    #[parse(rule=Rule::int_tick)]
+    #[parse(rule=Rule::overloaded_tick)]
     Tick,
     #[parse(rule=Rule::int_totl)]
     Totl {
@@ -65,7 +65,7 @@ pub enum Integer {
         genus: Box<IntArg>,
         species: Box<IntArg>,
     },
-    #[parse(rule=Rule::int_touc)]
+    #[parse(rule=Rule::overloaded_touc)]
     Touc {
         first: Box<AgentArg>,
         second: Box<AgentArg>,
@@ -80,11 +80,11 @@ pub enum Integer {
     Cmry,
     #[parse(rule=Rule::int_loft)]
     Loft { filename: Box<SStringArg> },
-    #[parse(rule=Rule::int_meta)]
+    #[parse(rule=Rule::overloaded_meta)]
     Meta,
     #[parse(rule=Rule::int_snax)]
     Snax { filename: Box<SStringArg> },
-    #[parse(rule=Rule::int_wdow)]
+    #[parse(rule=Rule::overloaded_wdow)]
     Wdow,
     #[parse(rule=Rule::int_wndb)]
     Wndb,
@@ -100,13 +100,13 @@ pub enum Integer {
     Wndw,
     #[parse(rule=Rule::int_npgs)]
     Npgs,
-    #[parse(rule=Rule::int_page)]
+    #[parse(rule=Rule::overloaded_page)]
     Page,
-    #[parse(rule=Rule::int_aslp)]
+    #[parse(rule=Rule::overloaded_aslp)]
     Aslp,
     #[parse(rule=Rule::int_attn)]
     Attn,
-    #[parse(rule=Rule::int_body)]
+    #[parse(rule=Rule::overloaded_body)]
     Body { body_part: Box<IntArg> },
     #[parse(rule=Rule::int_bvar)]
     Bvar,
@@ -116,19 +116,19 @@ pub enum Integer {
     Cage,
     #[parse(rule=Rule::int_crea)]
     Crea { agent: Box<AgentArg> },
-    #[parse(rule=Rule::int_dead)]
+    #[parse(rule=Rule::overloaded_dead)]
     Dead,
     #[parse(rule=Rule::int_decn)]
     Decn,
-    #[parse(rule=Rule::int_dirn)]
+    #[parse(rule=Rule::overloaded_dirn)]
     Dirn,
-    #[parse(rule=Rule::int_drea)]
+    #[parse(rule=Rule::overloaded_drea)]
     Drea,
     #[parse(rule=Rule::int_drv)]
     Drv,
     #[parse(rule=Rule::int_expr)]
     Expr,
-    #[parse(rule=Rule::int_face)]
+    #[parse(rule=Rule::overloaded_face)]
     Face,
     #[parse(rule=Rule::int_ins)]
     Ins,
@@ -141,9 +141,9 @@ pub enum Integer {
     Orgn,
     #[parse(rule=Rule::int_tage)]
     Tage,
-    #[parse(rule=Rule::int_uncs)]
+    #[parse(rule=Rule::overloaded_uncs)]
     Uncs,
-    #[parse(rule=Rule::int_zomb)]
+    #[parse(rule=Rule::overloaded_zomb)]
     Zomb,
     #[parse(rule=Rule::int_code)]
     Code,
@@ -227,7 +227,7 @@ pub enum Integer {
     Mopx,
     #[parse(rule=Rule::int_mopy)]
     Mopy,
-    #[parse(rule=Rule::int_pure)]
+    #[parse(rule=Rule::overloaded_pure)]
     Pure,
     #[parse(rule=Rule::int_addm)]
     Addm {
@@ -247,7 +247,7 @@ pub enum Integer {
         y_left_floor: Box<IntArg>,
         y_right_floor: Box<IntArg>,
     },
-    #[parse(rule=Rule::int_door)]
+    #[parse(rule=Rule::overloaded_door)]
     Door {
         room_id1: Box<IntArg>,
         room_id2: Box<IntArg>,
@@ -271,7 +271,7 @@ pub enum Integer {
     },
     #[parse(rule=Rule::int_left)]
     Left,
-    #[parse(rule=Rule::int_link)]
+    #[parse(rule=Rule::overloaded_link)]
     Link {
         room1: Box<IntArg>,
         room2: Box<IntArg>,
@@ -284,28 +284,28 @@ pub enum Integer {
     },
     #[parse(rule=Rule::int_maph)]
     Maph,
-    #[parse(rule=Rule::int_mapk)]
+    #[parse(rule=Rule::overloaded_mapk)]
     Mapk,
     #[parse(rule=Rule::int_mapw)]
     Mapw,
-    #[parse(rule=Rule::int_perm)]
+    #[parse(rule=Rule::overloaded_perm)]
     Perm,
     #[parse(rule=Rule::int_rght)]
     Rght,
     #[parse(rule=Rule::int_room)]
     Room { agent: Box<AgentArg> },
-    #[parse(rule=Rule::int_rtyp)]
+    #[parse(rule=Rule::overloaded_rtyp)]
     Rtyp { room_id: Box<IntArg> },
     #[parse(rule=Rule::int_up)]
     Up,
     //Motion
-    #[parse(rule=Rule::int_aero)]
+    #[parse(rule=Rule::overloaded_aero)]
     Aero,
-    #[parse(rule=Rule::int_elas)]
+    #[parse(rule=Rule::overloaded_elas)]
     Elas,
     #[parse(rule=Rule::int_fall)]
     Fall,
-    #[parse(rule=Rule::int_fric)]
+    #[parse(rule=Rule::overloaded_fric)]
     Fric,
     #[parse(rule=Rule::int_movs)]
     Movs,
@@ -419,14 +419,14 @@ pub enum Integer {
         kanga_mask: Box<IntArg>,
         eeyore_mask: Box<IntArg>,
     },
-    #[parse(rule=Rule::int_wpau)]
+    #[parse(rule=Rule::overloaded_wpau)]
     Wpau,
     #[parse(rule=Rule::int_wtik)]
     Wtik,
     #[parse(rule=Rule::int_year)]
     Year,
     // Variables
-    #[parse(rule=Rule::int_char)]
+    #[parse(rule=Rule::overloaded_char)]
     Char {
         string: Box<SStringArg>,
         index: Box<IntArg>,
@@ -457,13 +457,13 @@ pub enum Integer {
     Cabb,
     #[parse(rule=Rule::int_cabl)]
     Cabl,
-    #[parse(rule=Rule::int_cabp)]
+    #[parse(rule=Rule::overloaded_cabp)]
     Cabp,
     #[parse(rule=Rule::int_cabr)]
     Cabr,
     #[parse(rule=Rule::int_cabt)]
     Cabt,
-    #[parse(rule=Rule::int_cabv)]
+    #[parse(rule=Rule::overloaded_cabv)]
     Cabv,
     // World
     #[parse(rule=Rule::int_nwld)]

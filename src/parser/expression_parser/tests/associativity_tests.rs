@@ -2,7 +2,7 @@ use pest::Parser;
 
 use super::parse_expr;
 use crate::{
-    ast::{Integer, IntArg},
+    ast::{IntArg, Integer},
     parse_expression,
     parser::CaosParser,
     Rule,
@@ -34,7 +34,8 @@ fn test_right_assoc() {
                 }
                 .into()
             )
-        }.into()
+        }
+        .into()
     );
 }
 
@@ -58,7 +59,8 @@ fn test_right_assoc_nested() {
                 }
                 .into()
             )
-        }.into()
+        }
+        .into()
     );
 }
 
@@ -76,7 +78,8 @@ fn test_left_assoc() {
                 .into()
             ),
             eor_mask: Box::new(1.into())
-        }.into()
+        }
+        .into()
     );
 }
 
@@ -100,6 +103,7 @@ fn test_left_assoc_nested() {
                 .into()
             ),
             eor_mask: Box::new(4.into())
-        }.into()
+        }
+        .into()
     );
 }

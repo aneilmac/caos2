@@ -1,0 +1,120 @@
+// Known tokens shared across multiple expressions / commands
+overloaded = _{
+  overloaded_accg
+| overloaded_aero
+| overloaded_aslp
+| overloaded_attr
+| overloaded_base
+| overloaded_bhvr
+| overloaded_body
+| overloaded_bkgd
+| overloaded_cabp
+| overloaded_cabv
+| overloaded_char
+| overloaded_chem
+| overloaded_clac
+| overloaded_clik
+| overloaded_dead
+| overloaded_dirn
+| overloaded_door
+| overloaded_drea
+| overloaded_driv
+| overloaded_elas
+| overloaded_face
+| overloaded_hand
+| overloaded_hist_foto
+| overloaded_hist_name
+| overloaded_hist_utxt
+| overloaded_fric
+| overloaded_wrld
+| overloaded_zomb
+| overloaded_wpau
+| overloaded_wdow
+| overloaded_vois
+| overloaded_imsk
+| overloaded_link
+| overloaded_meta
+| overloaded_mira
+| overloaded_norn
+| overloaded_uncs
+| overloaded_trck
+| overloaded_touc
+| overloaded_tick
+| overloaded_targ
+| overloaded_rtyp
+| overloaded_rnge
+| overloaded_rmsc
+| overloaded_rate
+| overloaded_pure
+| overloaded_pupt
+| overloaded_puhl
+| overloaded_ptxt
+| overloaded_pswd
+| overloaded_prop
+| overloaded_pose
+| overloaded_plne
+| overloaded_perm
+| overloaded_loci
+| overloaded_mapk
+| overloaded_page
+| overloaded_paus
+}
+
+overloaded_accg       = { ^"accg" }
+overloaded_aero       = { ^"aero" }
+overloaded_aslp       = { ^"aslp" }
+overloaded_attr       = { ^"attr" }
+overloaded_base       = { ^"base" }
+overloaded_bhvr       = { ^"bhvr" }
+overloaded_body       = { ^"body" }
+overloaded_bkgd       = { ^"bkgd" }
+overloaded_cabp       = { ^"cabp" }
+overloaded_cabv       = { ^"cabv" }
+overloaded_char       = { ^"char" }
+overloaded_chem       = { ^"chem" }
+overloaded_clac       = { ^"clac" }
+overloaded_clik       = { ^"clik" }
+overloaded_dead       = { ^"dead" }
+overloaded_dirn       = { ^"dirn" }
+overloaded_door       = { ^"door" }
+overloaded_drea       = { ^"drea" }
+overloaded_driv       = { ^"driv" }
+overloaded_elas       = { ^"elas" }
+overloaded_face       = { ^"face" }
+overloaded_hand       = { ^"hand" }
+overloaded_hist_foto  = { ^"hist" ~ ^"foto" }
+overloaded_hist_name  = { ^"hist" ~ ^"name" }
+overloaded_hist_utxt  = { ^"hist" ~ ^"utxt" }
+overloaded_fric       = { ^"fric" }
+overloaded_wrld       = { ^"wrld" }
+overloaded_zomb      = { ^"zomb" }
+overloaded_wpau       = { ^"wpau" }
+overloaded_wdow       = { ^"wdow" }
+overloaded_vois       = { ^"vois" }
+overloaded_imsk       = { ^"imsk" }
+overloaded_link       = { ^"link" }
+overloaded_meta      = { ^"meta" }
+overloaded_mira       = { ^"mira" }
+overloaded_norn       = { ^"norn"}
+overloaded_uncs       = { ^"uncs" }
+overloaded_trck       = { ^"trck" }
+overloaded_touc       = { ^"touc" }
+overloaded_tick       = { ^"tick" }
+overloaded_targ       = { ^"targ" }
+overloaded_rtyp       = { ^"rtyp" }
+overloaded_rnge       = { ^"rnge" }
+overloaded_rmsc       = { ^"rmsc" }
+overloaded_rate       = { ^"rate" }
+overloaded_pure       = { ^"pure" }
+overloaded_pupt       = { ^"pupt" }
+overloaded_puhl       = { ^"puhl" }
+overloaded_ptxt       = { ^"ptxt" }
+overloaded_pswd       = { ^"pswd" }
+overloaded_prop       = { ^"prop" }
+overloaded_pose       = { ^"pose" }
+overloaded_plne       = { ^"plne" }
+overloaded_perm       = { ^"perm" }
+overloaded_loci       = { ^"loci" }
+overloaded_mapk       = { ^"mapk" }
+overloaded_page       = { ^"page" }
+overloaded_paus       = { ^"paus" }

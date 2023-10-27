@@ -11,7 +11,7 @@ use pest::Parser;
 use crate::{
     ast::Anything,
     parser::{parse_expression, CaosParser},
-    CaosError, Rule
+    CaosError, Rule,
 };
 
 fn parse_expr<T>(content: &str) -> T

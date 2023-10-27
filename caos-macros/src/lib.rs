@@ -1,6 +1,6 @@
 use darling::{ast, FromDeriveInput, FromVariant};
 use proc_macro::TokenStream;
-use quote::{quote_spanned, format_ident};
+use quote::{format_ident, quote_spanned};
 use syn::parse_macro_input;
 
 #[derive(Debug, FromDeriveInput)]
@@ -21,14 +21,21 @@ struct ExpressionVariant {
 
 #[proc_macro_derive(CommandParser, attributes(parse))]
 pub fn command_parser(input: TokenStream) -> TokenStream {
-    trait_parser(input, format_ident!("CommandParser"), format_ident!( "CommandThunk"))
+    trait_parser(
+        input,
+        format_ident!("CommandParser"),
+        format_ident!("CommandThunk"),
+    )
 }
 
 #[proc_macro_derive(ExpressionParser, attributes(parse))]
 pub fn expression_parser(input: TokenStream) -> TokenStream {
-    trait_parser(input, format_ident!("ExpressionParser"), format_ident!("ExpressionThunk"))
+    trait_parser(
+        input,
+        format_ident!("ExpressionParser"),
+        format_ident!("ExpressionThunk"),
+    )
 }
-
 
 fn trait_parser(input: TokenStream, trait_name: syn::Ident, thunk_name: syn::Ident) -> TokenStream {
     let derive_input = parse_macro_input!(input as syn::DeriveInput);

@@ -1,34 +1,18 @@
 int = _{
-    int_attr
-  | int_base
-  | int_bhvr
-  | int_cati
-  | int_clac
-  | int_clik
+    int_cati
   | int_fmly
   | int_gnus
   | int_hght
-  | int_imsk
-  | int_mira
   | int_mows
-  | int_paus
-  | int_plne
-  | int_pose
-  | int_puhl
-  | int_pupt
   | int_seee
   | int_spcs
-  | int_tick
   | int_totl
-  | int_touc
   | int_visi
   | int_wdth
   | int_cmrx
   | int_cmry
   | int_loft
-  | int_meta
   | int_snax
-  | int_wdow
   | int_wndb
   | int_wndh
   | int_wndl
@@ -36,27 +20,18 @@ int = _{
   | int_wndt
   | int_wndw
   | int_npgs
-  | int_page
-  | int_aslp
   | int_attn
-  | int_body
   | int_bvar
   | int_byit
   | int_cage
   | int_crea
-  | int_dead
   | int_decn
-  | int_dirn
-  | int_drea
   | int_drv
   | int_expr
-  | int_face
   | int_ins
   | int_orgi
   | int_orgn
   | int_tage
-  | int_uncs
-  | int_zomb
   | int_code
   | int_codf
   | int_codg
@@ -85,30 +60,21 @@ int = _{
   | int_keyd
   | int_mopx
   | int_mopy
-  | int_pure
   | int_addm
   | int_addr
-  | int_door
   | int_down
   | int_gmap
   | int_grap
   | int_grid
   | int_hirp
   | int_left
-  | int_link
   | int_lorp
   | int_maph
-  | int_mapk
   | int_mapw
-  | int_perm
   | int_rght
   | int_room
-  | int_rtyp
   | int_up
-  | int_aero
-  | int_elas
   | int_fall
-  | int_fric
   | int_movs
   | int_tmvb
   | int_tmvf
@@ -141,10 +107,8 @@ int = _{
   | int_sean
   | int_time
   | int_wolf
-  | int_wpau
   | int_wtik
   | int_year
-  | int_char
   | int_ftoi
   | int_rand
   | int_rean
@@ -156,10 +120,8 @@ int = _{
   | int_vmnr
   | int_cabb
   | int_cabl
-  | int_cabp
   | int_cabr
   | int_cabt
-  | int_cabv
   | int_nwld
   | int_wnti
   | int_prt_itot
@@ -167,36 +129,20 @@ int = _{
   | int_prt_otot
 }
 
-int_attr      = { ^"attr" }
-int_base      = { ^"base" }
-int_bhvr      = { ^"bhvr" }
 int_cati      = { ^"cati" }
-int_clac      = { ^"clac" }
-int_clik      = { ^"clik" }
 int_fmly      = { ^"fmly" }
 int_gnus      = { ^"gnus" }
 int_hght      = { ^"hght" }
-int_imsk      = { ^"imsk" }
-int_mira      = { ^"mira" }
 int_mows      = { ^"mows" }
-int_paus      = { ^"paus" }
-int_plne      = { ^"plne" }
-int_pose      = { ^"pose" }
-int_puhl      = { ^"puhl" }
-int_pupt      = { ^"pupt" }
 int_seee      = { ^"seee" }
 int_spcs      = { ^"spcs" }
-int_tick      = { ^"tick" }
 int_totl      = { ^"totl" }
-int_touc      = { ^"touc" }
 int_visi      = { ^"visi" }
 int_wdth      = { ^"wdth" }
 int_cmrx      = { ^"cmrx" }
 int_cmry      = { ^"cmry" }
 int_loft      = { ^"loft" }
-int_meta      = { ^"meta" }
 int_snax      = { ^"snax" }
-int_wdow      = { ^"wdow" }
 int_wndb      = { ^"wndb" }
 int_wndh      = { ^"wndh" }
 int_wndl      = { ^"wndl" }
@@ -204,27 +150,18 @@ int_wndr      = { ^"wndr" }
 int_wndt      = { ^"wndt" }
 int_wndw      = { ^"wndw" }
 int_npgs      = { ^"npgs" }
-int_page      = { ^"page" }
-int_aslp      = { ^"aslp" }
 int_attn      = { ^"attn" }
-int_body      = { ^"body" }
 int_bvar      = { ^"bvar" }
 int_byit      = { ^"byit" }
 int_cage      = { ^"cage" }
 int_crea      = { ^"crea" }
-int_dead      = { ^"dead" }
 int_decn      = { ^"decn" }
-int_dirn      = { ^"dirn" }
-int_drea      = { ^"drea" }
 int_drv       = { ^"drv!" }
 int_expr      = { ^"expr" }
-int_face      = { ^"face" }
 int_ins       = { ^"ins#" }
 int_orgi      = { ^"orgi" }
 int_orgn      = { ^"orgn" }
 int_tage      = { ^"tage" }
-int_uncs      = { ^"uncs" }
-int_zomb      = { ^"zomb" }
 int_code      = { ^"code" }
 int_codf      = { ^"codf" }
 int_codg      = { ^"codg" }
@@ -253,30 +190,21 @@ int_ooww      = { ^"ooww" }
 int_keyd      = { ^"keyd" }
 int_mopx      = { ^"mopx" }
 int_mopy      = { ^"mopy" }
-int_pure      = { ^"pure" }
 int_addm      = { ^"addm" }
 int_addr      = { ^"addr" }
-int_door      = { ^"door" }
 int_down      = { ^"down" }
 int_gmap      = { ^"gmap" }
 int_grap      = { ^"grap" }
 int_grid      = { ^"grid" }
 int_hirp      = { ^"hirp" }
 int_left      = { ^"left" }
-int_link      = { ^"link" }
 int_lorp      = { ^"lorp" }
 int_maph      = { ^"maph" }
-int_mapk      = { ^"mapk" }
 int_mapw      = { ^"mapw" }
-int_perm      = { ^"perm" }
 int_rght      = { ^"rght" }
 int_room      = { ^"room" }
-int_rtyp      = { ^"rtyp" }
 int_up        = { ^"_up_" }
-int_aero      = { ^"aero" }
-int_elas      = { ^"elas" }
 int_fall      = { ^"fall" }
-int_fric      = { ^"fric" }
 int_movs      = { ^"movs" }
 int_tmvb      = { ^"tmvb" }
 int_tmvf      = { ^"tmvf" }
@@ -309,10 +237,8 @@ int_scol      = { ^"scol" }
 int_sean      = { ^"sean" }
 int_time      = { ^"time" }
 int_wolf      = { ^"wolf" }
-int_wpau      = { ^"wpau" }
 int_wtik      = { ^"wtik" }
 int_year      = { ^"year" }
-int_char      = { ^"char" }
 int_ftoi      = { ^"ftoi" }
 int_rand      = { ^"rand" }
 int_rean      = { ^"rean" }
@@ -324,10 +250,8 @@ int_vmjr      = { ^"vmjr" }
 int_vmnr      = { ^"vmnr" }
 int_cabb      = { ^"cabb" }
 int_cabl      = { ^"cabl" }
-int_cabp      = { ^"cabp" }
 int_cabr      = { ^"cabr" }
 int_cabt      = { ^"cabt" }
-int_cabv      = { ^"cabv" }
 int_nwld      = { ^"nwld" }
 int_wnti      = { ^"wnti" }
 int_prt_itot  = { ^"prt:" ~ ^"itot" }

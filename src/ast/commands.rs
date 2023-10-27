@@ -9,17 +9,11 @@ use crate::Rule;
 #[derive(Eq, PartialEq, Clone, Debug, CommandParser)]
 pub enum Command {
     #[parse(ignore)]
-    Gsub {
-        destination: Label,
-    },
+    Gsub { destination: Label },
     #[parse(ignore)]
-    DbgAsrt {
-        condition: Condition,
-    },
+    DbgAsrt { condition: Condition },
     #[parse(ignore)]
-    Goto {
-        destination: Label,
-    },
+    Goto { destination: Label },
     #[parse(ignore)]
     Doif {
         condition: Condition,
@@ -38,9 +32,7 @@ pub enum Command {
         definition: ScriptDefinition,
     },
     #[parse(ignore)]
-    LoopEver {
-        definition: ScriptDefinition,
-    },
+    LoopEver { definition: ScriptDefinition },
     #[parse(ignore)]
     LoopUntl {
         definition: ScriptDefinition,
@@ -81,46 +73,28 @@ pub enum Command {
     },
     // Box<AgentArg>s
     #[parse(rule=Rule::command_anim)]
-    Anim {
-        pose_list: Box<ByteString>,
-    },
+    Anim { pose_list: Box<ByteString> },
     #[parse(rule=Rule::command_anms)]
-    Anms {
-        anim_string: Box<SStringArg>,
-    },
-    #[parse(rule=Rule::command_attr)]
-    Attr {
-        attributes: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_base)]
-    Base {
-        index: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_bhvr)]
-    Bhvr {
-        permissions: Box<IntArg>,
-    },
+    Anms { anim_string: Box<SStringArg> },
+    #[parse(rule=Rule::overloaded_attr)]
+    Attr { attributes: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_base)]
+    Base { index: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_bhvr)]
+    Bhvr { permissions: Box<IntArg> },
     #[parse(rule=Rule::command_frat)]
-    Frat {
-        framerate: Box<IntArg>,
-    },
+    Frat { framerate: Box<IntArg> },
     #[parse(rule=Rule::command_gait)]
-    Gait {
-        gait_number: Box<IntArg>,
-    },
+    Gait { gait_number: Box<IntArg> },
     #[parse(rule=Rule::command_gall)]
     Gall {
         sprite_file: Box<SStringArg>,
         first_image: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_hand)]
-    Hand {
-        name_for_the_hand: Box<SStringArg>,
-    },
+    #[parse(rule=Rule::overloaded_hand)]
+    Hand { name_for_the_hand: Box<SStringArg> },
     #[parse(rule=Rule::command_kill)]
-    Kill {
-        agent: Box<AgentArg>,
-    },
+    Kill { agent: Box<AgentArg> },
     #[parse(rule=Rule::command_mesg_writ)]
     MesgWrit {
         agent: Box<AgentArg>,
@@ -134,10 +108,8 @@ pub enum Command {
         param_2: Box<Anything>,
         delay: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_mira)]
-    Mira {
-        on_off: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_mira)]
+    Mira { on_off: Box<IntArg> },
     #[parse(rule=Rule::command_new_simp)]
     NewSimp {
         family: Box<IntArg>,
@@ -152,34 +124,26 @@ pub enum Command {
     Nohh,
     #[parse(rule=Rule::command_over)]
     Over,
-    #[parse(rule=Rule::command_paus)]
-    Paus {
-        paused: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_plne)]
-    Plne {
-        plane: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_pose)]
-    Pose {
-        pose: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_puhl)]
+    #[parse(rule=Rule::overloaded_paus)]
+    Paus { paused: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_plne)]
+    Plne { plane: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_pose)]
+    Pose { pose: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_puhl)]
     Puhl {
         pose: Box<IntArg>,
         x: Box<IntArg>,
         y: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_pupt)]
+    #[parse(rule=Rule::overloaded_pupt)]
     Pupt {
         pose: Box<IntArg>,
         x: Box<IntArg>,
         y: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_rnge)]
-    Rnge {
-        distance: Box<FloatArg>,
-    },
+    #[parse(rule=Rule::overloaded_rnge)]
+    Rnge { distance: Box<FloatArg> },
     #[parse(rule=Rule::command_rtar)]
     Rtar {
         family: Box<IntArg>,
@@ -187,19 +151,15 @@ pub enum Command {
         species: Box<IntArg>,
     },
     #[parse(rule=Rule::command_show)]
-    Show {
-        visibility: Box<IntArg>,
-    },
+    Show { visibility: Box<IntArg> },
     #[parse(rule=Rule::command_star)]
     Star {
         family: Box<IntArg>,
         genus: Box<IntArg>,
         species: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_tick)]
-    Tick {
-        tick_rate: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_tick)]
+    Tick { tick_rate: Box<IntArg> },
     #[parse(rule=Rule::command_tint)]
     Tint {
         red_tint: Box<IntArg>,
@@ -223,18 +183,14 @@ pub enum Command {
         dendrite_number: Box<IntArg>,
     },
     #[parse(rule=Rule::command_brn_dmpl)]
-    BrnDmpl {
-        lobe_number: Box<IntArg>,
-    },
+    BrnDmpl { lobe_number: Box<IntArg> },
     #[parse(rule=Rule::command_brn_dmpn)]
     BrnDmpn {
         lobe_number: Box<IntArg>,
         neuron_number: Box<IntArg>,
     },
     #[parse(rule=Rule::command_brn_dmpt)]
-    BrnDmpt {
-        tract_number: Box<IntArg>,
-    },
+    BrnDmpt { tract_number: Box<IntArg> },
     #[parse(rule=Rule::command_brn_setd)]
     BrnSetd {
         tract_number: Box<IntArg>,
@@ -262,7 +218,7 @@ pub enum Command {
         new_value: Box<FloatArg>,
     },
     // Camera
-    #[parse(rule=Rule::command_bkgd)]
+    #[parse(rule=Rule::overloaded_bkgd)]
     Bkgd {
         metaroom_id: Box<IntArg>,
         background: Box<SStringArg>,
@@ -286,9 +242,7 @@ pub enum Command {
         pan: Box<IntArg>,
     },
     #[parse(rule=Rule::command_cmrt)]
-    Cmrt {
-        pan: Box<IntArg>,
-    },
+    Cmrt { pan: Box<IntArg> },
     #[parse(rule=Rule::command_frsh)]
     Frsh,
     #[parse(rule=Rule::command_line)]
@@ -303,7 +257,7 @@ pub enum Command {
         stipple_on: Box<IntArg>,
         stipple_off: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_meta)]
+    #[parse(rule=Rule::overloaded_meta)]
     Meta {
         metaroom_id: Box<IntArg>,
         camera_x: Box<IntArg>,
@@ -324,7 +278,7 @@ pub enum Command {
         height: Box<IntArg>,
         zoom_factor: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_trck)]
+    #[parse(rule=Rule::overloaded_trck)]
     Trck {
         agent: Box<AgentArg>,
         x_percent: Box<IntArg>,
@@ -332,7 +286,7 @@ pub enum Command {
         style: Box<IntArg>,
         transition: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_wdow)]
+    #[parse(rule=Rule::overloaded_wdow)]
     Wdow,
     #[parse(rule=Rule::command_zoom)]
     Zoom {
@@ -376,14 +330,10 @@ pub enum Command {
         first_image: Box<IntArg>,
         plane: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_page)]
-    Page {
-        page: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_page)]
+    Page { page: Box<IntArg> },
     #[parse(rule=Rule::command_part)]
-    Part {
-        part_id: Box<IntArg>,
-    },
+    Part { part_id: Box<IntArg> },
     #[parse(rule=Rule::command_pat_butt)]
     PatButt {
         part_id: Box<IntArg>,
@@ -440,9 +390,7 @@ pub enum Command {
         num_values: Box<IntArg>,
     },
     #[parse(rule=Rule::command_pat_kill)]
-    PatKill {
-        part_id: Box<IntArg>,
-    },
+    PatKill { part_id: Box<IntArg> },
     #[parse(rule=Rule::command_pat_text)]
     PatText {
         part_id: Box<IntArg>,
@@ -454,62 +402,48 @@ pub enum Command {
         message_id: Box<IntArg>,
         font_sprite: Box<SStringArg>,
     },
-    #[parse(rule=Rule::command_ptxt)]
-    Ptxt {
-        text: Box<SStringArg>,
-    },
+    #[parse(rule=Rule::overloaded_ptxt)]
+    Ptxt { text: Box<SStringArg> },
     // Creates
     #[parse(rule=Rule::command_ages)]
-    Ages {
-        times: Box<IntArg>,
-    },
+    Ages { times: Box<IntArg> },
     #[parse(rule=Rule::command_appr)]
     Appr,
-    #[parse(rule=Rule::command_aslp)]
-    Aslp {
-        asleep: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_body)]
+    #[parse(rule=Rule::overloaded_aslp)]
+    Aslp { asleep: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_body)]
     Body {
         set_number: Box<IntArg>,
         layer: Box<IntArg>,
     },
     #[parse(rule=Rule::command_born)]
     Born,
-    #[parse(rule=Rule::command_chem)]
+    #[parse(rule=Rule::overloaded_chem)]
     Chem {
         chemical: Box<IntArg>,
         adjustment: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_dead)]
+    #[parse(rule=Rule::overloaded_dead)]
     Dead,
-    #[parse(rule=Rule::command_dirn)]
-    Dirn {
-        direction: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_dirn)]
+    Dirn { direction: Box<IntArg> },
     #[parse(rule=Rule::command_done)]
     Done,
-    #[parse(rule=Rule::command_drea)]
-    Drea {
-        dream: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_driv)]
+    #[parse(rule=Rule::overloaded_drea)]
+    Drea { dream: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_driv)]
     Driv {
         drive: Box<IntArg>,
         adjustment: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_face)]
-    Face {
-        set_number: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_face)]
+    Face { set_number: Box<IntArg> },
     #[parse(rule=Rule::command_forf)]
     Forf {
         creature_to_learn_about: Box<AgentArg>,
     },
     #[parse(rule=Rule::command_hair)]
-    Hair {
-        stage: Box<IntArg>,
-    },
+    Hair { stage: Box<IntArg> },
     #[parse(rule=Rule::command_injr)]
     Injr {
         organ: Box<IntArg>,
@@ -519,7 +453,7 @@ pub enum Command {
     Like {
         creature_state_opinion_about: Box<AgentArg>,
     },
-    #[parse(rule=Rule::command_loci)]
+    #[parse(rule=Rule::overloaded_loci)]
     Loci {
         r#type: Box<IntArg>,
         organ: Box<IntArg>,
@@ -536,10 +470,7 @@ pub enum Command {
     #[parse(rule=Rule::command_mate)]
     Mate,
     #[parse(rule=Rule::command_mvft)]
-    Mvft {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Mvft { x: Box<FloatArg>, y: Box<FloatArg> },
     #[parse(rule=Rule::command_new_crea)]
     NewCrea {
         family: Box<IntArg>,
@@ -556,20 +487,14 @@ pub enum Command {
         sex: Box<IntArg>,
         variant: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_norn)]
-    Norn {
-        creature: Box<AgentArg>,
-    },
+    #[parse(rule=Rule::overloaded_norn)]
+    Norn { creature: Box<AgentArg> },
     #[parse(rule=Rule::command_nude)]
     Nude,
     #[parse(rule=Rule::command_ordr_shou)]
-    OrdrShou {
-        speech: Box<SStringArg>,
-    },
+    OrdrShou { speech: Box<SStringArg> },
     #[parse(rule=Rule::command_ordr_sign)]
-    OrdrSign {
-        speech: Box<SStringArg>,
-    },
+    OrdrSign { speech: Box<SStringArg> },
     #[parse(rule=Rule::command_ordr_writ)]
     OrdrWrit {
         creature: Box<AgentArg>,
@@ -649,12 +574,10 @@ pub enum Command {
         drive4: Box<IntArg>,
         adjust4: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_touc)]
+    #[parse(rule=Rule::overloaded_touc)]
     Touc,
-    #[parse(rule=Rule::command_uncs)]
-    Uncs {
-        unconscious: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_uncs)]
+    Uncs { unconscious: Box<IntArg> },
     #[parse(rule=Rule::command_urge_shou)]
     UrgeShou {
         noun_stim: Box<FloatArg>,
@@ -691,31 +614,21 @@ pub enum Command {
         set_number: Box<IntArg>,
         layer: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_zomb)]
-    Zomb {
-        zombie: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_zomb)]
+    Zomb { zombie: Box<IntArg> },
     #[parse(rule=Rule::command_apro)]
     // Debug
-    Apro {
-        search_text: Box<SStringArg>,
-    },
+    Apro { search_text: Box<SStringArg> },
     #[parse(rule=Rule::command_dbg_cpro)]
     DbgCpro,
     #[parse(rule=Rule::command_dbg_flsh)]
     DbgFlsh,
     #[parse(rule=Rule::command_dbg_html)]
-    DbgHtml {
-        sort_order: Box<IntArg>,
-    },
+    DbgHtml { sort_order: Box<IntArg> },
     #[parse(rule=Rule::command_dbg_outs)]
-    DbgOuts {
-        value: Box<SStringArg>,
-    },
+    DbgOuts { value: Box<SStringArg> },
     #[parse(rule=Rule::command_dbg_outv)]
-    DbgOutv {
-        value: Box<DecimalArg>,
-    },
+    DbgOutv { value: Box<DecimalArg> },
     #[parse(rule=Rule::command_dbg_paws)]
     DbgPaws,
     #[parse(rule=Rule::command_dbg_play)]
@@ -725,21 +638,15 @@ pub enum Command {
     #[parse(rule=Rule::command_dbg_prof)]
     DbgProf,
     #[parse(rule=Rule::command_dbg_tack)]
-    DbgTack {
-        follow: Box<AgentArg>,
-    },
+    DbgTack { follow: Box<AgentArg> },
     #[parse(rule=Rule::command_dbg_tock)]
     DbgTock,
     #[parse(rule=Rule::command_dbg_wtik)]
-    DbgWtik {
-        new_world_tick: Box<IntArg>,
-    },
+    DbgWtik { new_world_tick: Box<IntArg> },
     #[parse(rule=Rule::command_help)]
     Help,
     #[parse(rule=Rule::command_mann)]
-    Mann {
-        command: Box<SStringArg>,
-    },
+    Mann { command: Box<SStringArg> },
     #[parse(rule=Rule::command_memx)]
     Memx,
     // Files
@@ -771,17 +678,11 @@ pub enum Command {
         append: Box<IntArg>,
     },
     #[parse(rule=Rule::command_outs)]
-    Outs {
-        text: Box<SStringArg>,
-    },
+    Outs { text: Box<SStringArg> },
     #[parse(rule=Rule::command_outv)]
-    Outv {
-        value: Box<DecimalArg>,
-    },
+    Outv { value: Box<DecimalArg> },
     #[parse(rule=Rule::command_outx)]
-    Outx {
-        text: Box<SStringArg>,
-    },
+    Outx { text: Box<SStringArg> },
     // Genetics
     #[parse(rule=Rule::command_gene_clon)]
     GeneClon {
@@ -829,49 +730,39 @@ pub enum Command {
         related_moniker_1: Box<SStringArg>,
         related_moniker_2: Box<SStringArg>,
     },
-    #[parse(rule=Rule::command_hist_foto)]
+    #[parse(rule=Rule::overloaded_hist_foto)]
     HistFoto {
         moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
         new_value: Box<SStringArg>,
     },
-    #[parse(rule=Rule::command_hist_name)]
+    #[parse(rule=Rule::overloaded_hist_name)]
     HistName {
         moniker: Box<SStringArg>,
         new_name: Box<SStringArg>,
     },
-    #[parse(rule=Rule::command_hist_utxt)]
+    #[parse(rule=Rule::overloaded_hist_utxt)]
     HistUtxt {
         moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
         new_value: Box<SStringArg>,
     },
     #[parse(rule=Rule::command_hist_wipe)]
-    HistWipe {
-        moniker: Box<SStringArg>,
-    },
-    #[parse(rule=Rule::command_clac)]
-    Clac {
-        message: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_clik)]
+    HistWipe { moniker: Box<SStringArg> },
+    #[parse(rule=Rule::overloaded_clac)]
+    Clac { message: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_clik)]
     Clik {
         message_1: Box<IntArg>,
         message_2: Box<IntArg>,
         message_3: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_imsk)]
-    Imsk {
-        mask: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_imsk)]
+    Imsk { mask: Box<IntArg> },
     #[parse(rule=Rule::command_mous)]
-    Mous {
-        behaviour: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_pure)]
-    Pure {
-        value: Box<IntArg>,
-    },
+    Mous { behaviour: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_pure)]
+    Pure { value: Box<IntArg> },
     #[parse(rule=Rule::command_tran)]
     Tran {
         transparency: Box<IntArg>,
@@ -899,22 +790,14 @@ pub enum Command {
     #[parse(rule=Rule::command_calc)]
     Calc,
     #[parse(rule=Rule::command_delm)]
-    Delm {
-        metaroom_id: Box<IntArg>,
-    },
+    Delm { metaroom_id: Box<IntArg> },
     #[parse(rule=Rule::command_delr)]
-    Delr {
-        room_id: Box<IntArg>,
-    },
+    Delr { room_id: Box<IntArg> },
     #[parse(rule=Rule::command_dmap)]
-    Dmap {
-        debug_map: Box<IntArg>,
-    },
+    Dmap { debug_map: Box<IntArg> },
     #[parse(rule=Rule::command_doca)]
-    Doca {
-        no_of_updates: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_door)]
+    Doca { no_of_updates: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_door)]
     Door {
         room_id1: Box<IntArg>,
         room_id2: Box<IntArg>,
@@ -925,7 +808,7 @@ pub enum Command {
         ca_index: Box<IntArg>,
         amount: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_link)]
+    #[parse(rule=Rule::overloaded_link)]
     Link {
         room1: Box<IntArg>,
         room2: Box<IntArg>,
@@ -936,19 +819,17 @@ pub enum Command {
         width: Box<IntArg>,
         height: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_mapk)]
+    #[parse(rule=Rule::overloaded_mapk)]
     Mapk,
-    #[parse(rule=Rule::command_perm)]
-    Perm {
-        permiability: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_prop)]
+    #[parse(rule=Rule::overloaded_perm)]
+    Perm { permiability: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_prop)]
     Prop {
         room_id: Box<IntArg>,
         ca_index: Box<IntArg>,
         ca_value: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_rate)]
+    #[parse(rule=Rule::overloaded_rate)]
     Rate {
         room_type: Box<IntArg>,
         ca_index: Box<IntArg>,
@@ -956,52 +837,36 @@ pub enum Command {
         loss: Box<FloatArg>,
         diffusion: Box<FloatArg>,
     },
-    #[parse(rule=Rule::command_rtyp)]
+    #[parse(rule=Rule::overloaded_rtyp)]
     Rtyp {
         room_id: Box<IntArg>,
         room_type: Box<IntArg>,
     },
     // Motion
-    #[parse(rule=Rule::command_accg)]
-    Accg {
-        acceleration: Box<FloatArg>,
-    },
-    #[parse(rule=Rule::command_aero)]
-    Aero {
-        aerodynamics: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_elas)]
-    Elas {
-        elasticity: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_accg)]
+    Accg { acceleration: Box<FloatArg> },
+    #[parse(rule=Rule::overloaded_aero)]
+    Aero { aerodynamics: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_elas)]
+    Elas { elasticity: Box<IntArg> },
     #[parse(rule=Rule::command_flto)]
     Flto {
         screen_x: Box<FloatArg>,
         screen_y: Box<FloatArg>,
     },
     #[parse(rule=Rule::command_frel)]
-    Frel {
-        relative: Box<AgentArg>,
-    },
-    #[parse(rule=Rule::command_fric)]
-    Fric {
-        friction: Box<IntArg>,
-    },
+    Frel { relative: Box<AgentArg> },
+    #[parse(rule=Rule::overloaded_fric)]
+    Fric { friction: Box<IntArg> },
     #[parse(rule=Rule::command_mvby)]
     Mvby {
         delta_x: Box<FloatArg>,
         delta_y: Box<FloatArg>,
     },
     #[parse(rule=Rule::command_mvsf)]
-    Mvsf {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Mvsf { x: Box<FloatArg>, y: Box<FloatArg> },
     #[parse(rule=Rule::command_mvto)]
-    Mvto {
-        x: Box<FloatArg>,
-        y: Box<FloatArg>,
-    },
+    Mvto { x: Box<FloatArg>, y: Box<FloatArg> },
     #[parse(rule=Rule::command_velo)]
     Velo {
         x_velocity: Box<FloatArg>,
@@ -1009,9 +874,7 @@ pub enum Command {
     },
     // Ports
     #[parse(rule=Rule::command_prt_bang)]
-    PrtBang {
-        bang_strength: Box<IntArg>,
-    },
+    PrtBang { bang_strength: Box<IntArg> },
     #[parse(rule=Rule::command_prt_inew)]
     PrtInew {
         id: Box<IntArg>,
@@ -1022,9 +885,7 @@ pub enum Command {
         message_num: Box<IntArg>,
     },
     #[parse(rule=Rule::command_prt_izap)]
-    PrtIzap {
-        id: Box<IntArg>,
-    },
+    PrtIzap { id: Box<IntArg> },
     #[parse(rule=Rule::command_prt_join)]
     PrtJoin {
         source_agent: Box<AgentArg>,
@@ -1047,9 +908,7 @@ pub enum Command {
         y: Box<IntArg>,
     },
     #[parse(rule=Rule::command_prt_ozap)]
-    PrtOzap {
-        id: Box<IntArg>,
-    },
+    PrtOzap { id: Box<IntArg> },
     #[parse(rule=Rule::command_prt_send)]
     PrtSend {
         id: Box<IntArg>,
@@ -1057,16 +916,12 @@ pub enum Command {
     },
     // Resources
     #[parse(rule=Rule::command_pray_garb)]
-    PrayGarb {
-        force: Box<IntArg>,
-    },
+    PrayGarb { force: Box<IntArg> },
     #[parse(rule=Rule::command_pray_refr)]
     PrayRefr,
     // Scripts
     #[parse(rule=Rule::command_gids_fmly)]
-    GidsFmly {
-        family: Box<IntArg>,
-    },
+    GidsFmly { family: Box<IntArg> },
     #[parse(rule=Rule::command_gids_gnus)]
     GidsGnus {
         family: Box<IntArg>,
@@ -1107,21 +962,14 @@ pub enum Command {
     #[parse(rule=Rule::command_unlk)]
     Unlk,
     #[parse(rule=Rule::command_wait)]
-    Wait {
-        ticks: Box<IntArg>,
-    },
+    Wait { ticks: Box<IntArg> },
     // Sounds
     #[parse(rule=Rule::command_fade)]
     Fade,
     #[parse(rule=Rule::command_mclr)]
-    Mclr {
-        x: Box<IntArg>,
-        y: Box<IntArg>,
-    },
+    Mclr { x: Box<IntArg>, y: Box<IntArg> },
     #[parse(rule=Rule::command_midi)]
-    Midi {
-        midi_file: Box<SStringArg>,
-    },
+    Midi { midi_file: Box<SStringArg> },
     #[parse(rule=Rule::command_mmsc)]
     Mmsc {
         x: Box<IntArg>,
@@ -1129,32 +977,21 @@ pub enum Command {
         track_name: Box<SStringArg>,
     },
     #[parse(rule=Rule::command_rclr)]
-    Rclr {
-        x: Box<IntArg>,
-        y: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_rmsc)]
+    Rclr { x: Box<IntArg>, y: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_rmsc)]
     Rmsc {
         x: Box<IntArg>,
         y: Box<IntArg>,
         track_name: Box<SStringArg>,
     },
     #[parse(rule=Rule::command_sezz)]
-    Sezz {
-        text: Box<SStringArg>,
-    },
+    Sezz { text: Box<SStringArg> },
     #[parse(rule=Rule::command_sndc)]
-    Sndc {
-        sound_file: Box<SStringArg>,
-    },
+    Sndc { sound_file: Box<SStringArg> },
     #[parse(rule=Rule::command_snde)]
-    Snde {
-        sound_file: Box<SStringArg>,
-    },
+    Snde { sound_file: Box<SStringArg> },
     #[parse(rule=Rule::command_sndl)]
-    Sndl {
-        sound_file: Box<SStringArg>,
-    },
+    Sndl { sound_file: Box<SStringArg> },
     #[parse(rule=Rule::command_sndq)]
     Sndq {
         sound_file: Box<SStringArg>,
@@ -1173,24 +1010,16 @@ pub enum Command {
         gender: Box<IntArg>,
         age: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_vois)]
-    Vois {
-        voice_name: Box<SStringArg>,
-    },
+    #[parse(rule=Rule::overloaded_vois)]
+    Vois { voice_name: Box<SStringArg> },
     #[parse(rule=Rule::command_volm)]
-    Volm {
-        volume: Box<IntArg>,
-    },
+    Volm { volume: Box<IntArg> },
     // Date
-    #[parse(rule=Rule::command_wpau)]
-    Wpau {
-        paused: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_wpau)]
+    Wpau { paused: Box<IntArg> },
     // Box<Variable>s
     #[parse(rule=Rule::command_absv)]
-    Absv {
-        var: Box<Variable>,
-    },
+    Absv { var: Box<Variable> },
     #[parse(rule=Rule::command_adds)]
     Adds {
         var: Box<Variable>,
@@ -1206,16 +1035,14 @@ pub enum Command {
         var: Box<Variable>,
         value: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_char)]
+    #[parse(rule=Rule::overloaded_char)]
     Char {
         string: Box<Variable>,
         index: Box<IntArg>,
         character: Box<IntArg>,
     },
     #[parse(rule=Rule::command_delg)]
-    Delg {
-        variable_name: Box<SStringArg>,
-    },
+    Delg { variable_name: Box<SStringArg> },
     #[parse(rule=Rule::command_divv)]
     Divv {
         var: Box<Variable>,
@@ -1232,9 +1059,7 @@ pub enum Command {
         mul: Box<DecimalArg>,
     },
     #[parse(rule=Rule::command_negv)]
-    Negv {
-        var: Box<Variable>,
-    },
+    Negv { var: Box<Variable> },
     #[parse(rule=Rule::command_orrv)]
     Orrv {
         var: Box<Variable>,
@@ -1262,10 +1087,8 @@ pub enum Command {
         var: Box<Variable>,
         sub: Box<DecimalArg>,
     },
-    #[parse(rule=Rule::command_targ)]
-    Targ {
-        agent: Box<AgentArg>,
-    },
+    #[parse(rule=Rule::overloaded_targ)]
+    Targ { agent: Box<AgentArg> },
     // Vehicles
     #[parse(rule=Rule::command_cabn)]
     Cabn {
@@ -1274,18 +1097,12 @@ pub enum Command {
         right: Box<IntArg>,
         bottom: Box<IntArg>,
     },
-    #[parse(rule=Rule::command_cabp)]
-    Cabp {
-        plane: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_cabv)]
-    Cabv {
-        cabin_room_id: Box<IntArg>,
-    },
+    #[parse(rule=Rule::overloaded_cabp)]
+    Cabp { plane: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_cabv)]
+    Cabv { cabin_room_id: Box<IntArg> },
     #[parse(rule=Rule::command_cabw)]
-    Cabw {
-        cabin_capacity: Box<IntArg>,
-    },
+    Cabw { cabin_capacity: Box<IntArg> },
     #[parse(rule=Rule::command_dpas)]
     Dpas {
         family: Box<IntArg>,
@@ -1321,17 +1138,11 @@ pub enum Command {
     },
     // World
     #[parse(rule=Rule::command_delw)]
-    Delw {
-        world_name: Box<SStringArg>,
-    },
+    Delw { world_name: Box<SStringArg> },
     #[parse(rule=Rule::command_load)]
-    Load {
-        world_name: Box<SStringArg>,
-    },
-    #[parse(rule=Rule::command_pswd)]
-    Pswd {
-        world_name: Box<SStringArg>,
-    },
+    Load { world_name: Box<SStringArg> },
+    #[parse(rule=Rule::overloaded_pswd)]
+    Pswd { world_name: Box<SStringArg> },
     #[parse(rule=Rule::command_quit)]
     Quit,
     #[parse(rule=Rule::command_rgam)]
@@ -1339,13 +1150,9 @@ pub enum Command {
     #[parse(rule=Rule::command_save)]
     Save,
     #[parse(rule=Rule::command_tntw)]
-    Tntw {
-        index: Box<IntArg>,
-    },
-    #[parse(rule=Rule::command_wrld)]
-    Wrld {
-        world_name: Box<SStringArg>,
-    },
+    Tntw { index: Box<IntArg> },
+    #[parse(rule=Rule::overloaded_wrld)]
+    Wrld { world_name: Box<SStringArg> },
     #[parse(rule=Rule::command_wtnt)]
     Wtnt {
         index: Box<IntArg>,

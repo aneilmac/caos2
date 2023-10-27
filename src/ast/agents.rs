@@ -34,7 +34,7 @@ pub enum Agent {
     },
     #[parse(rule=Rule::agent_pntr)]
     Pntr,
-    #[parse(rule=Rule::agent_targ)]
+    #[parse(rule=Rule::overloaded_targ)]
     Targ,
     #[parse(rule=Rule::agent_twin)]
     Twin {
@@ -43,11 +43,11 @@ pub enum Agent {
     },
     #[parse(rule=Rule::agent_it)]
     It,
-    #[parse(rule=Rule::agent_trck)]
+    #[parse(rule=Rule::overloaded_trck)]
     Trck,
     #[parse(rule=Rule::agent_hhld)]
     Hhld,
-    #[parse(rule=Rule::agent_norn)]
+    #[parse(rule=Rule::overloaded_norn)]
     Norn,
     #[parse(rule=Rule::agent_agnt)]
     Agnt { unique_id: Box<IntArg> },

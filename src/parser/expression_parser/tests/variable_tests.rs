@@ -1,8 +1,9 @@
 use super::parse_expr;
 use crate::{
     ast::{Agent, Variable},
+    parse_expression,
     parser::CaosParser,
-    Rule, parse_expression,
+    Rule,
 };
 use pest::Parser;
 

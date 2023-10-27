@@ -8,12 +8,9 @@ agent = _{
   | agent_ownr
   | agent_pcls
   | agent_pntr
-  | agent_targ
   | agent_twin
   | agent_it
-  | agent_trck
   | agent_hhld
-  | agent_norn
   | agent_agnt
   | agent_tack
   | agent_mtoa
@@ -31,12 +28,9 @@ agent_null     = { ^"null" }
 agent_ownr     = { ^"ownr" }
 agent_pcls     = { ^"pcls" }
 agent_pntr     = { ^"pntr" }
-agent_targ     = { ^"targ" }
 agent_twin     = { ^"twin" }
 agent_it       = { ^"_it_" }
-agent_trck     = { ^"trck" }
 agent_hhld     = { ^"hhld" }
-agent_norn     = { ^"norn" }
 agent_agnt     = { ^"agnt" }
 agent_tack     = { ^"tack" }
 agent_mtoa     = { ^"mtoa" }

@@ -8,15 +8,19 @@ mod base;
 //mod caos_string;
 //mod caos_variable;
 //mod script;
+mod command_parser;
 mod condition_parser;
 mod expression_parser;
+mod partial;
 
 use base::*;
 // use caos_command::*;
 // use caos_program::*;
 // use script::*;
-use condition_parser::*;
+pub(crate) use command_parser::*;
+pub(self) use condition_parser::*;
 pub(crate) use expression_parser::*;
+pub(crate) use partial::*;
 
 use crate::{ast::CosFile, CaosError, ErrorType};
 use pest_derive::Parser;
@@ -31,6 +35,7 @@ use pest_derive::Parser;
 #[grammar = "grammar/caos_string.pest"]
 #[grammar = "grammar/caos_variable.pest"]
 #[grammar = "grammar/condition.pest"]
+#[grammar = "grammar/caos_overloaded.pest"]
 #[grammar = "grammar/script.pest"]
 struct CaosParser;
 

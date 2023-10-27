@@ -13,13 +13,16 @@ fn parse_condition_input(input: &str) -> Condition {
 
 #[test]
 fn test_condition_join_fail() {
-    let mut p = CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND").expect("Parsed successfully");
+    let mut p =
+        CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND").expect("Parsed successfully");
     parse_condition(&mut p).expect_err("Should fail incomplete");
 
-    let mut p = CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND MV00").expect("Parsed successfully");
+    let mut p =
+        CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND MV00").expect("Parsed successfully");
     parse_condition(&mut p).expect_err("Should fail incomplete");
 
-    let mut p = CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND MV00 GE").expect("Parsed successfully");
+    let mut p = CaosParser::parse(Rule::tokens, "    MV32 EQ MV23 AND MV00 GE")
+        .expect("Parsed successfully");
     parse_condition(&mut p).expect_err("Should fail incomplete");
 
     let mut p = CaosParser::parse(Rule::tokens, "AND MV32 EQ MV23").expect("Parsed successfully");
@@ -37,8 +40,7 @@ fn test_condition_compare_fail() {
 
 #[test]
 fn test_condition_expression_fail() {
-    let mut p =
-        CaosParser::parse(Rule::tokens, "MV32 MV32 EQ MV23").expect("Parsed successfully");
+    let mut p = CaosParser::parse(Rule::tokens, "MV32 MV32 EQ MV23").expect("Parsed successfully");
     parse_condition(&mut p).expect_err("Should fail too many expressions LHS");
 }
 

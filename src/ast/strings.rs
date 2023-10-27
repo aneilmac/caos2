@@ -8,7 +8,7 @@ pub enum SString {
     Literal(String),
     #[parse(rule=Rule::string_catx)]
     Catx { category_id: Box<IntArg> },
-    #[parse(rule=Rule::string_hand)]
+    #[parse(rule=Rule::overloaded_hand)]
     Hand,
     #[parse(rule=Rule::string_wild)]
     Wild {
@@ -18,11 +18,11 @@ pub enum SString {
         tag_stub: Box<SStringArg>,
         offset: Box<IntArg>,
     },
-    #[parse(rule=Rule::string_bkgd)]
+    #[parse(rule=Rule::overloaded_bkgd)]
     Bkgd { metaroom_id: Box<IntArg> },
-    #[parse(rule=Rule::string_ptxt)]
+    #[parse(rule=Rule::overloaded_ptxt)]
     Ptxt,
-    #[parse(rule=Rule::string_face)]
+    #[parse(rule=Rule::overloaded_face)]
     Face,
     #[parse(rule=Rule::string_dbg)]
     Dbg { variable: Box<IntArg> },
@@ -34,7 +34,7 @@ pub enum SString {
     Innl,
     #[parse(rule=Rule::string_gtos)]
     Gtos { slot: Box<IntArg> },
-    #[parse(rule=Rule::string_hist_foto)]
+    #[parse(rule=Rule::overloaded_hist_foto)]
     HistFoto {
         moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
@@ -49,13 +49,13 @@ pub enum SString {
         moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
     },
-    #[parse(rule=Rule::string_hist_name)]
+    #[parse(rule=Rule::overloaded_hist_name)]
     HistName { moniker: Box<SStringArg> },
     #[parse(rule=Rule::string_hist_next)]
     HistNext { moniker: Box<SStringArg> },
     #[parse(rule=Rule::string_hist_prev)]
     HistPrev { moniker: Box<SStringArg> },
-    #[parse(rule=Rule::string_hist_utxt)]
+    #[parse(rule=Rule::overloaded_hist_utxt)]
     HistUtxt {
         moniker: Box<SStringArg>,
         event_no: Box<IntArg>,
@@ -73,7 +73,7 @@ pub enum SString {
     Erid { metaroom_id: Box<IntArg> },
     #[parse(rule=Rule::string_mloc)]
     Mloc { metaroom_id: Box<IntArg> },
-    #[parse(rule=Rule::string_rate)]
+    #[parse(rule=Rule::overloaded_rate)]
     Rate {
         room_type: Box<IntArg>,
         ca_index: Box<IntArg>,
@@ -108,9 +108,9 @@ pub enum SString {
         catches: Box<IntArg>,
         report: Box<Variable>,
     },
-    #[parse(rule=Rule::string_rmsc)]
+    #[parse(rule=Rule::overloaded_rmsc)]
     Rmsc { x: Box<IntArg>, y: Box<IntArg> },
-    #[parse(rule=Rule::string_vois)]
+    #[parse(rule=Rule::overloaded_vois)]
     Vois,
     // Date
     #[parse(rule=Rule::string_rtif)]
@@ -136,11 +136,11 @@ pub enum SString {
     #[parse(rule=Rule::string_vtos)]
     Vtos { value: Box<DecimalArg> },
     // World
-    #[parse(rule=Rule::string_pswd)]
+    #[parse(rule=Rule::overloaded_pswd)]
     Pswd { world_index: Box<IntArg> },
     #[parse(rule=Rule::string_wnam)]
     Wnam,
-    #[parse(rule=Rule::string_wrld)]
+    #[parse(rule=Rule::overloaded_wrld)]
     Wrld { world_index: Box<IntArg> },
     #[parse(rule=Rule::string_wuid)]
     Wuid,

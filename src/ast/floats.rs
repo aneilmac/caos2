@@ -45,17 +45,17 @@ pub enum Float {
     Posx,
     #[parse(rule=Rule::float_posy)]
     Posy,
-    #[parse(rule=Rule::float_rnge)]
+    #[parse(rule=Rule::overloaded_rnge)]
     Rnge,
-    #[parse(rule=Rule::float_chem)]
+    #[parse(rule=Rule::overloaded_chem)]
     Chem { chemical: Box<IntArg> },
     #[parse(rule=Rule::float_dftx)]
     Dftx,
     #[parse(rule=Rule::float_dfty)]
     Dfty,
-    #[parse(rule=Rule::float_driv)]
+    #[parse(rule=Rule::overloaded_driv)]
     Driv { drive: Box<IntArg> },
-    #[parse(rule=Rule::float_loci)]
+    #[parse(rule=Rule::overloaded_loci)]
     Loci {
         r#type: Box<IntArg>,
         organ: Box<IntArg>,
@@ -77,7 +77,7 @@ pub enum Float {
     Movx,
     #[parse(rule=Rule::float_movy)]
     Movy,
-    #[parse(rule=Rule::float_prop)]
+    #[parse(rule=Rule::overloaded_prop)]
     Prop {
         room_id: Box<IntArg>,
         ca_index: Box<IntArg>,
@@ -86,7 +86,7 @@ pub enum Float {
     Torx { room_id: Box<IntArg> },
     #[parse(rule=Rule::float_tory)]
     Tory { room_id: Box<IntArg> },
-    #[parse(rule=Rule::float_accg)]
+    #[parse(rule=Rule::overloaded_accg)]
     Accg,
     #[parse(rule=Rule::float_obst)]
     Obst { direction: Box<IntArg> },

@@ -1,15 +1,12 @@
 #[cfg(test)]
 mod tests;
 
-mod command_parser_trait;
-mod command_thunk;
 mod expression_parser_trait;
 mod expression_stack;
 mod expression_thunk;
-mod partial;
 
 use crate::{
-    ast::{Agent, Anything, Command, Float, Integer, SString, Variable},
+    ast::{Agent, Anything, Float, Integer, SString, Variable},
     parser::base::{
         parse_bytestring_literal, parse_float_literal, parse_int_literal, parse_string_literal,
     },
@@ -17,43 +14,10 @@ use crate::{
 };
 use expression_stack::ExpressionStack;
 use pest::iterators::{Pair, Pairs};
-use std::vec::Vec;
 
-pub(crate) use command_parser_trait::CommandParser;
-pub(crate) use command_thunk::CommandThunk;
+use super::Partial;
 pub(crate) use expression_parser_trait::ExpressionParser;
 pub(crate) use expression_thunk::ExpressionThunk;
-pub(crate) use partial::Partial;
-
-pub fn parse_commands<'i>(pairs: &mut Pairs<'i, Rule>) -> Result<Vec<Command>, CaosError> {
-    let mut commands = Vec::<Command>::new();
-
-    while let Some(pair) = pairs.next() {
-        let mut thunk: CommandThunk = 
-            find_command_match(pair)?;
-
-        loop {
-            if thunk.is_ready() {
-                let c = thunk.complete()?;
-                commands.push(c);
-                break;
-            } else {
-                match thunk {
-                    CommandThunk::Completed(..) => unreachable!(),
-                    CommandThunk::Partial(ref mut p) => {
-                        let arg = parse_expression(pairs)?;
-                        p.arg_parts.push(arg);
-                    }
-                }
-            }
-        }
-    }
-    Ok(commands)
-}
-
-fn find_command_match(pair: Pair<Rule>) -> Result<CommandThunk, CaosError> {
-    todo!()
-}
 
 pub fn parse_expression<'i>(pairs: &'_ mut Pairs<'i, Rule>) -> Result<Anything, CaosError> {
     let mut expression_stack = ExpressionStack::new();
@@ -67,7 +31,7 @@ pub fn parse_expression<'i>(pairs: &'_ mut Pairs<'i, Rule>) -> Result<Anything, 
 
     match expression_stack.root.into_iter().last() {
         Some(e) => Err(CaosError::new_parse_error(e.origin)),
-        None =>  Err(CaosError::new_end_of_stream())
+        None => Err(CaosError::new_end_of_stream()),
     }
 }
 

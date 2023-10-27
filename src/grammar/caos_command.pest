@@ -18,30 +18,19 @@ command = _{
   | command_ever
   | command_anim
   | command_anms
-  | command_attr
-  | command_base
-  | command_bhvr
   | command_frat
   | command_gait
   | command_gall
-  | command_hand
   | command_kill
   | command_mesg_writ
   | command_mesg_wrt
-  | command_mira
   | command_new_simp
   | command_nohh
   | command_over
   | command_paus
-  | command_plne
-  | command_pose
-  | command_puhl
-  | command_pupt
-  | command_rnge
   | command_rtar
   | command_show
   | command_star
-  | command_tick
   | command_tint
   | command_ttar
   | command_brn_dmpb
@@ -53,18 +42,14 @@ command = _{
   | command_brn_setl
   | command_brn_setn
   | command_brn_sett
-  | command_bkgd
   | command_brmi
   | command_cmra
   | command_cmrp
   | command_cmrt
   | command_frsh
   | command_line
-  | command_meta
   | command_scam
   | command_snap
-  | command_trck
-  | command_wdow
   | command_zoom
   | command_fcus
   | command_frmt
@@ -80,19 +65,10 @@ command = _{
   | command_pat_grph
   | command_pat_kill
   | command_pat_text
-  | command_ptxt
   | command_ages
   | command_appr
-  | command_aslp
-  | command_body
   | command_born
-  | command_chem
-  | command_dead
-  | command_dirn
   | command_done
-  | command_drea
-  | command_driv
-  | command_face
   | command_forf
   | command_hair
   | command_injr
@@ -103,7 +79,6 @@ command = _{
   | command_mvft
   | command_new_crea
   | command_newc
-  | command_norn
   | command_nude
   | command_ordr_shou
   | command_ordr_sign
@@ -118,8 +93,6 @@ command = _{
   | command_sway_sign
   | command_sway_tact
   | command_sway_writ
-  | command_touc
-  | command_uncs
   | command_urge_shou
   | command_urge_sign
   | command_urge_tact
@@ -127,7 +100,6 @@ command = _{
   | command_vocb
   | command_walk
   | command_wear
-  | command_zomb
   | command_apro
   | command_dbg_asrt
   | command_dbg_cpro
@@ -163,15 +135,8 @@ command = _{
   | command_gene_load
   | command_gene_move
   | command_hist_evnt
-  | command_hist_foto
-  | command_hist_name
-  | command_hist_utxt
   | command_hist_wipe
-  | command_clac
-  | command_clik
-  | command_imsk
   | command_mous
-  | command_pure
   | command_tran
   | command_addb
   | command_altr
@@ -181,21 +146,11 @@ command = _{
   | command_delr
   | command_dmap
   | command_doca
-  | command_door
   | command_emit
-  | command_link
   | command_mapd
   | command_mapk
-  | command_perm
-  | command_prop
-  | command_rate
-  | command_rtyp
-  | command_accg
-  | command_aero
-  | command_elas
   | command_flto
   | command_frel
-  | command_fric
   | command_mvby
   | command_mvsf
   | command_mvto
@@ -228,7 +183,6 @@ command = _{
   | command_midi
   | command_mmsc
   | command_rclr
-  | command_rmsc
   | command_sezz
   | command_sndc
   | command_snde
@@ -237,14 +191,11 @@ command = _{
   | command_stpc
   | command_strk
   | command_voic
-  | command_vois
   | command_volm
-  | command_wpau
   | command_absv
   | command_adds
   | command_addv
   | command_andv
-  | command_char
   | command_delg
   | command_divv
   | command_modv
@@ -256,10 +207,7 @@ command = _{
   | command_sets
   | command_setv
   | command_subv
-  | command_targ
   | command_cabn
-  | command_cabp
-  | command_cabv
   | command_cabw
   | command_dpas
   | command_gpas
@@ -268,12 +216,10 @@ command = _{
   | command_spas
   | command_delw
   | command_load
-  | command_pswd
   | command_quit
   | command_rgam
   | command_save
   | command_tntw
-  | command_wrld
   | command_wtnt
 }
 
@@ -296,30 +242,19 @@ command_untl = { ^"untl" }
 command_ever = { ^"ever "}
 command_anim       = { ^"anim" }
 command_anms       = { ^"anms" }
-command_attr       = { ^"attr" }
-command_base       = { ^"base" }
-command_bhvr       = { ^"bhvr" }
 command_frat       = { ^"frat" }
 command_gait       = { ^"gait" }
 command_gall       = { ^"gall" }
-command_hand       = { ^"hand" }
 command_kill       = { ^"kill" }
 command_mesg_writ  = { ^"mesg" ~ ^"writ" }
 command_mesg_wrt   = { ^"mesg" ~ ^"wrt+" }
-command_mira       = { ^"mira" }
 command_new_simp   = { ^"new:" ~ ^"simp" }
 command_nohh       = { ^"nohh" }
 command_over       = { ^"over" }
 command_paus       = { ^"paus" }
-command_plne       = { ^"plne" }
-command_pose       = { ^"pose" }
-command_puhl       = { ^"puhl" }
-command_pupt       = { ^"pupt" }
-command_rnge       = { ^"rnge" }
 command_rtar       = { ^"rtar" }
 command_show       = { ^"show" }
 command_star       = { ^"star" }
-command_tick       = { ^"tick" }
 command_tint       = { ^"tint" }
 command_ttar       = { ^"ttar" }
 command_brn_dmpb   = { ^"brn:" ~ ^"dmpb" }
@@ -331,18 +266,14 @@ command_brn_setd   = { ^"brn:" ~ ^"setd" }
 command_brn_setl   = { ^"brn:" ~ ^"setl" }
 command_brn_setn   = { ^"brn:" ~ ^"setn" }
 command_brn_sett   = { ^"brn:" ~ ^"sett" }
-command_bkgd       = { ^"bkgd" }
 command_brmi       = { ^"brmi" }
 command_cmra       = { ^"cmra" }
 command_cmrp       = { ^"cmrp" }
 command_cmrt       = { ^"cmrt" }
 command_frsh       = { ^"frsh" }
 command_line       = { ^"line" }
-command_meta       = { ^"meta" }
 command_scam       = { ^"scam" }
 command_snap       = { ^"snap" }
-command_trck       = { ^"trck" }
-command_wdow       = { ^"wdow" }
 command_zoom       = { ^"zoom" }
 command_fcus       = { ^"fcus" }
 command_frmt       = { ^"frmt" }
@@ -358,19 +289,10 @@ command_pat_fixd   = { ^"pat:" ~ ^"fixd" }
 command_pat_grph   = { ^"pat:" ~ ^"grph" }
 command_pat_kill   = { ^"pat:" ~ ^"kill" }
 command_pat_text   = { ^"pat:" ~ ^"text" }
-command_ptxt       = { ^"ptxt" }
 command_ages       = { ^"ages" }
 command_appr       = { ^"appr" }
-command_aslp       = { ^"aslp" }
-command_body       = { ^"body" }
 command_born       = { ^"born" }
-command_chem       = { ^"chem" }
-command_dead       = { ^"dead" }
-command_dirn       = { ^"dirn" }
 command_done       = { ^"done" }
-command_drea       = { ^"drea" }
-command_driv       = { ^"driv" }
-command_face       = { ^"face" }
 command_forf       = { ^"forf" }
 command_hair       = { ^"hair" }
 command_injr       = { ^"injr" }
@@ -381,7 +303,6 @@ command_mate       = { ^"mate" }
 command_mvft       = { ^"mvft" }
 command_new_crea   = { ^"new:" ~ ^"crea" }
 command_newc       = { ^"newc" }
-command_norn       = { ^"norn"}
 command_nude      = { ^"nude" }
 command_ordr_shou = { ^"ordr" ~ ^"shou" }
 command_ordr_sign = { ^"ordr" ~ ^"sign" }
@@ -396,8 +317,6 @@ command_sway_shou  = { ^"sway" ~ ^"shou" }
 command_sway_sign  = { ^"sway" ~ ^"sign" }
 command_sway_tact  = { ^"sway" ~ ^"tact" }
 command_sway_writ  = { ^"sway" ~ ^"writ" }
-command_touc       = { ^"touc" }
-command_uncs       = { ^"uncs" }
 command_urge_shou  = { ^"urge" ~ ^"shou"}
 command_urge_sign  = { ^"urge" ~ ^"sign"}
 command_urge_tact  = { ^"urge" ~ ^"tact"}
@@ -405,7 +324,6 @@ command_urge_writ  = { ^"urge" ~ ^"writ" }
 command_vocb       = { ^"vocb" }
 command_walk       = { ^"walk" }
 command_wear       = { ^"wear" }
-command_zomb       = { ^"zomb" }
 command_apro       = { ^"apro" }
 command_dbg_asrt   = { ^"dbg:" ~ ^"asrt" }
 command_dbg_cpro   = { ^"dbg:" ~ ^"cpro" }
@@ -441,15 +359,8 @@ command_gene_kill  = { ^"gene" ~ ^"kill" }
 command_gene_load  = { ^"gene" ~ ^"load" }
 command_gene_move  = { ^"gene" ~ ^"move" }
 command_hist_evnt  = { ^"hist" ~ ^"evnt" }
-command_hist_foto  = { ^"hist" ~ ^"foto" }
-command_hist_name  = { ^"hist" ~ ^"name" }
-command_hist_utxt  = { ^"hist" ~ ^"utxt" }
 command_hist_wipe  = { ^"hist" ~ ^"wipe" }
-command_clac       = { ^"clac" }
-command_clik       = { ^"clik" }
-command_imsk       = { ^"imsk" }
 command_mous       = { ^"mous" }
-command_pure       = { ^"pure" }
 command_tran       = { ^"tran" }
 command_addb       = { ^"addb" }
 command_altr       = { ^"altr" }
@@ -459,21 +370,11 @@ command_delm       = { ^"delm" }
 command_delr       = { ^"delr" }
 command_dmap       = { ^"dmap" }
 command_doca       = { ^"doca" }
-command_door       = { ^"door" }
 command_emit       = { ^"emit" }
-command_link       = { ^"link" }
 command_mapd       = { ^"mapd" }
 command_mapk       = { ^"mapk" }
-command_perm       = { ^"perm" }
-command_prop       = { ^"prop" }
-command_rate       = { ^"rate" }
-command_rtyp       = { ^"rtyp" }
-command_accg       = { ^"accg" }
-command_aero       = { ^"aero" }
-command_elas       = { ^"elas" }
 command_flto       = { ^"flto" }
 command_frel       = { ^"frel" }
-command_fric       = { ^"fric" }
 command_mvby       = { ^"mvby" }
 command_mvsf       = { ^"mvsf" }
 command_mvto       = { ^"mvto" }
@@ -506,7 +407,6 @@ command_mclr       = { ^"mclr" }
 command_midi       = { ^"midi" }
 command_mmsc       = { ^"mmsc" }
 command_rclr       = { ^"rclr" }
-command_rmsc       = { ^"rmsc" }
 command_sezz       = { ^"sezz" }
 command_sndc       = { ^"sndc" }
 command_snde       = { ^"snde" }
@@ -515,14 +415,11 @@ command_sndq       = { ^"sndq" }
 command_stpc       = { ^"stpc" }
 command_strk       = { ^"strk" }
 command_voic       = { ^"voic" }
-command_vois       = { ^"vois" }
 command_volm       = { ^"volm" }
-command_wpau       = { ^"wpau" }
 command_absv       = { ^"absv" }
 command_adds       = { ^"adds" }
 command_addv       = { ^"addv" }
 command_andv       = { ^"andv" }
-command_char       = { ^"char" }
 command_delg       = { ^"delg" }
 command_divv       = { ^"divv" }
 command_modv       = { ^"modv" }
@@ -534,10 +431,7 @@ command_seta       = { ^"seta" }
 command_sets       = { ^"sets" }
 command_setv       = { ^"setv" }
 command_subv       = { ^"subv" }
-command_targ       = { ^"targ" }
 command_cabn       = { ^"cabn" }
-command_cabp       = { ^"cabp" }
-command_cabv       = { ^"cabv" }
 command_cabw       = { ^"cabw" }
 command_dpas       = { ^"dpas" }
 command_gpas       = { ^"gpas" }
@@ -546,10 +440,8 @@ command_rpas       = { ^"rpas" }
 command_spas       = { ^"spas" }
 command_delw       = { ^"delw" }
 command_load       = { ^"load" }
-command_pswd       = { ^"pswd" }
 command_quit       = { ^"quit" }
 command_rgam       = { ^"rgam" }
 command_save       = { ^"save" }
 command_tntw       = { ^"tntw" }
-command_wrld       = { ^"wrld" }
 command_wtnt       = { ^"wtnt" }

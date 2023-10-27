@@ -15,16 +15,20 @@ pub fn parse_condition(pairs: &mut Pairs<Rule>) -> Result<Condition, CaosError> 
         v.push((c, j));
         c = new_c;
     }
-    Ok(v.into_iter().rev().fold(c, |c_rhs, (c_lhs, join_type)| {
-        Condition::Combination { c_lhs: Box::new(c_lhs), c_rhs: Box::new(c_rhs), join_type }
-    }))
+    Ok(v.into_iter()
+        .rev()
+        .fold(c, |c_rhs, (c_lhs, join_type)| Condition::Combination {
+            c_lhs: Box::new(c_lhs),
+            c_rhs: Box::new(c_rhs),
+            join_type,
+        }))
 }
 
 fn try_parse_condition_join_part(
     pairs: &mut Pairs<Rule>,
 ) -> Result<Option<(JoinType, Condition)>, CaosError> {
     if let Some(p) = pairs.peek() {
-        if let Ok(join_type) =  parse_condition_join(p) {
+        if let Ok(join_type) = parse_condition_join(p) {
             _ = pairs.next();
             let c = parse_condition_single(pairs)?;
             return Ok(Some((join_type, c)));
@@ -60,5 +64,9 @@ fn parse_condition_single(pairs: &mut Pairs<Rule>) -> Result<Condition, CaosErro
         .ok_or_else(|| CaosError::new_end_of_stream())
         .and_then(parse_condition_operator)?;
     let rhs = parse_expression(pairs)?;
-    Ok(Condition::Simple { cond_type, lhs, rhs })
+    Ok(Condition::Simple {
+        cond_type,
+        lhs,
+        rhs,
+    })
 }
