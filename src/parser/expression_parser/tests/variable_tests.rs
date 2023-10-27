@@ -2,7 +2,7 @@ use super::parse_expr;
 use crate::{
     ast::{Agent, Variable},
     parser::CaosParser,
-    Rule,
+    Rule, parse_expression,
 };
 use pest::Parser;
 
@@ -24,8 +24,11 @@ fn test_variable_mvxx() {
 
 #[test]
 fn test_variable_mvxx_fail() {
-    CaosParser::parse(Rule::expression, "MV3").expect_err("Not enough characters");
-    CaosParser::parse(Rule::expression, "MVFF").expect_err("Incorrect characters");
+    let mut p = CaosParser::parse(Rule::token, "MV3").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
+
+    let mut p = CaosParser::parse(Rule::token, "MVFF").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
 }
 
 #[test]
@@ -42,8 +45,11 @@ fn test_variable_ovxx() {
 
 #[test]
 fn test_variable_ovxx_fail() {
-    CaosParser::parse(Rule::expression, "OV3").expect_err("Not enough characters");
-    CaosParser::parse(Rule::expression, "OVFF").expect_err("Incorrect characters");
+    let mut p = CaosParser::parse(Rule::token, "OV3").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
+
+    let mut p = CaosParser::parse(Rule::token, "OVFF").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
 }
 
 #[test]
@@ -60,8 +66,11 @@ fn test_variable_vaxx() {
 
 #[test]
 fn test_variable_vaxx_fail() {
-    CaosParser::parse(Rule::expression, "VA3").expect_err("Not enough characters");
-    CaosParser::parse(Rule::expression, "VAFF").expect_err("Incorrect characters");
+    let mut p = CaosParser::parse(Rule::token, "VA3").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
+
+    let mut p = CaosParser::parse(Rule::token, "VAFF").expect("Successful parse");
+    parse_expression(&mut p).expect_err("Parse failure");
 }
 
 #[test]

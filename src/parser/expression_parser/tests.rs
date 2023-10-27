@@ -6,23 +6,19 @@ mod int_tests;
 mod string_tests;
 mod variable_tests;
 
-use crate::{
-    ast::Anything,
-    parser::{parse_expressions, CaosParser},
-    CaosError, Rule,
-};
 use pest::Parser;
 
-fn parse_exprs(content: &str) -> Vec<Anything> {
-    let p = CaosParser::parse(Rule::expressions0, content).expect("Parsed");
-    parse_expressions(p).expect("Parsed")
-}
+use crate::{
+    ast::Anything,
+    parser::{parse_expression, CaosParser},
+    CaosError, Rule
+};
 
 fn parse_expr<T>(content: &str) -> T
 where
     T: TryFrom<Anything, Error = CaosError>,
 {
-    let p = parse_exprs(content);
-    assert_eq!(p.len(), 1, "Expected one expression");
-    T::try_from(p.into_iter().next().unwrap()).expect(concat!("Expected ", stringify!(T)))
+    let mut p = CaosParser::parse(Rule::tokens, content).expect("Successful pest parse");
+    let p = parse_expression(&mut p).expect("Successful expression parse");
+    T::try_from(p).expect(concat!("Expected ", stringify!(T)))
 }

@@ -12,20 +12,13 @@ mod condition_parser;
 mod expression_parser;
 
 use base::*;
-// use caos_agent::*;
 // use caos_command::*;
-// use caos_decimal::*;
-// use caos_float::*;
-// use caos_int::*;
 // use caos_program::*;
-// use caos_string::*;
-// use caos_variable::*;
-// use condition::*;
 // use script::*;
+use condition_parser::*;
 pub(crate) use expression_parser::*;
 
 use crate::{ast::CosFile, CaosError, ErrorType};
-use pest::{pratt_parser::PrattParser, Parser};
 use pest_derive::Parser;
 
 #[derive(Parser)]

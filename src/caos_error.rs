@@ -17,6 +17,7 @@ pub enum ErrorType {
         actual: usize,
         line_col: LineCol,
     },
+    EndOfStream,
     SubError(Box<dyn Error>),
 }
 
@@ -32,6 +33,10 @@ impl CaosError {
             error_type,
             message,
         }
+    }
+
+    pub fn new_end_of_stream() -> Self {
+        CaosError::new(ErrorType::EndOfStream, String::from("Stream ended unexpectedly"))
     }
 
     pub fn new_from_error(e: Box<dyn Error>) -> Self {

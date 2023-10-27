@@ -1,4 +1,4 @@
-use super::{AgentArg, IntArg, SStringArg, Variable};
+use super::{AgentArg, IntArg, SStringArg};
 use crate::Rule;
 use caos_macros::ExpressionParser;
 

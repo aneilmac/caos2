@@ -36,7 +36,7 @@ pub fn expression_parser(input: TokenStream) -> TokenStream {
                 (None, Some(rule)) => Some({
                     if field_count == 0 {
                         quote_spanned!(name.span()=>
-                            #rule => Some(crate::parser::ExpressionThunk::Completed(crate::ast::Anything::from(Self::#name)))
+                            #rule => Some(crate::parser::ExpressionThunk::CompletedExpression(pair, crate::ast::Anything::from(Self::#name)))
                         )
                     } else {
                         let fields = v.fields.iter().map(|field| {
@@ -46,7 +46,7 @@ pub fn expression_parser(input: TokenStream) -> TokenStream {
                             )
                         });
                         quote_spanned!(name.span()=>
-                            #rule => Some(crate::parser::ExpressionThunk::Partial(crate::parser::Partial {
+                            #rule => Some(crate::parser::ExpressionThunk::PartialExpression(crate::parser::Partial {
                                 origin: pair,
                                 arg_parts: Vec::<crate::ast::Anything>::with_capacity(#field_count),
                                 target_args: #field_count,
@@ -60,7 +60,7 @@ pub fn expression_parser(input: TokenStream) -> TokenStream {
                                 })
                         })))
                     }
-            }),
+                }),
             }
         }).collect();
 

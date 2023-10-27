@@ -1,41 +1,36 @@
 #[cfg(test)]
 mod tests;
 
-use super::parse_expressions;
+use super::parse_expression;
 use crate::{
     ast::{Condition, ConditionType, JoinType},
     CaosError, Rule,
 };
 use pest::iterators::{Pair, Pairs};
 
-pub fn parse_condition(mut it: Pairs<Rule>) -> Result<Condition, CaosError> {
-    let (mut j, mut c) = parse_condition_join_part(&mut it)?;
-    loop {
-        match j {
-            Some(ji) => {
-                let (j_next, c_next) = parse_condition_join_part(&mut it)?;
-                c = Condition::Combination {
-                    c_lhs: Box::new(c_next),
-                    c_rhs: Box::new(c),
-                    join_type: ji,
-                };
-                j = j_next;
-            }
-            None => break,
-        }
+pub fn parse_condition(pairs: &mut Pairs<Rule>) -> Result<Condition, CaosError> {
+    let mut c = parse_condition_single(pairs)?;
+    let mut v = Vec::<(Condition, JoinType)>::new();
+    while let Some((j, new_c)) = try_parse_condition_join_part(pairs)? {
+        v.push((c, j));
+        c = new_c;
     }
-
-    Ok(c)
+    Ok(v.into_iter().rev().fold(c, |c_rhs, (c_lhs, join_type)| {
+        Condition::Combination { c_lhs: Box::new(c_lhs), c_rhs: Box::new(c_rhs), join_type }
+    }))
 }
 
-fn parse_condition_join_part(
+fn try_parse_condition_join_part(
     pairs: &mut Pairs<Rule>,
-) -> Result<(Option<JoinType>, Condition), CaosError> {
-    let condition = pairs.next_back().map(parse_condition_single).unwrap()?;
-
-    let join_type = pairs.next_back().map(parse_condition_join).transpose()?;
-
-    Ok((join_type, condition))
+) -> Result<Option<(JoinType, Condition)>, CaosError> {
+    if let Some(p) = pairs.peek() {
+        if let Ok(join_type) =  parse_condition_join(p) {
+            _ = pairs.next();
+            let c = parse_condition_single(pairs)?;
+            return Ok(Some((join_type, c)));
+        }
+    }
+    Ok(None)
 }
 
 fn parse_condition_operator(pair: Pair<Rule>) -> Result<ConditionType, CaosError> {
@@ -58,47 +53,12 @@ fn parse_condition_join(pair: Pair<Rule>) -> Result<JoinType, CaosError> {
     }
 }
 
-fn parse_condition_single(pair: Pair<Rule>) -> Result<Condition, CaosError> {
-    if pair.as_rule() != Rule::condition_single {
-        return Err(CaosError::new_parse_error(pair));
-    }
-
-    let mut it = pair.clone().into_inner();
-
-    let lhs = it
+fn parse_condition_single(pairs: &mut Pairs<Rule>) -> Result<Condition, CaosError> {
+    let lhs = parse_expression(pairs)?;
+    let cond_type = pairs
         .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(|it| parse_expressions(it.into_inner()))?;
-
-    if lhs.len() != 1 {
-        return Err(CaosError::new_arg_count_error(
-            1,
-            lhs.len(),
-            pair.line_col(),
-        ));
-    }
-
-    let cond_type = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
+        .ok_or_else(|| CaosError::new_end_of_stream())
         .and_then(parse_condition_operator)?;
-
-    let rhs = it
-        .next()
-        .ok_or(CaosError::new_parse_error(pair.clone()))
-        .and_then(|it| parse_expressions(it.into_inner()))?;
-
-    if rhs.len() != 1 {
-        return Err(CaosError::new_arg_count_error(
-            1,
-            rhs.len(),
-            pair.line_col(),
-        ));
-    }
-
-    Ok(Condition::Simple {
-        cond_type,
-        lhs: lhs.into_iter().next().unwrap(),
-        rhs: rhs.into_iter().next().unwrap(),
-    })
+    let rhs = parse_expression(pairs)?;
+    Ok(Condition::Simple { cond_type, lhs, rhs })
 }

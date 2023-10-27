@@ -4,6 +4,7 @@ condition_gt       =  { ">" | ^"gt" }
 condition_le       =  { "<=" | ^"le" }
 condition_ne       =  { "<>" | ^"ne" }
 condition_lt       =  { "<" | ^"lt" }
+
 condition_operator = _{
     condition_eq
   | condition_ge
@@ -14,4 +15,5 @@ condition_operator = _{
 }
 condition_and      =  { ^"and" }
 condition_or       =  { ^"or" }
+
 condition_join     = _{ condition_and | condition_or }

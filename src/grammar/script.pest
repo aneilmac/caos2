@@ -1,22 +1,21 @@
-expression = _{
-    literal_byte_string 
-    | literal_float
-    | literal_int
-    | literal_string
-    | variable
-    | float
-    | int 
-    | agent
-    | string
+token = _{ 
+literal_byte_string 
+| literal_float
+| literal_int
+| literal_string
+| variable
+| float
+| int 
+| agent
+| string
+| command
+| condition_operator
+| condition_join
+| label
 }
 
-expressions1 = { expression{1,} }
-condition_single = { expressions1 ~ condition_operator ~ expressions1 }
-condition = _{ condition_single ~ (condition_join ~ condition_single)* }
-
-expressions0 = _{ expression* }
-token = _{ command ~ expressions0 }
-script_contents = { token* }
+tokens = _ { token* }
+script_contents = { tokens }
 
 install_script = { install_script_start_tag ~ script_contents ~ install_script_end_tag }
 remove_script  = { remove_script_start_tag ~ script_contents ~ remove_script_end_tag }

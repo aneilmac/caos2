@@ -36,8 +36,8 @@ pub fn parse_command(pair: Pair<Rule>) -> Result<Command, CaosError> {
         Rule::command_etch => parse_command_etch(pair),
         Rule::command_esee => parse_command_esee(pair),
         Rule::command_epas => parse_command_epas(pair),
-        // Rule::command_loop_untl => parse_command_loop_untl(pair),
-        // Rule::command_loop_ever => parse_command_loop_ever(pair),
+        Rule::command_loop_untl => parse_command_loop_untl(pair),
+        Rule::command_loop_ever => parse_command_loop_ever(pair),
         Rule::command_anim => {
             let mut it = pair.clone().into_inner();
             let pose_list = it
