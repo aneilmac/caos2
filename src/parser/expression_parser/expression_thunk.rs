@@ -10,4 +10,3 @@ pub(crate) enum ExpressionThunk<'i> {
     Completed(Pair<'i, Rule>, Anything),
     Partial(Partial<'i, Anything>),
 }
-

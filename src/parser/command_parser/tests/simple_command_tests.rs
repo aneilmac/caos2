@@ -1,7 +1,4 @@
-use crate::{
-    ast::{Agent, Condition, SString, Variable},
-};
-
+use crate::ast::{Agent, Condition, SString, Variable};
 
 use super::*;
 

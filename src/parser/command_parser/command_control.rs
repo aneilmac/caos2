@@ -1,8 +1,4 @@
-
-
-use crate::{
-    ast::{AgentArg, ClassifierEnum, Command, DoIf, IntArg, Label, ScriptDefinition},
-};
+use crate::ast::{AgentArg, ClassifierEnum, Command, DoIf, IntArg, Label, ScriptDefinition};
 
 pub enum Control {
     Subr {
