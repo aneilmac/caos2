@@ -1,8 +1,7 @@
-use pest::iterators::Pair;
+
 
 use crate::{
     ast::{AgentArg, ClassifierEnum, Command, DoIf, IntArg, Label, ScriptDefinition},
-    CaosError, Rule,
 };
 
 pub enum Control {

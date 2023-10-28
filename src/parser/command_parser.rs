@@ -9,7 +9,7 @@ mod command_thunk;
 use crate::{
     ast::{AgentArg, ClassifierEnum, Command, DoIf, IntArg, ScriptDefinition},
     parser::parse_condition,
-    CaosError, ExpressionThunk, Rule,
+    CaosError, Rule,
 };
 use command_control::Control;
 pub(crate) use command_parser_trait::CommandParser;

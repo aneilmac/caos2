@@ -19,11 +19,6 @@ impl<'i> ExpressionStack<'i> {
         Self { root: Vec::new() }
     }
 
-    /// Returns `true` if the stack is empty.
-    pub fn is_empty(&self) -> bool {
-        self.root.is_empty()
-    }
-
     /// Pushes an [Anything] into the argument list of the leaf node.
     /// If there is no leaf node (that is there are no partials to try and complete left),
     /// then returns the [Anything] argument back out.

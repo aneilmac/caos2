@@ -20,13 +20,8 @@ impl CommandStack {
         }
     }
 
-    /// Returns `true` if the stack is empty.
-    pub fn is_ready(&self) -> bool {
-        self.partials.is_empty()
-    }
-
     pub fn to_commands(self) -> Result<Vec<Command>, CaosError> {
-        if let Some(e) = self.partials.into_iter().last() {
+        if let Some(_e) = self.partials.into_iter().last() {
             return Err(CaosError::new_end_of_stream());
         }
         Ok(self.commands)

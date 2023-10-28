@@ -1,7 +1,7 @@
 use super::Control;
 use crate::ast::{Command, Condition};
 use crate::parser::Partial;
-use crate::{CaosError, Rule};
+use crate::{Rule};
 use pest::iterators::Pair;
 
 /// A thunk for a partial-parse of some expression.
