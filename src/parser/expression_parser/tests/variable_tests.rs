@@ -25,11 +25,8 @@ fn test_variable_mvxx() {
 
 #[test]
 fn test_variable_mvxx_fail() {
-    let mut p = CaosParser::parse(Rule::token, "MV3").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
-
-    let mut p = CaosParser::parse(Rule::token, "MVFF").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "MV3").expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "MVFF").expect_err("Parse failure");
 }
 
 #[test]
@@ -46,11 +43,8 @@ fn test_variable_ovxx() {
 
 #[test]
 fn test_variable_ovxx_fail() {
-    let mut p = CaosParser::parse(Rule::token, "OV3").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
-
-    let mut p = CaosParser::parse(Rule::token, "OVFF").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "OV3").expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "OVFF").expect_err("Parse failure");
 }
 
 #[test]
@@ -67,11 +61,8 @@ fn test_variable_vaxx() {
 
 #[test]
 fn test_variable_vaxx_fail() {
-    let mut p = CaosParser::parse(Rule::token, "VA3").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
-
-    let mut p = CaosParser::parse(Rule::token, "VAFF").expect("Successful parse");
-    parse_expression(&mut p).expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "VA3").expect_err("Parse failure");
+    CaosParser::parse(Rule::token, "VAFF").expect_err("Parse failure");
 }
 
 #[test]

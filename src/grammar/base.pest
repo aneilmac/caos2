@@ -27,4 +27,4 @@ label = @{ ASCII_ALPHA+ ~ (ASCII_ALPHANUMERIC | "_")* }
 
 // Whitespace + Comments
 WHITESPACE = _{ " " | "\t" | NEWLINE }
-COMMENT    = _{ "*" ~ (!NEWLINE ~ ANY)* ~ NEWLINE }
+COMMENT    = _{ "*" ~ (!NEWLINE ~ ANY)* ~ (NEWLINE | EOI) }

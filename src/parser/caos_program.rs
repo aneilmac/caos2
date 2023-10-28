@@ -165,4 +165,11 @@ mod tests {
             }
         );
     }
+
+    #[test]
+    fn test_comment_no_newline() {
+        assert_eq!(
+            parse_program_str(r#"* Comment without newline"#),
+            CosFile::default());
+    }
 }
