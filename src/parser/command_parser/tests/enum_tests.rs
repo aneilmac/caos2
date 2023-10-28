@@ -1,5 +1,5 @@
 use super::*;
-use crate::ast::{Agent, ScriptDefinition};
+use crate::ast::{Agent, ClassifierEnum, ScriptDefinition};
 use pest::Parser;
 
 #[test]
@@ -60,12 +60,12 @@ fn test_command_econ() {
 fn test_command_enum_empty() {
     assert_eq!(
         parse_cmnd("ENUM 0 1 2 NEXT"),
-        Command::Enum {
+        Command::Enum(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition::default()
-        },
+        },)
     );
 }
 
@@ -73,12 +73,12 @@ fn test_command_enum_empty() {
 fn test_command_etch_empty() {
     assert_eq!(
         parse_cmnd("ETCH 0 1 2 NEXT"),
-        Command::Etch {
+        Command::Etch(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition::default()
-        },
+        },)
     );
 }
 
@@ -86,12 +86,12 @@ fn test_command_etch_empty() {
 fn test_command_esee_empty() {
     assert_eq!(
         parse_cmnd("ESEE 0 1 2 NEXT"),
-        Command::Esee {
+        Command::Esee(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition::default()
-        },
+        },)
     );
 }
 
@@ -99,27 +99,27 @@ fn test_command_esee_empty() {
 fn test_command_epas_empty() {
     assert_eq!(
         parse_cmnd("EPAS 0 1 2 NEXT"),
-        Command::Epas {
+        Command::Epas(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition::default()
-        },
+        },)
     );
 }
 
 #[test]
 fn test_command_enum() {
     assert_eq!(
-        parse_cmnd("ENUM 0 1 2 BRN: DMPB NEX"),
-        Command::Enum {
+        parse_cmnd("ENUM 0 1 2 BRN: DMPB NEXT"),
+        Command::Enum(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition {
                 commands: vec![Command::BrnDmpb]
             }
-        },
+        },)
     );
 }
 
@@ -127,14 +127,14 @@ fn test_command_enum() {
 fn test_command_etch() {
     assert_eq!(
         parse_cmnd("ETCH 0 1 2 BRN: DMPB NEXT"),
-        Command::Etch {
+        Command::Etch(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition {
                 commands: vec![Command::BrnDmpb]
             }
-        },
+        },)
     );
 }
 
@@ -142,14 +142,14 @@ fn test_command_etch() {
 fn test_command_esee() {
     assert_eq!(
         parse_cmnd("ESEE 0 1 2 BRN: DMPB NEXT"),
-        Command::Esee {
+        Command::Esee(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition {
                 commands: vec![Command::BrnDmpb]
             }
-        },
+        },)
     );
 }
 
@@ -157,13 +157,13 @@ fn test_command_esee() {
 fn test_command_epas() {
     assert_eq!(
         parse_cmnd("EPAS 0 1 2 BRN: DMPB NEXT"),
-        Command::Epas {
+        Command::Epas(ClassifierEnum {
             family: Box::new(0.into()),
             genus: Box::new(1.into()),
             species: Box::new(2.into()),
             definition: ScriptDefinition {
                 commands: vec![Command::BrnDmpb]
             }
-        },
+        },)
     );
 }

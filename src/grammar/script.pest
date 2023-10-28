@@ -12,7 +12,6 @@ token = _{
   | overloaded
   | condition_operator
   | condition_join
-  | label
 }
 
 tokens          = _{ token* }

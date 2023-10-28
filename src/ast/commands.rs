@@ -1,8 +1,8 @@
 use caos_macros::CommandParser;
 
 use super::{
-    AgentArg, Anything, ByteString, Condition, DecimalArg, FloatArg, IntArg, Label, SStringArg,
-    ScriptDefinition, Variable,
+    AgentArg, Anything, ByteString, ClassifierEnum, Condition, DecimalArg, DoIf, FloatArg, IntArg,
+    Label, SStringArg, ScriptDefinition, Variable,
 };
 use crate::Rule;
 
@@ -15,12 +15,7 @@ pub enum Command {
     #[parse(ignore)]
     Goto { destination: Label },
     #[parse(ignore)]
-    Doif {
-        condition: Condition,
-        definition: ScriptDefinition,
-        elif_definitions: Vec<(Condition, ScriptDefinition)>,
-        else_definition: Option<ScriptDefinition>,
-    },
+    Doif(DoIf),
     #[parse(ignore)]
     Subr {
         label: Label,
@@ -44,33 +39,13 @@ pub enum Command {
         definition: ScriptDefinition,
     },
     #[parse(ignore)]
-    Enum {
-        family: Box<IntArg>,
-        genus: Box<IntArg>,
-        species: Box<IntArg>,
-        definition: ScriptDefinition,
-    },
+    Enum(ClassifierEnum),
     #[parse(ignore)]
-    Etch {
-        family: Box<IntArg>,
-        genus: Box<IntArg>,
-        species: Box<IntArg>,
-        definition: ScriptDefinition,
-    },
+    Etch(ClassifierEnum),
     #[parse(ignore)]
-    Esee {
-        family: Box<IntArg>,
-        genus: Box<IntArg>,
-        species: Box<IntArg>,
-        definition: ScriptDefinition,
-    },
+    Esee(ClassifierEnum),
     #[parse(ignore)]
-    Epas {
-        family: Box<IntArg>,
-        genus: Box<IntArg>,
-        species: Box<IntArg>,
-        definition: ScriptDefinition,
-    },
+    Epas(ClassifierEnum),
     // Box<AgentArg>s
     #[parse(rule=Rule::command_anim)]
     Anim { pose_list: Box<ByteString> },

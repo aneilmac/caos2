@@ -1,4 +1,4 @@
-use super::{base::parse_int_literal, parse_command};
+use super::{base::parse_int_literal, parse_commands};
 use crate::{
     ast::{Command, EventScriptDefinition, Script, ScriptDefinition},
     CaosError, Rule,
@@ -100,7 +100,7 @@ pub fn parse_script_contents(pair: Pair<Rule>) -> Result<ScriptDefinition, CaosE
         return Err(CaosError::new_parse_error(pair));
     }
 
-    let commands: Result<Vec<Command>, CaosError> = pair.into_inner().map(parse_command).collect();
+    let commands: Result<Vec<Command>, CaosError> = parse_commands(&mut pair.into_inner());
     commands.map(|commands| ScriptDefinition { commands })
 }
 

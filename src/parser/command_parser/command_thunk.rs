@@ -1,5 +1,7 @@
+use super::Control;
+use crate::ast::{Command, Condition};
 use crate::parser::Partial;
-use crate::{ast::Command, CaosError, Rule};
+use crate::{CaosError, Rule};
 use pest::iterators::Pair;
 
 /// A thunk for a partial-parse of some expression.
@@ -9,22 +11,19 @@ use pest::iterators::Pair;
 pub(crate) enum CommandThunk<'i> {
     Completed(Pair<'i, Rule>, Command),
     Partial(Partial<'i, Command>),
+    Start(Control),
+    StartElif(Pair<'i, Rule>, Condition),
+    StartElse(Pair<'i, Rule>),
+    End(Pair<'i, Rule>),
+    EndLoop(Pair<'i, Rule>, Condition),
 }
 
 impl<'i> CommandThunk<'i> {
     /// Returns `true` if the thunk can be completed/unwrapped.
-    pub fn is_ready(&self) -> bool {
+    pub fn needs_expression(&self) -> bool {
         match self {
-            Self::Completed(..) => true,
-            Self::Partial(p) => p.is_ready(),
-        }
-    }
-
-    /// Attempts to complete/unwrap the thunk, producing an [Anything].
-    pub fn complete(self) -> Result<Command, CaosError> {
-        match self {
-            Self::Completed(_, c) => Ok(c),
-            Self::Partial(p) => p.complete(),
+            Self::Partial(p) => !p.is_ready(),
+            _ => false,
         }
     }
 }

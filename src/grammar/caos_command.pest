@@ -1,9 +1,11 @@
 command = _{
-    command_doif
+    command_gsub_label
+  | command_goto_label
+  | command_subr_label
+  | command_doif
   | command_elif
   | command_else
   | command_endi
-  | command_subr
   | command_retn
   | command_econ
   | command_enum
@@ -124,8 +126,6 @@ command = _{
   | command_outs
   | command_outv
   | command_outx
-  | command_goto
-  | command_gsub
   | command_gene_clon
   | command_gene_cros
   | command_gene_kill
@@ -219,6 +219,10 @@ command = _{
   | command_wtnt
 }
 
+command_gsub_label = _{ command_gsub ~ label }
+command_goto_label = _{ command_goto ~ label }
+command_subr_label = _{ command_subr ~ label }
+
 command_doif      = { ^"doif" }
 command_elif      = { ^"elif" }
 command_else      = { ^"else" }
@@ -235,7 +239,7 @@ command_reps      = { ^"reps" }
 command_repe      = { ^"repe" }
 command_loop      = { ^"loop" }
 command_untl      = { ^"untl" }
-command_ever      = { ^"ever " }
+command_ever      = { ^"ever" }
 command_anim      = { ^"anim" }
 command_anms      = { ^"anms" }
 command_frat      = { ^"frat" }

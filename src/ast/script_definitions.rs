@@ -18,6 +18,10 @@ impl ScriptDefinition {
     pub fn is_empty(&self) -> bool {
         self.commands.is_empty()
     }
+
+    pub fn push(&mut self, command: Command) {
+        self.commands.push(command)
+    }
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]

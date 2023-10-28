@@ -1,5 +1,5 @@
 use super::*;
-use crate::ast::{Condition, ConditionType, ScriptDefinition};
+use crate::ast::{Condition, ConditionType, DoIf, ScriptDefinition};
 use pest::Parser;
 
 #[test]
@@ -12,7 +12,7 @@ fn test_command_doif_parse_error_endi() {
 fn test_command_doif_empty() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: ConditionType::Ne,
                 lhs: 1.into(),
@@ -21,7 +21,7 @@ fn test_command_doif_empty() {
             definition: ScriptDefinition::default(),
             elif_definitions: vec![],
             else_definition: None
-        },
+        },)
     );
 }
 
@@ -29,7 +29,7 @@ fn test_command_doif_empty() {
 fn test_command_doif_simple() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH OVER ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: crate::ast::ConditionType::Ne,
                 lhs: 1.into(),
@@ -40,7 +40,7 @@ fn test_command_doif_simple() {
             },
             elif_definitions: vec![],
             else_definition: None
-        },
+        },)
     );
 }
 
@@ -48,7 +48,7 @@ fn test_command_doif_simple() {
 fn test_command_doif_empty_else() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELSE ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: crate::ast::ConditionType::Ne,
                 lhs: 1.into(),
@@ -59,7 +59,7 @@ fn test_command_doif_empty_else() {
             },
             elif_definitions: vec![],
             else_definition: Some(ScriptDefinition { commands: vec![] })
-        },
+        },)
     );
 }
 
@@ -67,7 +67,7 @@ fn test_command_doif_empty_else() {
 fn test_command_doif_else() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELSE OVER ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: crate::ast::ConditionType::Ne,
                 lhs: 1.into(),
@@ -80,7 +80,7 @@ fn test_command_doif_else() {
             else_definition: Some(ScriptDefinition {
                 commands: vec![Command::Over]
             })
-        },
+        },)
     );
 }
 
@@ -88,7 +88,7 @@ fn test_command_doif_else() {
 fn test_command_doif_empty_elif() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELIF 3 < 4 ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: ConditionType::Ne,
                 lhs: 1.into(),
@@ -106,7 +106,7 @@ fn test_command_doif_empty_elif() {
                 ScriptDefinition { commands: vec![] }
             )],
             else_definition: None
-        },
+        },)
     );
 }
 
@@ -114,7 +114,7 @@ fn test_command_doif_empty_elif() {
 fn test_command_doif_elif() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELIF 3 < 4 BRN: DMPB ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: ConditionType::Ne,
                 lhs: 1.into(),
@@ -134,7 +134,7 @@ fn test_command_doif_elif() {
                 }
             )],
             else_definition: None
-        },
+        },)
     );
 }
 
@@ -142,7 +142,7 @@ fn test_command_doif_elif() {
 fn test_command_doif_elif_multiple() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELIF 3 < 4 BRN: DMPB ELIF 5 = 6 OVER ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: ConditionType::Ne,
                 lhs: 1.into(),
@@ -174,7 +174,7 @@ fn test_command_doif_elif_multiple() {
                 )
             ],
             else_definition: None
-        },
+        }),
     );
 }
 
@@ -182,7 +182,7 @@ fn test_command_doif_elif_multiple() {
 fn test_command_doif_elif_else() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 NOHH ELIF 3 < 4 BRN: DMPB ELSE OVER ENDI"),
-        Command::Doif {
+        Command::Doif(DoIf {
             condition: Condition::Simple {
                 cond_type: ConditionType::Ne,
                 lhs: 1.into(),
@@ -204,6 +204,6 @@ fn test_command_doif_elif_else() {
             else_definition: Some(ScriptDefinition {
                 commands: vec![Command::Over]
             })
-        },
+        },)
     );
 }

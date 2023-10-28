@@ -61,105 +61,108 @@ fn parse_scripts(pair: Pair<Rule>, implicit: Option<Script>) -> Result<Vec<Scrip
 mod tests {
     use super::*;
     use crate::{
-        ast::{Command, ScriptDefinition},
+        ast::{Command, Label, ScriptDefinition},
         parser::CaosParser,
     };
     use pest::Parser;
 
+    fn parse_program_str(content: &str) -> CosFile {
+        let mut ps = CaosParser::parse(Rule::program, content).expect("Parsed");
+        parse_program(ps.next().unwrap()).expect("Successful parse")
+    }
+
     #[test]
     fn test_program_empty() {
-        for p in CaosParser::parse(Rule::program, "").expect("Parsed") {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile::default()
-            );
-        }
+        assert_eq!(parse_program_str(""), CosFile::default());
     }
 
     #[test]
     fn test_program_implicit_install_no_end_tag() {
-        for p in CaosParser::parse(Rule::program, "BRN: DMPB").expect("Parsed") {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile {
-                    scripts: vec![Script::Install(ScriptDefinition {
-                        commands: vec![Command::BrnDmpb]
-                    })]
-                }
-            );
-        }
+        assert_eq!(
+            parse_program_str("BRN: DMPB"),
+            CosFile {
+                scripts: vec![Script::Install(ScriptDefinition {
+                    commands: vec![Command::BrnDmpb]
+                })]
+            }
+        );
     }
 
     #[test]
     fn test_program_implicit_install_with_end_tag() {
-        for p in CaosParser::parse(Rule::program, "BRN: DMPB ENDM").expect("Parsed") {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile {
-                    scripts: vec![Script::Install(ScriptDefinition {
-                        commands: vec![Command::BrnDmpb]
-                    })]
-                }
-            );
-        }
+        assert_eq!(
+            parse_program_str("BRN: DMPB ENDM"),
+            CosFile {
+                scripts: vec![Script::Install(ScriptDefinition {
+                    commands: vec![Command::BrnDmpb]
+                })]
+            }
+        );
     }
 
     #[test]
     fn test_program_multi_scripts() {
-        for p in
-            CaosParser::parse(Rule::program, "ISCR BRN: DMPB ENDM RSCR OVER ENDM").expect("Parsed")
-        {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile {
-                    scripts: vec![
-                        Script::Install(ScriptDefinition {
-                            commands: vec![Command::BrnDmpb]
-                        }),
-                        Script::Removal(ScriptDefinition {
-                            commands: vec![Command::Over]
-                        })
-                    ]
-                }
-            );
-        }
+        assert_eq!(
+            parse_program_str("ISCR BRN: DMPB ENDM RSCR OVER ENDM"),
+            CosFile {
+                scripts: vec![
+                    Script::Install(ScriptDefinition {
+                        commands: vec![Command::BrnDmpb]
+                    }),
+                    Script::Removal(ScriptDefinition {
+                        commands: vec![Command::Over]
+                    })
+                ]
+            }
+        );
     }
 
     #[test]
     fn test_program_multi_scripts_no_end_tags() {
-        for p in CaosParser::parse(Rule::program, "ISCR BRN: DMPB RSCR OVER").expect("Parsed") {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile {
-                    scripts: vec![
-                        Script::Install(ScriptDefinition {
-                            commands: vec![Command::BrnDmpb]
-                        }),
-                        Script::Removal(ScriptDefinition {
-                            commands: vec![Command::Over]
-                        })
-                    ]
-                }
-            );
-        }
+        assert_eq!(
+            parse_program_str("ISCR BRN: DMPB RSCR OVER"),
+            CosFile {
+                scripts: vec![
+                    Script::Install(ScriptDefinition {
+                        commands: vec![Command::BrnDmpb]
+                    }),
+                    Script::Removal(ScriptDefinition {
+                        commands: vec![Command::Over]
+                    })
+                ]
+            }
+        );
     }
 
     #[test]
     fn test_program_implit_install_explicit_removal() {
-        for p in CaosParser::parse(Rule::program, "BRN: DMPB RSCR OVER ENDM").expect("Parsed") {
-            assert_eq!(
-                parse_program(p).expect("Parsed program file"),
-                CosFile {
-                    scripts: vec![
-                        Script::Install(ScriptDefinition {
-                            commands: vec![Command::BrnDmpb]
-                        }),
-                        Script::Removal(ScriptDefinition {
-                            commands: vec![Command::Over]
-                        })
-                    ]
-                }
-            );
-        }
+        assert_eq!(
+            parse_program_str("BRN: DMPB RSCR OVER ENDM"),
+            CosFile {
+                scripts: vec![
+                    Script::Install(ScriptDefinition {
+                        commands: vec![Command::BrnDmpb]
+                    }),
+                    Script::Removal(ScriptDefinition {
+                        commands: vec![Command::Over]
+                    })
+                ]
+            }
+        );
+    }
+
+    #[test]
+    fn test_keyword_label() {
+        assert_eq!(
+            parse_program_str("ISCR SUBR ENDM RETN ENDM"),
+            CosFile {
+                scripts: vec![Script::Install(ScriptDefinition {
+                    commands: vec![Command::Subr {
+                        label: String::from("ENDM").into(),
+                        definition: ScriptDefinition::default()
+                    }]
+                })]
+            }
+        );
     }
 }

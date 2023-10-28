@@ -16,7 +16,7 @@ pub struct ExpressionStack<'i> {
 impl<'i> ExpressionStack<'i> {
     /// Creates a new empty stack
     pub fn new() -> Self {
-        ExpressionStack { root: Vec::new() }
+        Self { root: Vec::new() }
     }
 
     /// Returns `true` if the stack is empty.
@@ -28,8 +28,7 @@ impl<'i> ExpressionStack<'i> {
     /// If there is no leaf node (that is there are no partials to try and complete left),
     /// then returns the [Anything] argument back out.
     fn try_push_partial(&mut self, a: Anything) -> Option<Anything> {
-        let leaf = self.root.last_mut();
-        match leaf {
+        match self.root.last_mut() {
             Some(t) => {
                 t.arg_parts.push(a);
                 None

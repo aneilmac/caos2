@@ -64,11 +64,10 @@ impl CaosError {
         let line_col @ (line, col) = p.line_col();
         let error_type = ErrorType::ParseError { line_col };
         let message = format!(
-            "Parse error at line: {} col: {}, reading {}. Got `{:?}` token.",
+            "Parse error at line: {} col: {}, reading {}.",
             line,
             col,
-            p.as_str(),
-            p.as_rule()
+            p.as_str()
         );
         CaosError {
             error_type,
