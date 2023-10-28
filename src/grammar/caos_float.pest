@@ -1,0 +1,71 @@
+float = _{
+    float_disq
+  | float_fltx
+  | float_flty
+  | float_mthx
+  | float_mthy
+  | float_posb
+  | float_posl
+  | float_posr
+  | float_post
+  | float_posx
+  | float_posy
+  | float_dftx
+  | float_dfty
+  | float_orgf
+  | float_uftx
+  | float_ufty
+  | float_innf
+  | float_movx
+  | float_movy
+  | float_torx
+  | float_tory
+  | float_obst
+  | float_relx
+  | float_rely
+  | float_pace
+  | float_acos
+  | float_asin
+  | float_atan
+  | float_cos
+  | float_itof
+  | float_sin
+  | float_sqrt
+  | float_stof
+  | float_tan
+}
+
+float_disq = { ^"disq" }
+float_fltx = { ^"fltx" }
+float_flty = { ^"flty" }
+float_mthx = { ^"mthx" }
+float_mthy = { ^"mthy" }
+float_posb = { ^"posb" }
+float_posl = { ^"posl" }
+float_posr = { ^"posr" }
+float_post = { ^"post" }
+float_posx = { ^"posx" }
+float_posy = { ^"posy" }
+float_dftx = { ^"dftx" }
+float_dfty = { ^"dfty" }
+float_orgf = { ^"orgf" }
+float_uftx = { ^"uftx" }
+float_ufty = { ^"ufty" }
+float_innf = { ^"innf" }
+float_movx = { ^"movx" }
+float_movy = { ^"movy" }
+float_torx = { ^"torx" }
+float_tory = { ^"tory" }
+float_obst = { ^"obst" }
+float_relx = { ^"relx" }
+float_rely = { ^"rely" }
+float_pace = { ^"pace" }
+float_acos = { ^"acos" }
+float_asin = { ^"asin" }
+float_atan = { ^"atan" }
+float_cos  = { ^"cos_" }
+float_itof = { ^"itof" }
+float_sin  = { ^"sin_" }
+float_sqrt = { ^"sqrt" }
+float_stof = { ^"stof" }
+float_tan  = { ^"tan_" }

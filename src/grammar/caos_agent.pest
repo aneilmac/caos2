@@ -1,0 +1,39 @@
+agent = _{
+    agent_carr
+  | agent_from
+  | agent_held
+  | agent_iitt
+  | agent_ncls
+  | agent_null
+  | agent_ownr
+  | agent_pcls
+  | agent_pntr
+  | agent_twin
+  | agent_it
+  | agent_hhld
+  | agent_agnt
+  | agent_tack
+  | agent_mtoa
+  | agent_mtoc
+  | agent_hots
+  | agent_prt_frma
+}
+
+agent_carr     = { ^"carr" }
+agent_from     = { ^"from" }
+agent_held     = { ^"held" }
+agent_iitt     = { ^"iitt" }
+agent_ncls     = { ^"ncls" }
+agent_null     = { ^"null" }
+agent_ownr     = { ^"ownr" }
+agent_pcls     = { ^"pcls" }
+agent_pntr     = { ^"pntr" }
+agent_twin     = { ^"twin" }
+agent_it       = { ^"_it_" }
+agent_hhld     = { ^"hhld" }
+agent_agnt     = { ^"agnt" }
+agent_tack     = { ^"tack" }
+agent_mtoa     = { ^"mtoa" }
+agent_mtoc     = { ^"mtoc" }
+agent_hots     = { ^"hots" }
+agent_prt_frma = { ^"prt:" ~ ^"frma" }

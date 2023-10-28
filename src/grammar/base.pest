@@ -1,0 +1,30 @@
+// Literal int
+int_decimal     = @{ "-"{0, 1} ~ ASCII_DIGIT+ }
+int_binary      = @{ ("0" | "1")+ }
+int_char_escape = @{ "\\'" }
+int_char_ok     =  { ASCII }
+literal_int     = ${
+    int_decimal
+  | ("%" ~ int_binary)
+  | ("'" ~ !"'" ~ (int_char_escape | int_char_ok) ~ "'")
+}
+// Literal string
+string_raw       = @{ (!("\\" | "\"") ~ ASCII)+ }
+escape_newline   =  { "n" }
+escape_quote     =  { "\"" }
+escape_backslash =  { "\\" }
+string_escape    = _{ "\\" ~ (escape_newline | escape_quote | escape_backslash) }
+literal_string   = ${ "\"" ~ (string_escape | string_raw)* ~ "\"" }
+
+// Literal byte string
+literal_byte_string = { "[" ~ literal_int* ~ "]" }
+
+// Literal floats
+literal_float = @{ int_decimal{0, 1} ~ "." ~ ASCII_DIGIT+ }
+
+// Label
+label = @{ ASCII_ALPHA+ ~ (ASCII_ALPHANUMERIC | "_")* }
+
+// Whitespace + Comments
+WHITESPACE = _{ " " | "\t" | NEWLINE }
+COMMENT    = _{ "*" ~ (!NEWLINE ~ ANY)* ~ (NEWLINE | EOI) }
