@@ -9,6 +9,12 @@ fn test_command_doif_parse_error_endi() {
 }
 
 #[test]
+fn test_command_doif_elif_else_error_order() {
+    let mut p = CaosParser::parse(Rule::command, "DOIF 1 <> 2 NOHH ELSE OVER ELIF 3 < 4 BRN: DMPB END").expect("Successful parse");
+    parse_commands(&mut p).expect_err("ELSE and ELIF in wrong order");
+}
+
+#[test]
 fn test_command_doif_empty() {
     assert_eq!(
         parse_cmnd("DOIF 1 <> 2 ENDI"),
