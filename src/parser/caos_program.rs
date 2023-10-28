@@ -61,7 +61,7 @@ fn parse_scripts(pair: Pair<Rule>, implicit: Option<Script>) -> Result<Vec<Scrip
 mod tests {
     use super::*;
     use crate::{
-        ast::{Command, Label, ScriptDefinition},
+        ast::{Command, ScriptDefinition},
         parser::CaosParser,
     };
     use pest::Parser;
@@ -170,6 +170,7 @@ mod tests {
     fn test_comment_no_newline() {
         assert_eq!(
             parse_program_str(r#"* Comment without newline"#),
-            CosFile::default());
+            CosFile::default()
+        );
     }
 }
